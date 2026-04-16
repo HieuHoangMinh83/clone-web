@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './About.css'
-import imgTower from '../../../img_newton/home/component 2/KAK8738-Pano-2-1.png'
-import imgLogo from '../../../img_newton/home/component 2/img3.png'
+import imgTower from '../../assets/images/about/tower-newtecons.png'
+import imgLogo from '../../assets/images/about/logo-paper.png'
 
 export default function About() {
   const sectionRef = useRef(null)
@@ -88,19 +88,19 @@ export default function About() {
             </span>
           </h2>
 
-          <p className="about__tag reveal" style={{ '--d': '.45s' }}>
+          <p className="about__tag reveal" style={{ '--d': '1.55s' }}>
             Build on Trust — Sự tin tưởng của bạn là chuẩn mực cho giá trị
             của chúng tôi
           </p>
 
-          <p className="about__body reveal" style={{ '--d': '.6s' }}>
+          <p className="about__body reveal" style={{ '--d': '1.7s' }}>
             Bằng nhiệt huyết và tinh thần không ngừng đổi mới, công ty đã
             vươn mình khẳng định vị thế trên thị trường xây dựng Việt Nam.
             Với đội ngũ kỹ sư giàu kinh nghiệm cùng cam kết về chất lượng,
             chúng tôi tiên phong chinh phục những tầm cao mới.
           </p>
 
-          <a href="#" className="about__cta reveal" style={{ '--d': '.75s' }}>
+          <a href="#" className="about__cta reveal" style={{ '--d': '1.85s' }}>
             <span className="about__cta-label">Về chúng tôi</span>
             <span className="about__cta-arrow" aria-hidden>
               <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
@@ -128,13 +128,6 @@ export default function About() {
             <span className="tile__corner tile__corner--tr" aria-hidden />
             <span className="tile__corner tile__corner--bl" aria-hidden />
             <span className="tile__corner tile__corner--br" aria-hidden />
-
-            <span className="tile__icon" aria-hidden>
-              <svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="16" cy="16" r="13" />
-                <path d="M16 8v8l5 3" strokeLinecap="round" />
-              </svg>
-            </span>
 
             <span className="tile__title">
               <span className="tile__title-top">LỊCH SỬ</span>
@@ -166,15 +159,6 @@ export default function About() {
             <span className="tile__corner tile__corner--tr" aria-hidden />
             <span className="tile__corner tile__corner--bl" aria-hidden />
             <span className="tile__corner tile__corner--br" aria-hidden />
-
-            <span className="tile__icon" aria-hidden>
-              <svg width="34" height="34" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="6" y="4" width="20" height="24" rx="1" />
-                <line x1="11" y1="10" x2="21" y2="10" strokeLinecap="round" />
-                <line x1="11" y1="15" x2="21" y2="15" strokeLinecap="round" />
-                <line x1="11" y1="20" x2="17" y2="20" strokeLinecap="round" />
-              </svg>
-            </span>
 
             <span className="tile__title">
               <span className="tile__title-top">COMPANY</span>

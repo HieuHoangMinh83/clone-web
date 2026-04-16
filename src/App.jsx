@@ -2,20 +2,18 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Header from './components/Header/Header.jsx'
 import Hero from './components/Hero/Hero.jsx'
 import About from './components/About/About.jsx'
-import BrandAnchor from './components/BrandAnchor/BrandAnchor.jsx'
-import Mission from './components/Mission/Mission.jsx'
-import Vision from './components/Vision/Vision.jsx'
+import Achievements from './components/Achievements/Achievements.jsx'
+import Fields from './components/Fields/Fields.jsx'
 import Projects from './components/Projects/Projects.jsx'
 import News from './components/News/News.jsx'
-import Footer from './components/Footer/Footer.jsx'
+import Contact from './components/Contact/Contact.jsx'
 import SectionIndicator from './components/SectionIndicator/SectionIndicator.jsx'
 
 const SECTION_LABELS = [
   'Banner',
   'Giới thiệu',
-  'Thương hiệu',
-  'Sứ mệnh',
-  'Tầm nhìn',
+  'Thành tựu',
+  'Lĩnh vực',
   'Dự án',
   'Tin tức',
   'Liên hệ',
@@ -27,13 +25,12 @@ const SECTION_LABELS = [
    gold  = chữ trắng trên nền tối, active vàng */
 const SECTION_TONES = [
   'light', // Hero — navy carousel
-  'dark',  // About — blue-100 light
-  'dark',  // BrandAnchor — gray-100 light
-  'light', // Mission — navy gradient
-  'gold',  // Vision — navy gradient, nhấn gold
-  'dark',  // Projects — white paper
-  'dark',  // News — white paper
-  'light', // Footer — navy
+  'light', // About — chữ trắng trên tile ảnh tối bên phải
+  'paper', // Achievements — trắng, accent đỏ
+  'light', // Fields — nền navy-dark, chữ trắng
+  'light', // Projects — nền navy-dark, chữ trắng
+  'paper', // News — white paper, xanh + xám nhạt
+  'light', // Contact — navy
 ]
 
 const TRANSITION_MS = 900
@@ -116,12 +113,11 @@ export default function App() {
       >
         <Hero />
         <About />
-        <BrandAnchor />
-        <Mission />
-        <Vision />
+        <Achievements />
+        <Fields />
         <Projects />
         <News />
-        <Footer />
+        <Contact />
       </div>
       <SectionIndicator
         current={index}

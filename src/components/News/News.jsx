@@ -197,9 +197,17 @@ export default function News() {
 
       <div className="news__container">
         <header className="news__head">
-          <h2 className="news__title">
-            <span className="news__title-main">TIN TỨC</span>{' '}
-            <span className="news__title-main">NEWTECONS</span>
+          <h2 className="news__title" aria-label="Tin tức Newtecons">
+            {'TIN TỨC NEWTECONS'.split('').map((ch, i) => (
+              <span
+                key={i}
+                className={`news__title-ch ${ch === ' ' ? 'is-space' : ''}`}
+                style={{ '--i': i }}
+              >
+                {ch === ' ' ? '\u00A0' : ch}
+              </span>
+            ))}
+            <span className="news__title-underline" aria-hidden />
           </h2>
           <a href="#" className="news__all">
             <span>XEM TẤT CẢ TIN</span>

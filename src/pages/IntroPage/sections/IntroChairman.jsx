@@ -1,0 +1,73 @@
+import bg from '../../../assets/images/intro/bg/chairman.png'
+import portrait from '../../../assets/images/intro/chairman-portrait.png'
+
+export default function IntroChairman() {
+  return (
+    <section className="intro-sec intro-chairman">
+      <div
+        className="intro-sec__bg"
+        style={{
+          backgroundImage: `linear-gradient(115deg, rgba(8,20,46,0.95) 0%, rgba(20,46,88,0.92) 55%, rgba(36,86,146,0.82) 100%), url(${bg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <span className="intro-chairman__watermark" aria-hidden>
+        MESSAGE
+      </span>
+
+      <figure className="intro-chairman__photo">
+        <img src={portrait} alt="Chủ tịch HĐQT Nguyễn Bá Dương" loading="lazy" />
+      </figure>
+
+      <div className="intro-container">
+        <div className="intro-chairman__copy">
+          <span className="intro-chairman__eyebrow">
+            <span className="intro-chairman__eyebrow-bar" /> Thông điệp
+          </span>
+          <h2 className="intro-chairman__title">
+            <span className="intro-chairman__title-soft">THÔNG ĐIỆP</span>
+            <span className="intro-chairman__title-strong">CHỦ TỊCH HĐQT</span>
+          </h2>
+          <span className="intro-chairman__quote-mark" aria-hidden>“</span>
+          <div className="intro-chairman__body">
+            <p>
+              Hơn hai thập kỷ hình thành và phát triển, Newtecons đã kiên cường vượt qua nhiều
+              thử thách và tạo dựng vị thế vững chắc của một Tổng thầu Xây dựng hàng đầu Việt
+              Nam. Những công trình chúng tôi thực hiện không chỉ là minh chứng cho trình độ kỹ
+              thuật, mà còn là biểu tượng cho niềm tự hào, mang đến những giá trị vượt thời gian
+              cho khách hàng, đối tác và cho cả cộng đồng, xã hội.
+            </p>
+            <p>
+              Với triết lý <em>“Uy tín – Chuyên nghiệp – Tử tế”</em>, Newtecons sẽ tiếp tục hành
+              trình xây dựng những công trình thẩm mỹ và bền vững. Kiên định với những giá trị
+              cốt lõi, chúng tôi cùng nhau kiến tạo biểu tượng của niềm tin, của giá trị và của
+              tương lai.
+            </p>
+          </div>
+          <div className="intro-chairman__sig">
+            <svg
+              className="intro-chairman__sig-stroke"
+              width="148"
+              height="36"
+              viewBox="0 0 148 36"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M4 24 C 18 6, 34 34, 52 16 S 88 4, 108 22 S 140 10, 146 28"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div>
+              <div className="intro-chairman__sig-name">NGUYỄN BÁ DƯƠNG</div>
+              <div className="intro-chairman__sig-role">Chủ tịch Hội đồng Quản trị</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

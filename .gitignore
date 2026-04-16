@@ -47,7 +47,7 @@ $RECYCLE.BIN/
 # Claude / AI tooling
 .claude/
 .claude-cache/
-
+.tmp-figma/*
 # Coverage / tests
 coverage/
 *.lcov

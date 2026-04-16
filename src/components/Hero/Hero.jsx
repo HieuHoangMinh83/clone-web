@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import banner1 from '../../../img_newton/home/component 1/banner-trang-chu-021-2048x1147.png'
-import banner2 from '../../../img_newton/home/component 1/cover_web-1.png'
+import banner1 from '../../assets/images/hero/banner-main.png'
+import banner2 from '../../assets/images/hero/cover-web.png'
 import './Hero.css'
 
 const slides = [
