@@ -1,0 +1,79 @@
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: var(--gray-200);
+  overflow: hidden;
+}
+
+.hero__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.hero__slide {
+  flex: 0 0 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-900);
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hero__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  z-index: 2;
+}
+
+.hero__dots li {
+  display: grid;
+  place-items: center;
+}
+
+.hero__dots button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0;
+  position: relative;
+  transition: background 0.25s, width 0.25s, border-color 0.25s, transform 0.2s;
+  cursor: pointer;
+}
+
+/* Expand hit area beyond visual bounds for easier tapping. */
+.hero__dots button::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+}
+
+.hero__dots button:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: scale(1.1);
+}
+
+.hero__dots button.is-active {
+  background: #fff;
+  width: 32px;
+  border-radius: 6px;
+  border-color: #fff;
+}

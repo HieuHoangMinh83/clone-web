@@ -1,0 +1,52 @@
+:root {
+  /* Brand */
+  --navy-900: #1a3c6b;
+  --navy-700: #245692;
+  --navy-600: #215594;
+  --blue-500: #3681dd;
+  --blue-100: #e8f2ff;
+  --blue-050: #d9eaff;
+
+  /* Logo accents (Newtecons mark) */
+  --gold-500: #dda969;
+  --teal-500: #1bcdd4;
+
+  /* Neutrals */
+  --ink-900: #0a0a0a;
+  --ink-700: #333333;
+  --ink-500: #555555;
+  --gray-100: #f5f5f5;
+  --gray-200: #cccccc;
+  --line-200: #f1f1f1;
+  --paper: #ffffff;
+
+  /* Accent */
+  --success-500: #7cc68d;
+
+  /* Typography */
+  --font-sans: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-full: 9999px;
+
+  /* Shadow */
+  --shadow-card: 0 8px 32px rgba(36, 86, 146, 0.08);
+  --shadow-hover: 0 16px 48px rgba(36, 86, 146, 0.14);
+
+  /* Spacing (8px grid) */
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 32px;
+  --s-6: 48px;
+  --s-8: 64px;
+  --s-10: 80px;
+  --s-12: 96px;
+
+  /* Layout */
+  --container: 1200px;
+  --header-h: 72px;
+}

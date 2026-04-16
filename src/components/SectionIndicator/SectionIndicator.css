@@ -1,0 +1,61 @@
+.indicator {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  transition: color 0.5s ease;
+}
+
+.indicator ul {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-end;
+}
+
+.indicator button {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ind-idle);
+  padding: 2px 4px;
+  line-height: 1;
+  transition:
+    color 0.35s ease,
+    font-size 0.35s ease,
+    font-weight 0.35s ease,
+    transform 0.35s ease;
+}
+
+.indicator button:hover {
+  color: var(--ind-hover);
+}
+
+.indicator button.is-active {
+  color: var(--ind-active);
+  font-size: 24px;
+  font-weight: 500;
+  transform: translateX(-2px);
+}
+
+/* ------- Tones ------- */
+.indicator--light {
+  --ind-idle: rgba(255, 255, 255, 0.75);
+  --ind-hover: #fff;
+  --ind-active: var(--blue-500);
+}
+
+.indicator--dark {
+  --ind-idle: var(--gold-500);
+  --ind-hover: var(--navy-900);
+  --ind-active: var(--navy-700);
+}
+
+.indicator--gold {
+  --ind-idle: rgba(255, 255, 255, 0.7);
+  --ind-hover: #fff;
+  --ind-active: var(--gold-500);
+}
