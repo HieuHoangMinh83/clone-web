@@ -1,0 +1,272 @@
+/* ---------- SECTION 5: Core Values — Semi-arc ---------- */
+.intro-values {
+  overflow: hidden;
+}
+.intro-values .intro-container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: 24px;
+  padding-bottom: 0;
+}
+
+/* ---------- Title ---------- */
+.intro-values__title {
+  font-size: clamp(34px, 3.6vw, 52px);
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.04em;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 2px 20px rgba(8, 24, 54, 0.45);
+}
+.intro-values__title strong {
+  font-weight: 800;
+  color: var(--gold-500);
+}
+
+/* ---------- Arc wrapper: overlay full-section, (0,0)=(0,0) viewport, (100,100)=góc dưới-phải ---------- */
+.intro-values__arc-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;  /* title & bg vẫn nhận được click/hover xuyên qua */
+}
+
+/* SVG arc line */
+.intro-values__arc-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Center text ---------- */
+.intro-values__center {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  width: 280px;
+  z-index: 1;
+  animation: val-fade-in 0.35s ease;
+}
+
+@keyframes val-fade-in {
+  from { opacity: 0; transform: translate(-50%, -50%) translateY(8px); }
+  to   { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+}
+
+.intro-values__center-name {
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--gold-500);
+  margin: 0 0 14px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.intro-values__center-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+/* ---------- Nodes container ---------- */
+.intro-values__nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------- Each node ---------- */
+.intro-values__node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  pointer-events: auto;
+  color: #fff;
+  font: inherit;
+  transform: translate(-50%, -50%);
+}
+
+/* Vị trí 5 node + path cung tròn được điều khiển bằng XY ở đầu IntroValues.jsx
+   (các biến ARC_LEFT_FOOT, ARC_RIGHT_FOOT, ARC_APEX, NODE_POSITIONS).
+   Inline style trên từng .intro-values__node sẽ set left/top — không chỉnh ở đây. */
+
+/* ---------- Circle icon ---------- */
+.intro-values__node-circle {
+  width: clamp(72px, 8vw, 100px);
+  height: clamp(72px, 8vw, 100px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(60, 130, 210, 1);
+  border: 9px solid rgba(60, 130, 210, 1);
+  box-shadow: 0 8px 24px rgba(8, 24, 54, 0.35);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              background 0.4s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+.intro-values__node-icon {
+  display: block;
+  width: 68%;
+  height: 68%;
+  background-color: var(--navy-900);
+  -webkit-mask-image: var(--icon-url);
+  mask-image: var(--icon-url);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* ---------- Active state ---------- */
+.intro-values__node.is-active .intro-values__node-circle {
+  background: #fff;
+  border-color: rgba(60, 130, 210, 1);
+  box-shadow: 0 0 24px rgba(60, 130, 210, 0.5),
+              0 0 48px rgba(60, 130, 210, 0.2),
+              0 8px 24px rgba(8, 24, 54, 0.35);
+  transform: scale(1.15);
+}
+
+/* ---------- Label ---------- */
+.intro-values__node-label {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  transition: color 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  transform: translateX(var(--label-shift, 0));
+}
+
+.intro-values__node.is-active .intro-values__node-label {
+  font-size: 17px;
+}
+
+/* ---------- Hover (non-active) ---------- */
+.intro-values__node:not(.is-active):hover .intro-values__node-circle {
+  transform: scale(1.08);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 32px rgba(8, 24, 54, 0.4);
+}
+.intro-values__node:not(.is-active):hover .intro-values__node-label {
+  color: #fff;
+  font-size: 17px;
+}
+
+/* ---------- Entrance animations ---------- */
+.intro-values .intro-sec__bg {
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.1s ease, transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.intro-values__title {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.25s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+}
+.intro-values__arc-svg {
+  opacity: 0;
+  transition: opacity 1s ease 0.5s;
+}
+.intro-values__center {
+  opacity: 0;
+  transition: opacity 0.8s ease 0.6s;
+}
+.intro-values__node {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(0.7s + var(--ai) * 0.12s);
+}
+
+.intro-values.is-in .intro-sec__bg {
+  opacity: 1;
+  transform: scale(1);
+}
+.intro-values.is-in .intro-values__title {
+  opacity: 1;
+  transform: translateY(0);
+}
+.intro-values.is-in .intro-values__arc-svg {
+  opacity: 1;
+}
+.intro-values.is-in .intro-values__center {
+  opacity: 1;
+}
+.intro-values.is-in .intro-values__node {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 639px) {
+  .intro-values__arc-svg { display: none; }
+
+  .intro-values__center {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  @keyframes val-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .intro-values__nodes {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .intro-values__node {
+    position: static !important;
+    transform: none !important;
+  }
+  .intro-values.is-in .intro-values__node {
+    transform: none !important;
+  }
+  .intro-values__node-circle {
+    width: 72px !important;
+    height: 72px !important;
+  }
+  .intro-values__node.is-active .intro-values__node-circle {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-values .intro-sec__bg,
+  .intro-values__title,
+  .intro-values__arc-svg,
+  .intro-values__center,
+  .intro-values__node {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .intro-values__node {
+    transform: translate(-50%, -50%) !important;
+  }
+}

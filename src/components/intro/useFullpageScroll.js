@@ -1,39 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Header from '../../components/shared/Header/Header.jsx'
-import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import FieldsBanner from '../../components/fields/FieldsBanner.jsx'
-import FieldsDB from '../../components/fields/FieldsDB.jsx'
-import FieldsPanel from '../../components/fields/FieldsPanel.jsx'
-import FieldsOutro from '../../components/fields/FieldsOutro.jsx'
-import { FIELDS_DATA } from '../../components/fields/fieldsData.js'
-import './FieldsPage.css'
-
-const SECTION_LABELS = [
-  'Banner',
-  'Tổng thầu D&B',
-  'Dân dụng',
-  'Công nghiệp',
-  'Hạ tầng',
-  'Cơ điện',
-  'Nội thất',
-  'Liên hệ',
-]
-
-const SECTION_TONES = [
-  'light',
-  'paper',
-  'light',
-  'light',
-  'light',
-  'light',
-  'light',
-  'light',
-]
 
 const TRANSITION_MS = 900
 
-export default function FieldsPage() {
-  const total = SECTION_LABELS.length
+export default function useFullpageScroll(total) {
   const [index, setIndex] = useState(0)
   const lockRef = useRef(false)
   const indexRef = useRef(0)
@@ -101,41 +70,5 @@ export default function FieldsPage() {
     }
   }, [goTo, total])
 
-  return (
-    <>
-      <Header />
-      <a className="intro-home-link" href="#/" aria-label="Về trang chủ">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M19 12H5" strokeLinecap="round" />
-          <path d="M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        <span>Trang chủ</span>
-      </a>
-      <div
-        className="fullpage"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
-      >
-        <FieldsBanner active={index === 0} />
-        <FieldsDB active={index === 1} />
-        {FIELDS_DATA.map((f, i) => (
-          <FieldsPanel
-            key={f.id}
-            field={f}
-            index={i + 1}
-            total={FIELDS_DATA.length}
-            active={index === i + 2}
-            reversed={i % 2 === 1}
-          />
-        ))}
-        <FieldsOutro active={index === total - 1} />
-      </div>
-      <SectionIndicator
-        current={index}
-        total={total}
-        onNav={goTo}
-        labels={SECTION_LABELS}
-        tone={SECTION_TONES[index]}
-      />
-    </>
-  )
+  return { index, goTo }
 }

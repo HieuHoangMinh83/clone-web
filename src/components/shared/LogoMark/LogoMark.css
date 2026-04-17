@@ -1,0 +1,74 @@
+/* ====== LogoMark — reusable animated SVG letter ====== */
+.logo-mark {
+  display: grid;
+  place-items: center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+              filter 0.4s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.logo-mark:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 14px rgba(27, 205, 212, 0.55))
+          drop-shadow(0 0 28px rgba(27, 205, 212, 0.2));
+}
+
+.logo-mark__svg {
+  width: 30px;
+  height: 36px;
+}
+
+/* -- Draw-in animations ------------------------------------ */
+
+/* Pillar / left half — rises from bottom */
+.logo-mark__part--up {
+  animation: lm-draw-up 7s ease infinite;
+}
+
+@keyframes lm-draw-up {
+  0%   { clip-path: inset(100% 0 0 0); opacity: 0; }
+  3%   { opacity: 1; }
+  12%  { clip-path: inset(0 0 0 0); }
+  70%  { clip-path: inset(0 0 0 0); opacity: 1; }
+  82%  { clip-path: inset(0 0 100% 0); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Pillar / right half — drops from top */
+.logo-mark__part--down {
+  animation: lm-draw-down 7s ease infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes lm-draw-down {
+  0%   { clip-path: inset(0 0 100% 0); opacity: 0; }
+  3%   { opacity: 1; }
+  12%  { clip-path: inset(0 0 0 0); }
+  70%  { clip-path: inset(0 0 0 0); opacity: 1; }
+  82%  { clip-path: inset(100% 0 0 0); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Crossbar — expands from center */
+.logo-mark__part--bar {
+  animation: lm-draw-bar 7s ease infinite;
+  animation-delay: 0.35s;
+}
+
+@keyframes lm-draw-bar {
+  0%   { clip-path: inset(0 50% 0 50%); opacity: 0; }
+  5%   { opacity: 1; }
+  14%  { clip-path: inset(0 0 0 0); }
+  70%  { clip-path: inset(0 0 0 0); opacity: 1; }
+  82%  { clip-path: inset(0 50% 0 50%); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Hover — freeze all, fully visible */
+.logo-mark:hover .logo-mark__part--up,
+.logo-mark:hover .logo-mark__part--down,
+.logo-mark:hover .logo-mark__part--bar {
+  animation: none;
+  opacity: 1;
+  clip-path: none;
+}

@@ -1,0 +1,91 @@
+/* Shared shell styles for the Giới thiệu page */
+
+/* ---------- generic section scaffolding (all 9 panels share these) ---------- */
+.intro-sec {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--ink-700);
+  isolation: isolate;
+}
+.intro-sec__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+}
+.intro-sec__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.intro-container {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--header-h) + 24px) 0 64px;
+}
+.intro-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  color: var(--gold-500);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.intro-title {
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--navy-900);
+}
+.intro-title strong {
+  font-weight: 800;
+  color: var(--navy-700);
+}
+.intro-title--light {
+  color: #fff;
+}
+.intro-title--light strong {
+  color: #fff;
+}
+.intro-lead {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-500);
+}
+.intro-lead--light {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- Carousel controls (shared) ---------- */
+.carousel-controls {
+  display: flex;
+  gap: 12px;
+}
+.carousel-controls button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.carousel-controls button[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ---------- Responsive: shared ---------- */
+@media (max-width: 639px) {
+  .intro-container {
+    padding-top: calc(var(--header-h) + 16px);
+    padding-bottom: 32px;
+  }
+}

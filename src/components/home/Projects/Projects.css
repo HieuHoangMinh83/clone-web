@@ -1,0 +1,337 @@
+/* ====== Projects Section ====== */
+.projects {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  overflow: hidden;
+  background: #07121f;
+}
+
+/* ====== Header - fixed overlay top-left ====== */
+.projects__head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 120px 64px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+}
+
+.projects.is-visible .projects__head {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.projects__head-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.projects__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  text-decoration: none;
+  pointer-events: auto;
+  transition: gap 0.3s ease;
+}
+
+.projects__cta:hover {
+  gap: 14px;
+}
+
+.projects__title {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+.projects__title strong {
+  font-weight: 800;
+  color: #fff;
+}
+
+/* ====== Rail ====== */
+.projects__rail {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* ====== Card ====== */
+.pcard {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* appear */
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.projects.is-visible .pcard {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    flex 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.7s ease calc(var(--i) * 0.12s + 0.2s),
+    transform 0.7s ease calc(var(--i) * 0.12s + 0.2s);
+}
+
+.pcard.is-active {
+  flex: 4;
+}
+
+/* Divider */
+.pcard + .pcard {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pcard__hit {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  color: #fff;
+  text-align: left;
+  background: #0a1528;
+  overflow: hidden;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ====== Media ====== */
+.pcard__media {
+  position: absolute;
+  inset: 0;
+}
+
+.pcard__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.pcard.is-active .pcard__img {
+  transform: scale(1);
+}
+
+.pcard__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.7) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
+}
+
+.pcard.is-active .pcard__shade {
+  opacity: 1;
+}
+
+/* ====== Body (active card) ====== */
+.pcard__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40px 32px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.pcard.is-active .pcard__body {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
+}
+
+.pcard__cat {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+}
+
+.pcard__title {
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 4px 0 0;
+  color: #fff;
+}
+
+.pcard__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+}
+
+.pcard__more svg {
+  transition: transform 0.3s ease;
+}
+
+.pcard.is-active:hover .pcard__more svg {
+  transform: translateX(4px);
+}
+
+/* ====== Collapsed vertical label ====== */
+.pcard__vlabel {
+  position: absolute;
+  bottom: 40px;
+  left: 12px;
+  z-index: 2;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg) translateX(20px);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+}
+
+.pcard:not(.is-active) .pcard__vlabel {
+  opacity: 1;
+  transform: rotate(180deg) translateX(0);
+  transition: opacity 0.5s ease 0.25s, transform 0.5s ease 0.25s;
+}
+
+.pcard.is-active .pcard__vlabel {
+  opacity: 0;
+  transform: rotate(180deg) translateX(20px);
+  pointer-events: none;
+}
+
+/* ====== Hover glow ====== */
+.pcard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  z-index: 3;
+  pointer-events: none;
+  transition: border-color 0.4s ease;
+}
+
+.pcard.is-active::after {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 1024px) {
+  .projects__head {
+    padding: 40px 32px;
+  }
+
+  .pcard__body {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .projects__head {
+    position: relative;
+    padding: 80px 24px 24px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .projects__title {
+    text-shadow: none;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .projects__rail {
+    flex-direction: column;
+    flex: 1;
+    min-height: 480px;
+  }
+
+  .pcard {
+    flex: 1;
+  }
+
+  .pcard.is-active {
+    flex: 3;
+  }
+
+  .pcard__vlabel {
+    writing-mode: horizontal-tb;
+    transform: translateX(-50%);
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+  }
+
+  .pcard__title {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__head,
+  .pcard,
+  .pcard__img,
+  .pcard__body,
+  .pcard__more svg {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+
+  .projects__head,
+  .pcard {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

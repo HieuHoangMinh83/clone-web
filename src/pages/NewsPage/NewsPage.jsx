@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Header from '../../components/Header/Header.jsx'
-import Contact from '../../components/Contact/Contact.jsx'
-import SectionIndicator from '../../components/SectionIndicator/SectionIndicator.jsx'
-import NewsBanner from './sections/NewsBanner.jsx'
-import NewsFeatured from './sections/NewsFeatured.jsx'
-import NewsGrid from './sections/NewsGrid.jsx'
+import Header from '../../components/shared/Header/Header.jsx'
+import Contact from '../../components/shared/Contact/Contact.jsx'
+import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
+import NewsBanner from '../../components/news/NewsBanner.jsx'
+import NewsFeatured from '../../components/news/NewsFeatured.jsx'
+import NewsGrid from '../../components/news/NewsGrid.jsx'
 import './NewsPage.css'
 
 const SECTION_LABELS = ['Banner', 'Nổi bật', 'Tin tức', 'Liên hệ']

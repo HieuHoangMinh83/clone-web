@@ -1,38 +1,41 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
+import Hero from '../../components/home/Hero/Hero.jsx'
+import About from '../../components/home/About/About.jsx'
+import Achievements from '../../components/home/Achievements/Achievements.jsx'
+import Fields from '../../components/home/Fields/Fields.jsx'
+import Projects from '../../components/home/Projects/Projects.jsx'
+import News from '../../components/home/News/News.jsx'
+import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import FieldsBanner from '../../components/fields/FieldsBanner.jsx'
-import FieldsDB from '../../components/fields/FieldsDB.jsx'
-import FieldsPanel from '../../components/fields/FieldsPanel.jsx'
-import FieldsOutro from '../../components/fields/FieldsOutro.jsx'
-import { FIELDS_DATA } from '../../components/fields/fieldsData.js'
-import './FieldsPage.css'
 
 const SECTION_LABELS = [
   'Banner',
-  'Tổng thầu D&B',
-  'Dân dụng',
-  'Công nghiệp',
-  'Hạ tầng',
-  'Cơ điện',
-  'Nội thất',
+  'Giới thiệu',
+  'Thành tựu',
+  'Lĩnh vực',
+  'Dự án',
+  'Tin tức',
   'Liên hệ',
 ]
 
+/* Tone chỉ số indicator theo nền section:
+   light = chữ trắng trên nền tối (active blue)
+   dark  = chữ nâu-vàng trên nền sáng (active navy)
+   gold  = chữ trắng trên nền tối, active vàng */
 const SECTION_TONES = [
-  'light',
-  'paper',
-  'light',
-  'light',
-  'light',
-  'light',
-  'light',
-  'light',
+  'light', // Hero — navy carousel
+  'light', // About — chữ trắng trên tile ảnh tối bên phải
+  'paper', // Achievements — trắng, accent đỏ
+  'light', // Fields — nền navy-dark, chữ trắng
+  'light', // Projects — nền navy-dark, chữ trắng
+  'paper', // News — white paper, xanh + xám nhạt
+  'light', // Contact — navy
 ]
 
 const TRANSITION_MS = 900
 
-export default function FieldsPage() {
+export default function HomePage() {
   const total = SECTION_LABELS.length
   const [index, setIndex] = useState(0)
   const lockRef = useRef(false)
@@ -104,30 +107,17 @@ export default function FieldsPage() {
   return (
     <>
       <Header />
-      <a className="intro-home-link" href="#/" aria-label="Về trang chủ">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M19 12H5" strokeLinecap="round" />
-          <path d="M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        <span>Trang chủ</span>
-      </a>
       <div
         className="fullpage"
         style={{ transform: `translateY(-${index * 100}vh)` }}
       >
-        <FieldsBanner active={index === 0} />
-        <FieldsDB active={index === 1} />
-        {FIELDS_DATA.map((f, i) => (
-          <FieldsPanel
-            key={f.id}
-            field={f}
-            index={i + 1}
-            total={FIELDS_DATA.length}
-            active={index === i + 2}
-            reversed={i % 2 === 1}
-          />
-        ))}
-        <FieldsOutro active={index === total - 1} />
+        <Hero />
+        <About />
+        <Achievements />
+        {/* <Fields /> */}
+        <Projects />
+        <News />
+        <Contact />
       </div>
       <SectionIndicator
         current={index}

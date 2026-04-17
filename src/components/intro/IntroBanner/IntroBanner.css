@@ -1,0 +1,86 @@
+/* ---------- SECTION 1: banner ---------- */
+.intro-banner {
+  color: #fff;
+}
+.intro-banner__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 18, 40, 0.22) 0%, rgba(6, 18, 40, 0.78) 100%);
+}
+.intro-banner__inner {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: calc(var(--header-h) + 80px);
+}
+.intro-banner__kicker {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.48em;
+  color: var(--gold-500);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.intro-banner__heading {
+  font-size: clamp(52px, 7.2vw, 104px);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.45);
+  color: #fff;
+  line-height: 1;
+}
+.intro-banner__mark {
+  display: inline-block;
+  width: 88px;
+  height: 4px;
+  background: var(--gold-500);
+  margin: 28px auto 24px;
+  border-radius: 4px;
+}
+.intro-banner__subtitle {
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 640px;
+  margin: 0 auto 40px;
+  font-weight: 400;
+}
+.intro-banner__crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 10px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.05);
+}
+.intro-banner__crumb a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
+}
+.intro-banner__crumb a:hover {
+  color: #fff;
+}
+.intro-banner__crumb strong {
+  color: var(--gold-500);
+  font-weight: 800;
+  margin-left: 14px;
+}
+.intro-banner__crumb span.sep {
+  margin: 0 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 1023px) {
+  .intro-banner__heading {
+    font-size: clamp(36px, 8vw, 72px);
+  }
+}
