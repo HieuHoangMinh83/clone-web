@@ -10,7 +10,9 @@ const BREAKPOINTS = [[640, 1], [1024, 2], [Infinity, 3]]
 
 export default function IntroHistory() {
   const viewportRef = useRef(null)
+  const sectionRef = useRef(null)
   const [viewportW, setViewportW] = useState(0)
+  const [inView, setInView] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -19,6 +21,19 @@ export default function IntroHistory() {
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
+  }, [])
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting && entry.intersectionRatio >= 0.15)
+      },
+      { threshold: [0, 0.15, 0.3, 0.5] },
+    )
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
   const { clampedPage, perView, hasPrev, hasNext, prev, next } = useCarousel(
@@ -31,7 +46,7 @@ export default function IntroHistory() {
   const offset = clampedPage * perView * (itemW + GAP)
 
   return (
-    <section className="intro-sec intro-history">
+    <section ref={sectionRef} className={`intro-sec intro-history ${inView ? 'is-in' : ''}`}>
       <div
         className="intro-sec__bg intro-history__bg"
         style={{ backgroundImage: `url(${bg})` }}
@@ -59,7 +74,7 @@ export default function IntroHistory() {
                   <article
                     className={`intro-history__item ${imgFirst ? 'is-img-top' : 'is-text-top'}`}
                     key={m.year}
-                    style={{ flex: `0 0 ${itemW}px` }}
+                    style={{ flex: `0 0 ${itemW}px`, '--i': i }}
                   >
                     <div className="intro-history__top">
                       {imgFirst ? (

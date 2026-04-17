@@ -26,7 +26,6 @@
   transition:
     color 0.35s ease,
     font-size 0.35s ease,
-    font-weight 0.35s ease,
     transform 0.35s ease;
 }
 
@@ -35,9 +34,9 @@
 }
 
 .indicator button.is-active {
-  color: var(--ind-active);
+  color: var(--navy-900);
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 800;
   transform: translateX(-2px);
 }
 
@@ -45,23 +44,19 @@
 .indicator--light {
   --ind-idle: rgba(255, 255, 255, 0.75);
   --ind-hover: #fff;
-  --ind-active: var(--blue-500);
 }
 
 .indicator--dark {
   --ind-idle: var(--gold-500);
   --ind-hover: var(--navy-900);
-  --ind-active: var(--navy-700);
 }
 
 .indicator--gold {
   --ind-idle: rgba(255, 255, 255, 0.7);
   --ind-hover: #fff;
-  --ind-active: var(--gold-500);
 }
 
 .indicator--paper {
   --ind-idle: rgba(26, 60, 107, 0.3);
   --ind-hover: var(--navy-900);
-  --ind-active: var(--blue-500);
 }

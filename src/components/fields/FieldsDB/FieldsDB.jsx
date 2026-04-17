@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './FieldsDB.css'
 
 const BENEFITS = [
   {
@@ -41,6 +42,7 @@ export default function FieldsDB({ active }) {
         <span className="fp-db__grid" />
         <span className="fp-db__orb fp-db__orb--a" />
         <span className="fp-db__orb fp-db__orb--b" />
+        <span className="fp-db__watermark">D&amp;B</span>
       </div>
 
       <div className="fp-db__inner">
@@ -65,9 +67,24 @@ export default function FieldsDB({ active }) {
             <strong>10–15% chi phí</strong> — phối hợp nhịp nhàng giữa thiết kế
             và thi công, giữa xây dựng và cơ điện.
           </p>
+
+          <ul className="fp-db__metrics" role="list">
+            <li className="fp-db__metric" style={{ '--m': 0 }}>
+              <span className="fp-db__metric-k">-30%</span>
+              <span className="fp-db__metric-v">Thời gian</span>
+            </li>
+            <li className="fp-db__metric" style={{ '--m': 1 }}>
+              <span className="fp-db__metric-k">-15%</span>
+              <span className="fp-db__metric-v">Chi phí</span>
+            </li>
+            <li className="fp-db__metric" style={{ '--m': 2 }}>
+              <span className="fp-db__metric-k">1</span>
+              <span className="fp-db__metric-v">Đầu mối</span>
+            </li>
+          </ul>
         </header>
 
-        <ul className="fp-db__grid-cards">
+        <ul className="fp-db__grid-cards" role="list">
           {BENEFITS.map((b, i) => (
             <li
               key={b.k}

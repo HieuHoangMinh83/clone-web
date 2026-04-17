@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import bg from '../../assets/images/fields/figma-f7.png'
+import bg from '../../../assets/images/fields/figma-f7.png'
+import './FieldsOutro.css'
 
 export default function FieldsOutro({ active }) {
   const [mount, setMount] = useState(false)

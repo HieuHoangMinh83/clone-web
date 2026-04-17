@@ -33,6 +33,17 @@ const SECTION_TONES = [
   'light', // Contact — navy
 ]
 
+/* Header có 2 loại: 'default' = có gradient mầu xanh, 'transparent' = không mầu.
+   Set true cho slide muốn tắt gradient. */
+const NAV_TRANSPARENT = [
+  false, // 0 Banner
+  false, // 1 Giới thiệu
+  false, // 2 Thành tựu
+  false, // 3 Dự án
+  false, // 4 Tin tức
+  false, // 5 Liên hệ
+]
+
 const TRANSITION_MS = 900
 
 export default function HomePage() {
@@ -106,7 +117,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
+      <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
       <div
         className="fullpage"
         style={{ transform: `translateY(-${index * 100}vh)` }}

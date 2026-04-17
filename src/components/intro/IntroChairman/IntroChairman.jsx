@@ -43,14 +43,10 @@ export default function IntroChairman() {
 
       <div className="intro-container">
         <div className="intro-chairman__copy">
-          <span className="intro-chairman__eyebrow">
-            <span className="intro-chairman__eyebrow-bar" /> Thông điệp
-          </span>
           <h2 className="intro-chairman__title">
             <span className="intro-chairman__title-soft">THÔNG ĐIỆP</span>
             <span className="intro-chairman__title-strong">CHỦ TỊCH HĐQT</span>
           </h2>
-          <span className="intro-chairman__quote-mark" aria-hidden>"</span>
           <div className="intro-chairman__body">
             <p>
               Hơn hai thập kỷ hình thành và phát triển, Newtecons đã kiên cường vượt qua nhiều
@@ -67,21 +63,6 @@ export default function IntroChairman() {
             </p>
           </div>
           <div className="intro-chairman__sig">
-            <svg
-              className="intro-chairman__sig-stroke"
-              width="148"
-              height="36"
-              viewBox="0 0 148 36"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M4 24 C 18 6, 34 34, 52 16 S 88 4, 108 22 S 140 10, 146 28"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
             <div>
               <div className="intro-chairman__sig-name">NGUYỄN BÁ DƯƠNG</div>
               <div className="intro-chairman__sig-role">Chủ tịch Hội đồng Quản trị</div>

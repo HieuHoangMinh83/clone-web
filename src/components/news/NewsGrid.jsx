@@ -1,11 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { NEWS_LIST } from './newsData.js'
 
 const PER_PAGE = 6
 
 export default function NewsGrid() {
   const [page, setPage] = useState(1)
+  const [mount, setMount] = useState(false)
   const totalPages = Math.max(1, Math.ceil(NEWS_LIST.length / PER_PAGE))
+
+  useEffect(() => {
+    const r = requestAnimationFrame(() => setMount(true))
+    return () => cancelAnimationFrame(r)
+  }, [])
 
   const items = useMemo(() => {
     const start = (page - 1) * PER_PAGE
@@ -13,45 +19,68 @@ export default function NewsGrid() {
   }, [page])
 
   return (
-    <section className="news-sec news-grid-sec">
+    <section className={`news-sec news-grid-sec ${mount ? 'is-in' : ''}`}>
+      <div className="news-grid__bg" aria-hidden>
+        <span className="news-grid__bg-grid" />
+        <span className="news-grid__bg-watermark">N</span>
+      </div>
+
       <div className="news-container">
         <header className="news-grid__head">
-          <div>
-            <span className="news-grid__kicker">— Tất cả bài viết</span>
+          <div className="news-grid__head-left">
+            <span className="news-grid__eyebrow">
+              <span className="news-grid__eyebrow-line" />
+              TẤT CẢ BÀI VIẾT
+            </span>
             <h2 className="news-grid__heading">
-              <strong>Tin tức</strong>
+              <span>Bản tin</span> <strong>Newtecons</strong>
             </h2>
           </div>
-          <div className="news-grid__count">
-            {NEWS_LIST.length} bài viết · Trang {page}/{totalPages}
+          <div className="news-grid__meta">
+            <span className="news-grid__meta-k">{NEWS_LIST.length.toString().padStart(2, '0')}</span>
+            <span className="news-grid__meta-v">
+              bài viết · Trang {page.toString().padStart(2, '0')}/{totalPages.toString().padStart(2, '0')}
+            </span>
           </div>
         </header>
 
         <div className="news-grid__list">
-          {items.map((p) => (
-            <article key={p.title} className="post-card">
-              <a className="post-card__img" href="#">
-                <img src={p.image} alt={p.title} loading="lazy" />
-                <span className="post-card__scrim" />
-              </a>
-              <div className="post-card__body">
-                <div className="post-card__date">
-                  <span className="post-card__day">{p.date.split('/')[0]}</span>
-                  <span className="post-card__ym">
-                    {p.date.split('/')[1]}/{p.date.split('/')[2]}
+          {items.map((p, i) => (
+            <article key={p.title} className="post-card" style={{ '--i': i }}>
+              <a className="post-card__link" href="#">
+                <div className="post-card__media">
+                  <img src={p.image} alt={p.title} loading="lazy" />
+                  <span className="post-card__scrim" />
+                  <span className="post-card__date">
+                    <span className="post-card__day">{p.date.split('/')[0]}</span>
+                    <span className="post-card__ym">
+                      {p.date.split('/')[1]}/{p.date.split('/')[2]}
+                    </span>
                   </span>
                 </div>
-                <h3 className="post-card__title">
-                  <a href="#">{p.title}</a>
-                </h3>
-              </div>
+                <div className="post-card__body">
+                  <h3 className="post-card__title">{p.title}</h3>
+                  <span className="post-card__more">
+                    Đọc tiếp
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
+                      <path
+                        d="M1 5h11m0 0L8 1m4 4l-4 4"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </a>
             </article>
           ))}
         </div>
 
         <nav className="news-grid__pager" aria-label="Phân trang">
           <button
-            className="news-grid__pager-btn"
+            className="news-grid__pager-btn news-grid__pager-btn--nav"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
             aria-label="Trang trước"
@@ -74,7 +103,7 @@ export default function NewsGrid() {
             )
           })}
           <button
-            className="news-grid__pager-btn"
+            className="news-grid__pager-btn news-grid__pager-btn--nav"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
             aria-label="Trang sau"

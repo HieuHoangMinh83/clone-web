@@ -36,13 +36,26 @@ const SECTION_TONES = [
   'light',
 ]
 
+/* true = tắt gradient nav ở slide đó */
+const NAV_TRANSPARENT = [
+  false, // 0 Banner
+  false, // 1 Thông điệp
+  false, // 2 Lịch sử
+  false, // 3 Tầm nhìn - Sứ mệnh
+  true,  // 4 Giá trị cốt lõi
+  false, // 5 Ban điều hành
+  false, // 6 Cán bộ quản lý
+  false, // 7 Đối tác
+  false, // 8 Liên hệ
+]
+
 export default function IntroPage() {
   const total = SECTION_LABELS.length
   const { index, goTo } = useFullpageScroll(total)
 
   return (
     <>
-      <Header />
+      <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
       <div
         className="fullpage"
         style={{ transform: `translateY(-${index * 100}vh)` }}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import bannerBg from '../../assets/images/fields/figma-header-bg.png'
+import bannerBg from '../../../assets/images/fields/figma-header-bg.png'
+import './FieldsBanner.css'
 
 export default function FieldsBanner({ active }) {
   const [mount, setMount] = useState(false)
@@ -10,6 +11,7 @@ export default function FieldsBanner({ active }) {
       const t = requestAnimationFrame(() => setMount(true))
       return () => cancelAnimationFrame(t)
     }
+    setMount(false)
   }, [active])
 
   return (
@@ -35,10 +37,7 @@ export default function FieldsBanner({ active }) {
       </div>
 
       <div className="fp-banner__inner">
-        <p className="fp-banner__kicker">
-          <span className="fp-banner__kicker-line" />
-          NEWTECONS · FIELDS OF ACTIVITY
-        </p>
+        
         <h1 className="fp-banner__title">
           <span className="fp-banner__title-mask">
             <span className="fp-banner__title-row">Lĩnh vực</span>
@@ -54,17 +53,10 @@ export default function FieldsBanner({ active }) {
           Sáu trụ cột chuyên môn — từ xây dựng dân dụng, công nghiệp, hạ tầng
           đến cơ điện và nội thất — kiến tạo hệ sinh thái phát triển toàn diện.
         </p>
-        <nav className="fp-banner__crumb" aria-label="Breadcrumb">
-          <a href="#/">Trang chủ</a>
-          <span className="sep">/</span>
-          <strong>Lĩnh vực</strong>
-        </nav>
+       
       </div>
 
-      <div className="fp-banner__scroll" aria-hidden>
-        <span className="fp-banner__scroll-label">Cuộn xuống</span>
-        <span className="fp-banner__scroll-line" />
-      </div>
+      
     </section>
   )
 }

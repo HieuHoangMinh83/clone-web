@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './FieldsPanel.css'
 
 export default function FieldsPanel({ field, index, total, active, reversed }) {
   const [mount, setMount] = useState(false)

@@ -10,65 +10,71 @@ import './IntroValues.css'
    x/y = phần trăm viewport. x=50 luôn là giữa màn hình, y=100 là đáy màn hình.
    ===================================================================== */
 
-// 🦶 2 CHÂN vòng cung (phải cùng y để đối xứng qua apex.x)
-const ARC_LEFT_FOOT  = { x: 29,  y: 100 }
-const ARC_RIGHT_FOOT = { x: 71, y: 100 }
+// Ngưỡng chia breakpoint (px). Viewport >= BP_LARGE → dùng LG, ngược lại → SM
+const BP_LARGE = 1700
 
-// ⛰️ ĐỈNH vòng cung (x nên = giữa 2 chân)
-const ARC_APEX       = { x: 50,  y: 57 }
+// ---------- 📐 CONFIG cho MÀN ≥ 1700 (LG) ----------
+const LG = {
+  ARC_LEFT_FOOT:  { x: 29, y: 100 },
+  ARC_RIGHT_FOOT: { x: 71, y: 100 },
+  ARC_APEX:       { x: 50, y: 57  },
+  ARC_STRETCH_X: 1,
+  ARC_STRETCH_Y: 1,
+  NODE_POSITIONS: [
+    { x: 30.5, y: 85 },  // Sáng tạo
+    { x: 38,   y: 66 },  // Đoàn kết
+    { x: 50,   y: 59 },  // Chính trực
+    { x: 62,   y: 66 },  // Tối ưu
+    { x: 69.5, y: 85 },  // Tử tế
+  ],
+}
+
+// ---------- 📐 CONFIG cho MÀN < 1700 (SM) — chỉnh giá trị ở đây ----------
+// Ellipse: cx=50, cy=100, rx=26, ry=52 → nodes tại t = 160°, 125°, 90°, 55°, 20°
+const SM = {
+  ARC_LEFT_FOOT:  { x: 24, y: 100 },
+  ARC_RIGHT_FOOT: { x: 76, y: 100 },
+  ARC_APEX:       { x: 50, y: 46  },
+  ARC_STRETCH_X: 1,
+  ARC_STRETCH_Y: 1,
+  NODE_POSITIONS: [
+    { x: 25.6, y: 82.2 },  // Sáng tạo    — (t=160°)
+    { x: 35.1, y: 57.4 },  // Đoàn kết    — (t=125°)
+    { x: 50,   y: 48   },  // Chính trực  — (t=90°, đỉnh)
+    { x: 64.9, y: 57.4 },  // Tối ưu      — (t=55°)
+    { x: 74.4, y: 82.2 },  // Tử tế       — (t=20°)
+  ],
+}
 
 // 🌀 ĐỘ CONG — hệ số tỉ lệ bán trục ellipse (độc lập với feet/apex)
 //   = 1 → cung đi CHÍNH XÁC qua 3 điểm feet + apex (mặc định)
 //   > 1 → cung phình to hơn theo trục tương ứng (vượt qua feet/apex)
 //   < 1 → cung thu vào trong (không chạm feet/apex)
-//   Ghi chú: khi ≠ 1, feet + apex chỉ là "khung tham chiếu" — cung sẽ lệch.
-const ARC_STRETCH_X = 1     // kéo ngang (độ rộng cung)
-const ARC_STRETCH_Y = 1     // kéo dọc   (đỉnh vồng cao/thấp)
 
-// 🔵 5 icon value (theo thứ tự trong values.js — Sáng tạo → Đoàn kết → Chính trực → Tối ưu → Tử tế)
-// Các giá trị nằm đúng trên ellipse hiện tại (cx=50, cy=100, rx=21, ry=43)
-// Phân bố theo góc tham số t = 160°, 125°, 90°, 55°, 20° (tránh 20° sát chân mỗi bên)
-const NODE_POSITIONS = [
-  { x: 30.5, y: 85 },  // Sáng tạo    — (t=160°)
-  { x: 38, y: 66 },  // Đoàn kết    — (t=125°)
-  { x: 50, y: 59 },  // Chính trực  — (t=90°, đỉnh)
-  { x: 62, y: 66 },  // Tối ưu      — (t=55°)
-  { x: 69.5, y: 85 },  // Tử tế       — (t=20°)
-]
-
-/* -------- không cần chỉnh phần dưới: path tự tính từ các giá trị trên --------
-   Mô hình: ellipse axis-aligned, tâm = trung điểm 2 chân, chord = trục ngang.
-     cx = (left.x + right.x) / 2                       — tâm ngang
-     cy = (left.y + right.y) / 2                       — tâm dọc (= đường chord)
-     rx = |right.x − cx|  × ARC_STRETCH_X              — bán trục ngang
-     ry = (cy − apex.y)   × ARC_STRETCH_Y              — bán trục dọc
-   Muốn xem số đo cung hiện tại?  DevTools console → window.__ARC_DEBUG */
-
-const _cx = (ARC_LEFT_FOOT.x + ARC_RIGHT_FOOT.x) / 2
-const _cy = (ARC_LEFT_FOOT.y + ARC_RIGHT_FOOT.y) / 2
-const _rx = Math.abs(ARC_RIGHT_FOOT.x - _cx) * ARC_STRETCH_X
-const _ry = (_cy - ARC_APEX.y) * ARC_STRETCH_Y
-const ARC_PATH = `M ${ARC_LEFT_FOOT.x} ${ARC_LEFT_FOOT.y} A ${_rx} ${_ry} 0 1 1 ${ARC_RIGHT_FOOT.x} ${ARC_RIGHT_FOOT.y}`
-
-// Tâm vùng "bowl" bên trong cung — để đặt text value
-const CENTER_TEXT_POS = { x: _cx, y: (ARC_APEX.y + _cy) / 2 }
-
-if (typeof window !== 'undefined') {
-  window.__ARC_DEBUG = {
-    center: { x: _cx, y: _cy },
-    rx: _rx,
-    ry: _ry,
-    aspectRatio: _ry / _rx,   // >1 = nhọn/cao, <1 = bè/dẹt, =1 = bán-tròn
-    path: ARC_PATH,
+function buildArc(cfg) {
+  const cx = (cfg.ARC_LEFT_FOOT.x + cfg.ARC_RIGHT_FOOT.x) / 2
+  const cy = (cfg.ARC_LEFT_FOOT.y + cfg.ARC_RIGHT_FOOT.y) / 2
+  const rx = Math.abs(cfg.ARC_RIGHT_FOOT.x - cx) * cfg.ARC_STRETCH_X
+  const ry = (cy - cfg.ARC_APEX.y) * cfg.ARC_STRETCH_Y
+  return {
+    cx, cy, rx, ry,
+    path: `M ${cfg.ARC_LEFT_FOOT.x} ${cfg.ARC_LEFT_FOOT.y} A ${rx} ${ry} 0 1 1 ${cfg.ARC_RIGHT_FOOT.x} ${cfg.ARC_RIGHT_FOOT.y}`,
+    centerText: { x: cx, y: (cfg.ARC_APEX.y + cy) / 2 },
   }
 }
 
 const DEFAULT_IDX = VALUES.findIndex((v) => v.featured) ?? 2
 
+function pickConfig() {
+  if (typeof window === 'undefined') return LG
+  return window.innerWidth >= BP_LARGE ? LG : SM
+}
+
 export default function IntroValues() {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
   const [active, setActive] = useState(DEFAULT_IDX)
+  const [cfg, setCfg] = useState(pickConfig)
 
   useEffect(() => {
     const el = sectionRef.current
@@ -82,6 +88,29 @@ export default function IntroValues() {
     io.observe(el)
     return () => io.disconnect()
   }, [])
+
+  useEffect(() => {
+    const onResize = () => setCfg(pickConfig())
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const arc = buildArc(cfg)
+  const ARC_PATH = arc.path
+  const CENTER_TEXT_POS = arc.centerText
+  const NODE_POSITIONS = cfg.NODE_POSITIONS
+  const _cx = arc.cx
+
+  if (typeof window !== 'undefined') {
+    window.__ARC_DEBUG = {
+      breakpoint: cfg === LG ? 'LG (>=1700)' : 'SM (<1700)',
+      center: { x: arc.cx, y: arc.cy },
+      rx: arc.rx,
+      ry: arc.ry,
+      aspectRatio: arc.ry / arc.rx,
+      path: ARC_PATH,
+    }
+  }
 
   const current = VALUES[active]
 
@@ -118,7 +147,7 @@ export default function IntroValues() {
         <div
           className="intro-values__center"
           key={current.key}
-          style={{ left: `${CENTER_TEXT_POS.x}%`, top: `calc(${CENTER_TEXT_POS.y}% + 10px)` }}
+          style={{ left: `${CENTER_TEXT_POS.x}%`, top: `calc(${CENTER_TEXT_POS.y}% + 40px)` }}
         >
           <h3 className="intro-values__center-name">{current.name}</h3>
           <p className="intro-values__center-desc">{current.desc}</p>

@@ -18,7 +18,12 @@ function getRouteKey() {
 
 const CLOSE_DELAY = 280
 
-export default function Header() {
+/**
+ * Header
+ * @param {string} variant - 'default' | 'navy' | 'dark' | 'light' | 'gold' | 'transparent'
+ * @param {object} navStyle - inline style để override trực tiếp (vd set --nav-bg, color, height)
+ */
+export default function Header({ variant = 'default', navStyle }) {
   const [open, setOpen] = useState(false)
   const [activeKey, setActiveKey] = useState(getRouteKey)
   const closeTimer = useRef(null)
@@ -54,7 +59,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="nav">
+      <header className={`nav nav--${variant}`} style={navStyle}>
         <div className="nav__inner">
           <a href="#/" className="nav__logo" aria-label="Trang chủ">
             <span className="nav__logo-mark">

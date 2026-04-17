@@ -30,16 +30,16 @@
   width: min(1240px, calc(100% - 48px));
   height: 100%;
   margin: 0 auto;
-  padding: calc(var(--header-h) + 24px) 0 56px;
+  padding: calc(var(--header-h) + 4px) 0 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 28px;
+  gap: 20px;
 }
 
 .intro-board__featured {
-  margin-top: 8px;
+  margin-top: 0;
 }
 .intro-board__grid {
   margin-top: auto;
@@ -52,10 +52,10 @@
   flex-shrink: 0;
 }
 .intro-board__title {
-  font-family: 'Noto Serif', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(32px, 3.4vw, 46px);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.18;
   color: #245692;
   text-transform: uppercase;
   margin: 0;
@@ -101,32 +101,35 @@
   aspect-ratio: 14 / 15;
 }
 
-/* ARROW (bare, no background) */
+/* ARROW (rounded badge, grey-white → blue on hover) */
 .intro-board__go {
   position: absolute;
-  right: 6px;
-  bottom: 6px;
+  right: 14px;
+  bottom: 14px;
   width: 28px;
   height: 28px;
   border: none;
-  background: transparent;
+  background: rgba(245, 248, 252, 0.92);
+  border-radius: 50%;
   padding: 0;
   cursor: pointer;
-  color: #fff;
+  color: #1a3c6b;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
-  transition: transform 0.25s ease, color 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 40, 90, 0.18);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 .intro-board__avatar--lg .intro-board__go {
   width: 34px;
   height: 34px;
-  right: 10px;
-  bottom: 10px;
+  right: 20px;
+  bottom: 20px;
 }
 .intro-board__go:hover {
-  color: #cfe4ff;
-  transform: translateX(3px);
+  background: var(--blue-500);
+  color: #fff;
+  transform: translateX(2px);
+  box-shadow: 0 4px 12px rgba(54, 129, 221, 0.45);
 }
 
 /* META */
@@ -140,7 +143,7 @@
   flex-shrink: 0;
 }
 .intro-board__name {
-  font-family: 'Noto Serif', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.35;
@@ -179,28 +182,32 @@
   gap: 12px;
   width: 100%;
   opacity: 0;
-  transform: translateY(20px);
-  animation: board-card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(var(--ci, 0) * 0.08s + 0.1s);
+  transform: translateY(24px);
 }
 @keyframes board-card-in {
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
+}
+.intro-board.is-in .intro-board__card {
+  animation: board-card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--ci, 0) * 0.1s + 0.5s);
 }
 
 /* ENTRANCE */
+@keyframes board-head-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .intro-board__title-block,
 .intro-board__featured {
   opacity: 0;
   transform: translateY(18px);
-  transition:
-    opacity 0.8s ease 0.2s,
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
 }
-.intro-board__featured { transition-delay: 0.35s; }
-.intro-board.is-in .intro-board__title-block,
+.intro-board.is-in .intro-board__title-block {
+  animation: board-head-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
 .intro-board.is-in .intro-board__featured {
-  opacity: 1;
-  transform: translateY(0);
+  animation: board-head-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
 
 /* RESPONSIVE */
@@ -240,10 +247,128 @@
   .intro-board__avatar--lg { width: 170px; }
 }
 
+/* ---------- MODAL ---------- */
+@keyframes board-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes board-modal-rise {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.intro-board__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 30, 60, 0.6);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  animation: board-modal-fade 0.25s ease both;
+}
+.intro-board__modal-box {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) 1fr;
+  width: min(860px, 100%);
+  max-height: min(560px, calc(100vh - 48px));
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 40, 90, 0.35);
+  animation: board-modal-rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.intro-board__modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a3c6b;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 40, 90, 0.2);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  z-index: 2;
+}
+.intro-board__modal-close:hover {
+  background: var(--blue-500);
+  color: #fff;
+  transform: scale(1.05);
+}
+.intro-board__modal-photo {
+  background: linear-gradient(180deg, #eaf2fb 0%, #dbeafe 100%);
+  overflow: hidden;
+}
+.intro-board__modal-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.intro-board__modal-info {
+  padding: 40px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+}
+.intro-board__modal-role {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-500);
+  margin-bottom: 10px;
+}
+.intro-board__modal-name {
+  font-family: var(--font-sans);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 800;
+  color: #004a99;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.intro-board__modal-divider {
+  width: 48px;
+  height: 3px;
+  background: var(--blue-500);
+  border-radius: 2px;
+  margin: 16px 0 18px;
+}
+.intro-board__modal-bio {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #334966;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .intro-board__modal-box {
+    grid-template-columns: 1fr;
+    max-height: calc(100vh - 32px);
+  }
+  .intro-board__modal-photo {
+    aspect-ratio: 4 / 3;
+  }
+  .intro-board__modal-info {
+    padding: 24px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .intro-board__title-block,
   .intro-board__featured,
-  .intro-board__card {
+  .intro-board__card,
+  .intro-board__modal,
+  .intro-board__modal-box {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

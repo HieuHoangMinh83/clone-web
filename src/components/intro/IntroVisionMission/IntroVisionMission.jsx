@@ -1,8 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import bg from '../../../assets/images/intro/bg/vision-mission.png'
 import iconVision from '../../../assets/images/intro/icons/vision.png'
 import iconMission from '../../../assets/images/intro/icons/mission.png'
 import './IntroVisionMission.css'
+
+function SplitWords({ text }) {
+  const words = text.split(' ')
+  return words.map((w, i) => (
+    <Fragment key={i}>
+      <span className="intro-vm__word" style={{ '--wi': i }}>
+        {w}
+      </span>
+      {i < words.length - 1 ? ' ' : ''}
+    </Fragment>
+  ))
+}
 
 export default function IntroVisionMission() {
   const sectionRef = useRef(null)
@@ -13,9 +25,9 @@ export default function IntroVisionMission() {
     if (!el) return
     const io = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting && entry.intersectionRatio >= 0.25)
+        setInView(entry.isIntersecting && entry.intersectionRatio >= 0.15)
       },
-      { threshold: [0, 0.25, 0.5] }
+      { threshold: [0, 0.15, 0.3, 0.5] }
     )
     io.observe(el)
     return () => io.disconnect()
@@ -41,9 +53,7 @@ export default function IntroVisionMission() {
             <h3 className="intro-vm__heading">TẦM NHÌN</h3>
             <span className="intro-vm__line" />
             <p className="intro-vm__text">
-              Giữ vững vị thế Tổng thầu xây dựng vững mạnh có tiềm lực kinh tế hàng đầu Việt
-              Nam, tiến tới phát triển thành tập đoàn đa ngành lấy xây dựng làm lĩnh vực cốt
-              lõi.
+              <SplitWords text="Giữ vững vị thế Tổng thầu xây dựng vững mạnh có tiềm lực kinh tế hàng đầu Việt Nam, tiến tới phát triển thành tập đoàn đa ngành lấy xây dựng làm lĩnh vực cốt lõi." />
             </p>
           </article>
 
@@ -57,9 +67,7 @@ export default function IntroVisionMission() {
             <h3 className="intro-vm__heading">SỨ MỆNH</h3>
             <span className="intro-vm__line" />
             <p className="intro-vm__text">
-              Dùng uy tín và chất lượng làm nền móng để dựng xây lên những công trình mang tầm
-              vóc Việt, cam kết đem lại lợi ích cao nhất cho khách hàng, đối tác và người lao
-              động, góp phần phát triển cộng đồng bền vững.
+              <SplitWords text="Dùng uy tín và chất lượng làm nền móng để dựng xây lên những công trình mang tầm vóc Việt, cam kết đem lại lợi ích cao nhất cho khách hàng, đối tác và người lao động, góp phần phát triển cộng đồng bền vững." />
             </p>
           </article>
         </div>
