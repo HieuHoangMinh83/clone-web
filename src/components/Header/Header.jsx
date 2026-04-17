@@ -5,12 +5,14 @@ const LINKS = [
   { key: 'home', href: '#/', label: 'Trang chủ', desc: 'Tổng quan Newtecons' },
   { key: 'intro', href: '#/gioi-thieu', label: 'Giới thiệu', desc: 'Câu chuyện & đội ngũ' },
   { key: 'fields', href: '#/linh-vuc', label: 'Lĩnh vực', desc: 'Dịch vụ & năng lực' },
+  { key: 'news', href: '#/tin-tuc', label: 'Tin tức', desc: 'Sự kiện & truyền thông' },
 ]
 
 function getRouteKey() {
   const h = (typeof window !== 'undefined' ? window.location.hash : '') || ''
   if (h.startsWith('#/gioi-thieu')) return 'intro'
   if (h.startsWith('#/linh-vuc')) return 'fields'
+  if (h.startsWith('#/tin-tuc')) return 'news'
   return 'home'
 }
 
