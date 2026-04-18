@@ -10,6 +10,7 @@ const LINKS = [
   { key: 'recruit', href: '#/tuyen-dung', label: 'Tuyển dụng' },
   { key: 'contact', href: '#/lien-he', label: 'Liên hệ' },
   { key: 'news-builder', href: '#/tin-tuc-builder', label: 'Thiết kế tin tức' },
+  { key: 'component-library', href: '#/thu-vien-component', label: 'Thư viện Component' },
 ]
 
 function getRouteKey() {
@@ -21,6 +22,7 @@ function getRouteKey() {
   if (h.startsWith('#/tin-tuc')) return 'news'
   if (h.startsWith('#/tuyen-dung')) return 'recruit'
   if (h.startsWith('#/lien-he')) return 'contact'
+  if (h.startsWith('#/thu-vien-component')) return 'component-library'
   return 'home'
 }
 
@@ -35,6 +37,7 @@ export default function Header({ variant = 'default', navStyle }) {
   const [open, setOpen] = useState(false)
   const [activeKey, setActiveKey] = useState(getRouteKey)
   const closeTimer = useRef(null)
+  const drawerRef = useRef(null)
 
   useEffect(() => {
     const onHash = () => {
@@ -52,6 +55,22 @@ export default function Header({ variant = 'default', navStyle }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
+  useEffect(() => {
+    const el = drawerRef.current
+    if (!open || !el) return
+    const stopBubble = (e) => e.stopPropagation()
+    el.addEventListener('wheel', stopBubble, { passive: true })
+    el.addEventListener('touchstart', stopBubble, { passive: true })
+    el.addEventListener('touchmove', stopBubble, { passive: true })
+    el.addEventListener('touchend', stopBubble, { passive: true })
+    return () => {
+      el.removeEventListener('wheel', stopBubble)
+      el.removeEventListener('touchstart', stopBubble)
+      el.removeEventListener('touchmove', stopBubble)
+      el.removeEventListener('touchend', stopBubble)
+    }
   }, [open])
 
   const cancelClose = () => {
@@ -136,6 +155,7 @@ export default function Header({ variant = 'default', navStyle }) {
       />
 
       <aside
+        ref={drawerRef}
         id="site-drawer"
         className={`nav-drawer${open ? ' is-open' : ''}`}
         role="dialog"

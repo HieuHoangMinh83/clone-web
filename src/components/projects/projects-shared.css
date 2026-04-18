@@ -20,13 +20,15 @@
   --prj-ink-deep: #0a1938;
 }
 
-/* Generic section shell — each section picks its own height/background */
+/* Generic section shell — đồng bộ với các page khác: full viewport */
 .prj-sec {
   position: relative;
-  width: 100%;
+  width: 100vw;
+  min-height: 100vh;
   color: var(--ink-700);
   isolation: isolate;
   font-family: var(--font-sans);
+  overflow: hidden;
 }
 .prj-sec__bg {
   position: absolute;

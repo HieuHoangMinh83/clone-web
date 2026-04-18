@@ -11,6 +11,7 @@ import JobDetail from './pages/JobDetail/JobDetail.jsx'
 import ContactPage from './pages/ContactPage/ContactPage.jsx'
 import ProjectsPage from './pages/ProjectsPage/ProjectsPage.jsx'
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail.jsx'
+import ComponentLibrary from './pages/ComponentLibrary/ComponentLibrary.jsx'
 import LogoDemo from './pages/LogoDemo.jsx'
 
 function parseRoute() {
@@ -35,6 +36,7 @@ function parseRoute() {
   }
   if (h.startsWith('/tuyen-dung')) return { name: 'recruit' }
   if (h.startsWith('/lien-he')) return { name: 'contact' }
+  if (h.startsWith('/thu-vien-component')) return { name: 'component-library' }
   if (h.startsWith('/logo-demo')) return { name: 'logo-demo' }
   return { name: 'home' }
 }
@@ -59,6 +61,7 @@ export default function App() {
   if (route.name === 'recruit') return <RecruitPage />
   if (route.name === 'job-detail') return <JobDetail jobId={route.id} />
   if (route.name === 'contact') return <ContactPage />
+  if (route.name === 'component-library') return <ComponentLibrary />
   if (route.name === 'logo-demo') return <LogoDemo />
   return <HomePage />
 }
