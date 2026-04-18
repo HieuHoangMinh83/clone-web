@@ -72,13 +72,34 @@ p {
   margin: 0;
 }
 
-/* Fullpage viewport — each .section child is one 100vh screen. */
+/* Fullpage viewport — mỗi .section child là 1 màn 100vh.
+   Dùng cho desktop/tablet (>= 768px). Trên mobile, hệ thống chuyển
+   sang scroll thường qua class .fullpage--scroll. */
 .fullpage {
   position: fixed;
   inset: 0;
   width: 100vw;
   will-change: transform;
   transition: transform 0.9s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+/* Slide mode (mặc định) — không cần thêm gì, dùng .fullpage gốc */
+.fullpage--slide {
+  /* alias rõ ràng — không thêm rule */
+}
+
+/* Scroll mode (mobile) — bỏ position fixed, sections tự stack, body scroll */
+.fullpage--scroll {
+  position: static !important;
+  inset: auto !important;
+  width: 100% !important;
+  transform: none !important;
+  transition: none !important;
+}
+.fullpage--scroll > .section {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100vh;
 }
 
 .section {

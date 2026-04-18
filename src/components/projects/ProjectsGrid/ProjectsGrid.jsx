@@ -105,7 +105,7 @@ export default function ProjectsGrid() {
             return (
               <a
                 key={p.slug}
-                href={`#/du-an/${p.slug}`}
+                href={`/du-an/${p.slug}`}
                 className={`prj-card prj-card--${size}`}
                 style={{ '--i': i }}
               >

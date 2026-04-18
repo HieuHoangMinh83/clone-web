@@ -430,6 +430,7 @@ export default function NewsBuilder() {
   const [slideIndex, setSlideIndex] = useState(0)
   const slideIndexRef = useRef(0)
   const slideLockRef = useRef(false)
+  const previewRef = useRef(null)
   const totalSlides = draft.blocks.length
 
   // Khi editor đóng => bật fullpage scroll cho preview (wheel / key / touch)
@@ -515,6 +516,7 @@ export default function NewsBuilder() {
     if (!editorOpen) {
       slideIndexRef.current = 0
       setSlideIndex(0)
+      if (previewRef.current) previewRef.current.scrollTop = 0
     }
   }, [editorOpen])
 
@@ -599,11 +601,11 @@ export default function NewsBuilder() {
     <div className="nb">
       <header className="nb__bar">
         <div className="nb__bar-left">
-          <a className="nb__bar-back" href="#/tin-tuc">← Tin tức</a>
+          <a className="nb__bar-back" href="/tin-tuc">← Tin tức</a>
           <span className="nb__bar-title">Trình thiết kế chi tiết tin tức</span>
         </div>
         <div className="nb__bar-right">
-          <a className="nb__bar-btn" href="#/tin-tuc-builder/khoi">Thư viện khối</a>
+          <a className="nb__bar-btn" href="/tin-tuc-builder/khoi">Thư viện khối</a>
           <button className="nb__bar-btn" onClick={() => setGalleryOpen(true)}>Xem mẫu</button>
           <button className="nb__bar-btn" onClick={resetDraft}>Đặt lại</button>
           <button
@@ -620,7 +622,7 @@ export default function NewsBuilder() {
       </header>
 
       <div className={`nb__body ${editorOpen ? 'is-editor-open' : ''}`}>
-        <main className="nb__preview">
+        <main className="nb__preview" ref={previewRef}>
           <Preview draft={draft} slideIndex={editorOpen ? null : slideIndex} />
         </main>
 
@@ -1275,28 +1277,33 @@ function Preview({ draft, slideIndex }) {
     : undefined
   return (
     <div className={`nb-prev ${isFullpage ? 'is-fullpage' : ''}`} style={style}>
-      {blocks.map((b) => (
-        <PreviewBlock key={b.id} block={b} meta={meta} />
+      {blocks.map((b, i) => (
+        <PreviewBlock
+          key={b.id}
+          block={b}
+          meta={meta}
+          active={!isFullpage || slideIndex === i}
+        />
       ))}
     </div>
   )
 }
 
-function PreviewBlock({ block, meta }) {
-  if (block.type === 'hero') return <PrevHero meta={meta} />
-  if (block.type === 'columns') return <PrevColumns block={block} />
-  if (block.type === 'quote') return <PrevQuote block={block} />
-  if (block.type === 'stats') return <PrevStats block={block} />
-  if (block.type === 'related') return <PrevRelated />
+function PreviewBlock({ block, meta, active }) {
+  if (block.type === 'hero') return <PrevHero meta={meta} active={active} />
+  if (block.type === 'columns') return <PrevColumns block={block} active={active} />
+  if (block.type === 'quote') return <PrevQuote block={block} active={active} />
+  if (block.type === 'stats') return <PrevStats block={block} active={active} />
+  if (block.type === 'related') return <PrevRelated active={active} />
   if (block.type === 'contact') return <PrevContact />
   return null
 }
 
-function PrevHero({ meta }) {
-  return <NewsHero article={meta} />
+function PrevHero({ meta, active }) {
+  return <NewsHero article={meta} active={active} />
 }
 
-function PrevColumns({ block }) {
+function PrevColumns({ block, active }) {
   const useFigureLayout = block.variant === 'figure' || !!block.figure
   if (useFigureLayout) {
     return (
@@ -1307,6 +1314,7 @@ function PrevColumns({ block }) {
         showShare={false}
         kicker="Phần nội dung"
         heading={<>Chi tiết &amp; <em>triển khai</em></>}
+        active={active}
       />
     )
   }
@@ -1317,20 +1325,21 @@ function PrevColumns({ block }) {
       kicker="Phần nội dung"
       heading={<>Bối cảnh &amp; <em>chi tiết</em></>}
       subtitle="Các cột văn bản dưới đây mô tả chi tiết ngữ cảnh, nội dung chính của bài viết."
+      active={active}
     />
   )
 }
 
-function PrevQuote({ block }) {
-  return <NewsQuote text={block.text} attribution={block.attribution} />
+function PrevQuote({ block, active }) {
+  return <NewsQuote text={block.text} attribution={block.attribution} active={active} />
 }
 
-function PrevStats({ block }) {
-  return <NewsStats items={block.items} heading={block.heading || 'Quy mô & tác động'} />
+function PrevStats({ block, active }) {
+  return <NewsStats items={block.items} heading={block.heading || 'Quy mô & tác động'} active={active} />
 }
 
-function PrevRelated() {
-  return <NewsRelated articles={NEWS_LIST.slice(0, 3)} showAll={null} />
+function PrevRelated({ active }) {
+  return <NewsRelated articles={NEWS_LIST.slice(0, 3)} showAll={null} active={active} />
 }
 
 function PrevContact() {

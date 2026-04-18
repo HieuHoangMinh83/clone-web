@@ -18,7 +18,7 @@ export default function NewsRelated({
   active = true,
   kicker,
   heading,
-  showAll = { href: '#/tin-tuc', label: 'Xem tất cả tin' },
+  showAll = { href: '/tin-tuc', label: 'Xem tất cả tin' },
   className = '',
 }) {
   if (!articles.length) return null
@@ -70,7 +70,7 @@ function RelatedCard({ article, index }) {
   const [d, m, y] = (article.date || '').split('/')
   return (
     <article className="news-related__card" style={{ '--i': index }}>
-      <a className="news-related__link" href={`#/tin-tuc/${article.slug}`}>
+      <a className="news-related__link" href={`/tin-tuc/${article.slug}`}>
         <div className="news-related__media">
           <img src={article.image} alt={article.title} loading="lazy" />
           <span className="news-related__cat">{article.category}</span>

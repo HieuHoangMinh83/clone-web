@@ -26,7 +26,7 @@ function NotFoundPage() {
           <p className="nd__empty-text">
             Đường dẫn không tồn tại hoặc bài viết đã được gỡ. Vui lòng quay về trang Tin tức.
           </p>
-          <a className="nd__empty-btn" href="#/tin-tuc">Về trang Tin tức</a>
+          <a className="nd__empty-btn" href="/tin-tuc">Về trang Tin tức</a>
         </div>
       </main>
     </>
@@ -131,9 +131,9 @@ export default function NewsDetail({ slug }) {
           active={index === 0}
           crumb={
             <>
-              <a href="#/">Trang chủ</a>
+              <a href="/">Trang chủ</a>
               <span className="sep" aria-hidden>/</span>
-              <a href="#/tin-tuc">Tin tức</a>
+              <a href="/tin-tuc">Tin tức</a>
               <span className="sep" aria-hidden>/</span>
               <span className="current">{article.category}</span>
             </>

@@ -50,7 +50,7 @@ export default function FieldsOutro({ active }) {
           </p>
 
           <div className="fp-outro__ctas">
-            <a className="fp-outro__cta fp-outro__cta--primary" href="#/lien-he">
+            <a className="fp-outro__cta fp-outro__cta--primary" href="/lien-he">
               <span>Liên hệ hợp tác</span>
               <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
                 <path
@@ -62,7 +62,7 @@ export default function FieldsOutro({ active }) {
                 />
               </svg>
             </a>
-            <a className="fp-outro__cta fp-outro__cta--ghost" href="#/gioi-thieu">
+            <a className="fp-outro__cta fp-outro__cta--ghost" href="/gioi-thieu">
               <span>Giới thiệu công ty</span>
             </a>
           </div>

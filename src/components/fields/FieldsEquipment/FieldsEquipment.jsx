@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import FieldsEquipmentMap from './FieldsEquipmentMap'
 import './FieldsEquipment.css'
 
 const IconCrane = () => (
@@ -72,12 +73,6 @@ const EQUIPMENT = [
   { Icon: IconSlide,     name: 'Coffa trượt',        tag: 'Slip-form · 24/7' },
 ]
 
-const WAREHOUSES = [
-  { city: 'Hà Nội',  tag: 'Miền Bắc · HQ',  size: '12.000m²', pos: 'hn' },
-  { city: 'Đà Nẵng', tag: 'Miền Trung',     size: '6.000m²',  pos: 'dn' },
-  { city: 'TP.HCM',  tag: 'Miền Nam · HQ',  size: '18.000m²', pos: 'hcm' },
-]
-
 export default function FieldsEquipment({ active }) {
   const [mount, setMount] = useState(false)
   useEffect(() => {
@@ -133,22 +128,7 @@ export default function FieldsEquipment({ active }) {
             <span className="fp-eq__map-label">Hệ thống kho · 03 vùng</span>
             <span className="fp-eq__map-sum">36.000m² · sẵn sàng 24h</span>
           </div>
-          <div className="fp-eq__map-stripe">
-            {WAREHOUSES.map((w, i) => (
-              <div
-                key={w.pos}
-                className={`fp-eq__pin fp-eq__pin--${w.pos}`}
-                style={{ '--pi': i }}
-              >
-                <span className="fp-eq__pin-dot" aria-hidden />
-                <div className="fp-eq__pin-body">
-                  <span className="fp-eq__pin-name">{w.city}</span>
-                  <span className="fp-eq__pin-tag">{w.tag}</span>
-                  <span className="fp-eq__pin-size">{w.size}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FieldsEquipmentMap />
           <div className="fp-eq__map-foot">
             <span className="fp-eq__map-foot-k">24<span>h</span></span>
             <span className="fp-eq__map-foot-v">huy động toàn quốc</span>

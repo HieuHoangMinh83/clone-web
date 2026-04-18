@@ -458,7 +458,7 @@ function withDetail(article) {
 const FEATURED_BASE = {
   id: 'lumiere-evergreen-tong-thau-ngam',
   slug: 'lumiere-evergreen-tong-thau-ngam',
-  image: featuredMain,
+  image: c05,
   category: 'Tin dự án',
   date: '28/12/2024',
   author: 'Phòng Truyền thông Newtecons',
@@ -475,7 +475,7 @@ export const FEATURED_SUB = [
   {
     id: 'masteri-co-loa-khoi-cong',
     slug: 'masteri-co-loa-khoi-cong',
-    image: sub1,
+    image: c07,
     category: 'Tin dự án',
     date: '20/12/2024',
     author: 'Phòng Truyền thông Newtecons',
@@ -488,7 +488,7 @@ export const FEATURED_SUB = [
   {
     id: 'top10-nha-thau-uy-tin-2024',
     slug: 'top10-nha-thau-uy-tin-2024',
-    image: sub2,
+    image: c10,
     category: 'Giải thưởng',
     date: '12/12/2024',
     author: 'Phòng Truyền thông Newtecons',

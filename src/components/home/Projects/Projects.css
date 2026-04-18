@@ -263,7 +263,7 @@
 /* ====== Responsive ====== */
 @media (max-width: 1024px) {
   .projects__head {
-    padding: 40px 32px;
+    display: none;
   }
 
   .pcard__body {
@@ -276,18 +276,6 @@
     height: auto;
     min-height: 100vh;
     flex-direction: column;
-  }
-
-  .projects__head {
-    position: relative;
-    padding: 80px 24px 24px;
-    opacity: 1;
-    transform: none;
-  }
-
-  .projects__title {
-    text-shadow: none;
-    color: rgba(255, 255, 255, 0.5);
   }
 
   .projects__rail {
@@ -304,14 +292,22 @@
     flex: 3;
   }
 
-  .pcard__vlabel {
+  .pcard__vlabel,
+  .pcard:not(.is-active) .pcard__vlabel,
+  .pcard.is-active .pcard__vlabel {
     writing-mode: horizontal-tb;
-    transform: translateX(-50%);
-    bottom: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: auto;
+    left: auto;
+    bottom: 16px;
+    right: 20px;
+    transform: none;
     font-size: 14px;
+    text-align: right;
+    line-height: 1.25;
+  }
+
+  .pcard.is-active .pcard__vlabel {
+    opacity: 0;
   }
 
   .pcard__title {

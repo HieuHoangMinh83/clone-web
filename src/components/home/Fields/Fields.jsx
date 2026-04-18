@@ -219,7 +219,7 @@ export default function Fields() {
                 onMouseMove={onCardMove}
                 onMouseLeave={onCardLeave}
               >
-                <a className="fcard__hit" href={`#/linh-vuc`} aria-label={f.name}>
+                <a className="fcard__hit" href={`/linh-vuc`} aria-label={f.name}>
                   <div className="fcard__media" aria-hidden>
                     <img className="fcard__img" src={f.img} alt="" loading="lazy" />
                     <span className="fcard__tint" />

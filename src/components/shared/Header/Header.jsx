@@ -2,27 +2,27 @@ import { useEffect, useRef, useState } from 'react'
 import './Header.css'
 
 const LINKS = [
-  { key: 'home', href: '#/', label: 'Trang chủ' },
-  { key: 'intro', href: '#/gioi-thieu', label: 'Giới thiệu' },
-  { key: 'fields', href: '#/linh-vuc', label: 'Lĩnh vực hoạt động' },
-  { key: 'projects', href: '#/du-an', label: 'Dự án' },
-  { key: 'news', href: '#/tin-tuc', label: 'Tin tức' },
-  { key: 'recruit', href: '#/tuyen-dung', label: 'Tuyển dụng' },
-  { key: 'contact', href: '#/lien-he', label: 'Liên hệ' },
-  { key: 'news-builder', href: '#/tin-tuc-builder', label: 'Thiết kế tin tức' },
-  { key: 'component-library', href: '#/thu-vien-component', label: 'Thư viện Component' },
+  { key: 'home', href: '/', label: 'Trang chủ' },
+  { key: 'intro', href: '/gioi-thieu', label: 'Giới thiệu' },
+  { key: 'fields', href: '/linh-vuc', label: 'Lĩnh vực hoạt động' },
+  { key: 'projects', href: '/du-an', label: 'Dự án' },
+  { key: 'news', href: '/tin-tuc', label: 'Tin tức' },
+  { key: 'recruit', href: '/tuyen-dung', label: 'Tuyển dụng' },
+  { key: 'contact', href: '/lien-he', label: 'Liên hệ' },
+  { key: 'news-builder', href: '/tin-tuc-builder', label: 'Thiết kế tin tức' },
+  { key: 'component-library', href: '/thu-vien-component', label: 'Thư viện Component' },
 ]
 
 function getRouteKey() {
-  const h = (typeof window !== 'undefined' ? window.location.hash : '') || ''
-  if (h.startsWith('#/gioi-thieu')) return 'intro'
-  if (h.startsWith('#/linh-vuc')) return 'fields'
-  if (h.startsWith('#/du-an')) return 'projects'
-  if (h.startsWith('#/tin-tuc-builder')) return 'news-builder'
-  if (h.startsWith('#/tin-tuc')) return 'news'
-  if (h.startsWith('#/tuyen-dung')) return 'recruit'
-  if (h.startsWith('#/lien-he')) return 'contact'
-  if (h.startsWith('#/thu-vien-component')) return 'component-library'
+  const h = (typeof window !== 'undefined' ? window.location.pathname : '') || '/'
+  if (h.startsWith('/gioi-thieu')) return 'intro'
+  if (h.startsWith('/linh-vuc')) return 'fields'
+  if (h.startsWith('/du-an')) return 'projects'
+  if (h.startsWith('/tin-tuc-builder')) return 'news-builder'
+  if (h.startsWith('/tin-tuc')) return 'news'
+  if (h.startsWith('/tuyen-dung')) return 'recruit'
+  if (h.startsWith('/lien-he')) return 'contact'
+  if (h.startsWith('/thu-vien-component')) return 'component-library'
   return 'home'
 }
 
@@ -40,12 +40,12 @@ export default function Header({ variant = 'default', navStyle }) {
   const drawerRef = useRef(null)
 
   useEffect(() => {
-    const onHash = () => {
+    const onPop = () => {
       setActiveKey(getRouteKey())
       setOpen(false)
     }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Header({ variant = 'default', navStyle }) {
     <>
       <header className={`nav nav--${variant}`} style={navStyle}>
         <div className="nav__inner">
-          <a href="#/" className="nav__logo" aria-label="Trang chủ">
+          <a href="/" className="nav__logo" aria-label="Trang chủ">
             <span className="nav__logo-mark">
               <svg className="nav__logo-n" viewBox="0 0 145.8 175" aria-hidden>
                 <defs>

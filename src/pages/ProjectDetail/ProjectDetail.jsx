@@ -38,7 +38,7 @@ function NotFound() {
           <p className="pd__empty-kicker">404</p>
           <h1>Không tìm thấy dự án</h1>
           <p>Đường dẫn không tồn tại hoặc dự án đã được gỡ.</p>
-          <a className="pd__empty-btn" href="#/du-an">Về trang Dự án</a>
+          <a className="pd__empty-btn" href="/du-an">Về trang Dự án</a>
         </div>
       </main>
     </>
@@ -68,7 +68,7 @@ export default function ProjectDetail({ slug }) {
           </div>
           <div className="pd-container pd-hero__container">
             <nav className="pd-hero__crumb" aria-label="breadcrumb">
-              <a href="#/du-an">Dự án</a>
+              <a href="/du-an">Dự án</a>
               <span className="pd-hero__crumb-sep" aria-hidden>·</span>
               <span className="pd-hero__crumb-cat">{project.categoryLabel}</span>
             </nav>
@@ -150,7 +150,7 @@ export default function ProjectDetail({ slug }) {
                   chuẩn quốc tế, đồng thời giữ vững tiến độ cam kết.
                 </p>
               </div>
-              <a className="pd-over__back" href="#/du-an">
+              <a className="pd-over__back" href="/du-an">
                 <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M19 5H1m0 0l4-4M1 5l4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -253,7 +253,7 @@ export default function ProjectDetail({ slug }) {
                 <a
                   key={r.slug}
                   className="pd-rel__card"
-                  href={`#/du-an/${r.slug}`}
+                  href={`/du-an/${r.slug}`}
                   style={{ '--i': i }}
                 >
                   <div className="pd-rel__media">

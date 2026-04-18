@@ -199,98 +199,93 @@
   letter-spacing: 0;
 }
 
-.fp-eq__map-stripe {
+.fp-eq__mapviz {
   position: relative;
   flex: 1;
-  width: 2px;
-  margin: 0 auto;
-  background: linear-gradient(180deg, transparent, rgba(221,169,105,0.5) 12%, rgba(221,169,105,0.5) 88%, transparent);
+  align-self: center;
+  height: 100%;
+  aspect-ratio: 707 / 800;
+  display: grid;
+  place-items: center;
 }
-.fp-eq__map-stripe::before,
-.fp-eq__map-stripe::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 1px;
-  background: rgba(221, 169, 105, 0.5);
-  left: 50%;
-  transform: translateX(-50%);
+.fp-eq__mapviz-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
 }
-.fp-eq__map-stripe::before { top: 12%; }
-.fp-eq__map-stripe::after { bottom: 12%; }
+.fp-eq__mapviz-paths {
+  filter: drop-shadow(0 0 24px rgba(36, 86, 146, 0.25));
+}
+
+.fp-eq__province {
+  fill: rgba(255, 255, 255, 0.035);
+  stroke: rgba(255, 255, 255, 0.10);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: fill .4s ease;
+}
+.fp-eq__province.is-active {
+  fill: rgba(221, 169, 105, 0.20);
+  stroke: rgba(221, 169, 105, 0.55);
+  stroke-width: 0.8;
+}
+.fp-eq__island {
+  fill: rgba(255, 255, 255, 0.55);
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
 
 .fp-eq__pin {
   --pi: 0;
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 14px;
   opacity: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 .fp-eq.is-in .fp-eq__pin {
   animation: fade-in .8s ease both;
   animation-delay: calc(1.8s + var(--pi) * 0.18s);
 }
-.fp-eq__pin--hn  { top: 12%; flex-direction: row-reverse; }
-.fp-eq__pin--dn  { top: 50%; }
-.fp-eq__pin--hcm { top: 88%; flex-direction: row-reverse; }
+/* Đẩy label ra xa centroid để không che hình tỉnh */
+.fp-eq__pin--hn  { transform: translate(28px, -50%); }
+.fp-eq__pin--dn,
+.fp-eq__pin--hcm { transform: translate(calc(-100% - 28px), -50%); }
 
-.fp-eq__pin-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--gold-500);
-  box-shadow: 0 0 0 4px rgba(221, 169, 105, 0.18), 0 0 16px rgba(221, 169, 105, 0.6);
-  flex-shrink: 0;
-  position: relative;
-}
-.fp-eq__pin-dot::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid rgba(221, 169, 105, 0.4);
-  animation: fp-eq-pulse 2.4s ease-in-out infinite;
-}
-@keyframes fp-eq-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.6); opacity: 0; }
-}
-
-.fp-eq__pin-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  white-space: nowrap;
-}
-.fp-eq__pin--hn .fp-eq__pin-body,
-.fp-eq__pin--hcm .fp-eq__pin-body {
-  text-align: right;
-}
-.fp-eq__pin-name {
+.fp-eq__pin .fp-eq__pin-name {
   font-family: var(--fp-display);
   font-style: italic;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #fff;
   line-height: 1;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  position: relative;
 }
-.fp-eq__pin-tag {
-  font-family: var(--fp-mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  color: var(--fp-ink-dim);
-  text-transform: uppercase;
+/* Gạch nhỏ nối từ tỉnh đến nhãn */
+.fp-eq__pin--hn .fp-eq__pin-name::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 22px;
+  height: 1px;
+  background: rgba(221, 169, 105, 0.55);
 }
-.fp-eq__pin-size {
-  font-family: var(--fp-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--gold-500);
-  margin-top: 2px;
+.fp-eq__pin--dn .fp-eq__pin-name::after,
+.fp-eq__pin--hcm .fp-eq__pin-name::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  width: 22px;
+  height: 1px;
+  background: rgba(221, 169, 105, 0.55);
 }
 
 .fp-eq__map-foot {
@@ -333,20 +328,11 @@
 @media (max-width: 1100px) {
   .fp-eq__inner { grid-template-columns: 1fr; gap: 28px; padding: calc(var(--header-h) + 16px) 28px 28px; }
   .fp-eq__list { grid-template-columns: repeat(2, 1fr); }
-  .fp-eq__map { height: 280px; }
-  .fp-eq__map-stripe {
-    width: auto; height: 2px; align-self: center; flex: none; width: 80%;
-    background: linear-gradient(90deg, transparent, rgba(221,169,105,0.5) 12%, rgba(221,169,105,0.5) 88%, transparent);
-    margin: auto 0;
-  }
-  .fp-eq__map-stripe::before, .fp-eq__map-stripe::after { width: 1px; height: 12px; left: auto; transform: none; top: 50%; margin-top: -6px; }
-  .fp-eq__map-stripe::before { left: 12%; bottom: auto; top: 50%; transform: translateY(-50%); }
-  .fp-eq__map-stripe::after  { right: 12%; left: auto; bottom: auto; top: 50%; transform: translateY(-50%); }
-  .fp-eq__pin { top: 50% !important; transform: translate(-50%, -50%); flex-direction: column !important; gap: 6px; }
-  .fp-eq__pin--hn  { left: 12%; }
-  .fp-eq__pin--dn  { left: 50%; }
-  .fp-eq__pin--hcm { left: 88%; }
-  .fp-eq__pin--hn .fp-eq__pin-body, .fp-eq__pin--hcm .fp-eq__pin-body { text-align: center; }
+  .fp-eq__map { height: 420px; }
+  .fp-eq__pin { gap: 8px; }
+  .fp-eq__pin-name { font-size: 15px; }
+  .fp-eq__pin-tag { font-size: 9px; }
+  .fp-eq__pin-size { font-size: 10px; }
 }
 @media (max-width: 720px) {
   .fp-eq__inner { padding-left: 20px; padding-right: 20px; }

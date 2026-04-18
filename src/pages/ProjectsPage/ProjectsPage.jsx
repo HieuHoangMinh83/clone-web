@@ -32,11 +32,11 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <Header variant="transparent" />
+      <Header variant="default" />
       <main className="prj-page">
         <ProjectsBanner />
-        <ProjectsPartners />
         <ProjectsSpotlight />
+        <ProjectsPartners />
         <ProjectsGrid />
         <ProjectsMilestones />
         <ProjectsCTA />

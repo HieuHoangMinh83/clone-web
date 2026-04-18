@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import SearchFilter from '../../components/shared/SearchFilter/SearchFilter.jsx'
 import { CATEGORIES, COMPONENTS } from './registry.jsx'
 import './ComponentLibrary.css'
 
@@ -43,46 +44,54 @@ export default function ComponentLibrary() {
 // ============================================================
 function LibraryView({ setActiveId }) {
   const [category, setCategory] = useState('all')
+  const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
 
+  const filterTabs = useMemo(
+    () =>
+      CATEGORIES.map((c) => {
+        const count =
+          c.id === 'all'
+            ? COMPONENTS.length
+            : COMPONENTS.filter((x) => x.category === c.id).length
+        return { key: c.id, label: `${c.label} · ${count}` }
+      }),
+    [],
+  )
+
   const filtered = useMemo(() => {
-    if (category === 'all') return COMPONENTS
-    return COMPONENTS.filter((c) => c.category === category)
-  }, [category])
+    const q = query.trim().toLowerCase()
+    return COMPONENTS.filter((c) => {
+      if (category !== 'all' && c.category !== category) return false
+      if (q) {
+        const hay = `${c.name} ${c.tag} ${c.subtitle || ''} ${c.desc || ''}`.toLowerCase()
+        if (!hay.includes(q)) return false
+      }
+      return true
+    })
+  }, [category, query])
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const visible = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
-  // reset page khi đổi category
+  // reset page khi đổi category / query
   useEffect(() => {
     setPage(0)
-  }, [category])
+  }, [category, query])
 
   return (
     <div className="cl">
       <header className="cl__bar">
-        <a className="cl__back" href="#/" title="Về trang chủ">←</a>
-        <nav className="cl__tabs" aria-label="Danh mục">
-          {CATEGORIES.map((c) => {
-            const count =
-              c.id === 'all'
-                ? COMPONENTS.length
-                : COMPONENTS.filter((x) => x.category === c.id).length
-            return (
-              <button
-                key={c.id}
-                type="button"
-                className={`cl__tab ${category === c.id ? 'is-active' : ''}`}
-                onClick={() => setCategory(c.id)}
-              >
-                {c.label}
-                <span className="cl__tab-count">{count}</span>
-              </button>
-            )
-          })}
-        </nav>
-        <span className="cl__count" title={`${COMPONENTS.length} components`}>
-          {COMPONENTS.length}
-        </span>
+        <div className="cl__bar-filter">
+          <SearchFilter
+            query={query}
+            onQueryChange={setQuery}
+            searchPlaceholder="Tìm theo tên, tag, mô tả…"
+            tabValue={category}
+            onTabChange={setCategory}
+            tabs={filterTabs}
+            tabsAriaLabel="Danh mục"
+          />
+        </div>
       </header>
 
       <main className="cl__grid" key={`${category}-${page}`}>

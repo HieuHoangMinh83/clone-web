@@ -552,3 +552,107 @@
 @media (prefers-reduced-motion: reduce) {
   .about *, .tile * { animation: none !important; transition-duration: .01ms !important; }
 }
+
+/* ================================================================
+   RESPONSIVE
+   - 1024px–1199px (tablet landscape / small desktop): vẫn 2 cột,
+     text rộng hơn, 2 tiles bên phải nhỏ lại
+   - 768px–1023px (tablet portrait): 1 cột stack
+   - < 768px (mobile): 1 cột + tiles stack
+   ================================================================ */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .about__grid {
+    grid-template-columns: 1.5fr 480px;
+  }
+  .about__intro {
+    padding: 100px 40px 60px clamp(40px, 5vw, 64px);
+    max-width: 100%;
+  }
+  .about__title {
+    font-size: clamp(30px, 4vw, 48px);
+  }
+  .about__body {
+    max-width: 540px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .about__tag {
+    max-width: 540px;
+    font-size: 15px;
+  }
+  .about__glyph {
+    width: 180px;
+    height: 200px;
+  }
+  .tile {
+    padding: 32px 18px 24px;
+  }
+  .tile__title-top { font-size: 14px; }
+  .tile__title-bot { font-size: 22px; }
+}
+
+@media (max-width: 1023px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+  }
+  .about__intro {
+    padding: clamp(80px, 12vh, 120px) clamp(24px, 4vw, 48px) clamp(20px, 3vh, 32px);
+    max-width: 100%;
+    min-height: 0;
+  }
+  .about__title {
+    font-size: clamp(30px, 5.4vw, 46px);
+  }
+  .about__title-brand {
+    /* Khi viewport hẹp, chữ NEWTECONS có thể wrap — cho phép nó co lại */
+    letter-spacing: -0.02em;
+  }
+  .about__body {
+    max-width: 100%;
+    font-size: clamp(13px, 1.8vw, 15px);
+    line-height: 1.6;
+  }
+  .about__tag {
+    max-width: 100%;
+    font-size: clamp(13px, 1.7vw, 16px);
+  }
+  .about__glyph {
+    width: 160px;
+    height: 180px;
+    top: -20px;
+    left: -30px;
+  }
+  .about__tiles {
+    grid-template-columns: 1fr 1fr;
+    min-height: clamp(180px, 28vh, 260px);
+  }
+  .tile {
+    padding: 24px 16px 20px;
+    min-height: 0;
+  }
+  .tile__title-top { font-size: 13px; }
+  .tile__title-bot { font-size: 18px; }
+  .tile__cta { font-size: 10px; }
+}
+
+@media (max-width: 639px) {
+  .about__intro {
+    padding: 72px 20px 20px;
+  }
+  .about__title {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+  .about__glyph {
+    display: none;
+  }
+  .about__tiles {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .tile {
+    min-height: 140px;
+    padding: 18px;
+  }
+}

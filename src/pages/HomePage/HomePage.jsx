@@ -44,12 +44,44 @@ const NAV_TRANSPARENT = [
 ]
 
 const TRANSITION_MS = 900
+const SLIDE_BREAKPOINT = '(min-width: 768px)' // tablet trở lên dùng slide
 
 export default function HomePage() {
   const total = SECTION_LABELS.length
   const [index, setIndex] = useState(0)
+  // Slide mode chỉ bật khi viewport >= tablet. Mobile dùng scroll thường.
+  const [isSlide, setIsSlide] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.matchMedia(SLIDE_BREAKPOINT).matches
+  })
   const lockRef = useRef(false)
   const indexRef = useRef(0)
+
+  // Theo dõi resize → switch slide/scroll mode
+  useEffect(() => {
+    const mq = window.matchMedia(SLIDE_BREAKPOINT)
+    const handler = (e) => {
+      setIsSlide(e.matches)
+      if (!e.matches) {
+        // Reset index khi xuống mobile để tránh state stale
+        indexRef.current = 0
+        setIndex(0)
+      }
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  // Toggle body class — bật scroll thường khi không phải slide mode
+  useEffect(() => {
+    if (isSlide) return
+    document.body.classList.add('is-scroll-page')
+    document.documentElement.classList.add('is-scroll-page')
+    return () => {
+      document.body.classList.remove('is-scroll-page')
+      document.documentElement.classList.remove('is-scroll-page')
+    }
+  }, [isSlide])
 
   const goTo = useCallback(
     (target) => {
@@ -65,7 +97,10 @@ export default function HomePage() {
     [total],
   )
 
+  // Wheel / key / touch handlers — chỉ attach khi slide mode
   useEffect(() => {
+    if (!isSlide) return
+
     const onWheel = (e) => {
       e.preventDefault()
       if (lockRef.current) return
@@ -112,14 +147,14 @@ export default function HomePage() {
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [goTo, total])
+  }, [isSlide, goTo, total])
 
   return (
     <>
       <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
       <div
-        className="fullpage"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
+        className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
+        style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
         <Hero />
         <About />
@@ -129,13 +164,15 @@ export default function HomePage() {
         <NewsFeatured />
         <Contact />
       </div>
-      <SectionIndicator
-        current={index}
-        total={total}
-        onNav={goTo}
-        labels={SECTION_LABELS}
-        tone={SECTION_TONES[index]}
-      />
+      {isSlide && (
+        <SectionIndicator
+          current={index}
+          total={total}
+          onNav={goTo}
+          labels={SECTION_LABELS}
+          tone={SECTION_TONES[index]}
+        />
+      )}
     </>
   )
 }

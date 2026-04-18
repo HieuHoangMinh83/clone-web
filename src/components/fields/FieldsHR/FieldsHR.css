@@ -48,10 +48,11 @@
   height: 100%;
   max-width: 1320px;
   margin: 0 auto;
-  padding: calc(var(--header-h) + 12px) 56px 36px;
+  padding: calc(var(--header-h) + 8px) 56px 16vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 28px;
+  grid-template-rows: auto auto 1fr;
+  gap: 20px;
+  align-content: start;
 }
 
 /* ---------- TOP: Kicker + display title ---------- */
@@ -85,7 +86,7 @@
 
 .fp-hr__award {
   position: relative;
-  width: clamp(200px, 19vw, 280px);
+  width: clamp(170px, 15vw, 230px);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
@@ -276,7 +277,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  padding-top: 26px;
+  padding-top: 14px;
   border-top: 1px solid var(--fp-line-light);
 }
 .fp-hr__stat {

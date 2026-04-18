@@ -69,10 +69,6 @@ export default function FieldsHR({ active }) {
 
       <div className="fp-hr__inner">
         <header className="fp-hr__head">
-          <span className="fp-kicker fp-hr__kicker">
-            <span className="fp-kicker__rule" />
-            06 — Nguồn nhân lực
-          </span>
           <h2 className="fp-display fp-hr__title">
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Nơi tài năng</span></span>
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}><em>bám rễ</em>.</span></span>

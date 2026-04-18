@@ -16,6 +16,8 @@ import Header from '../../components/shared/Header/Header.jsx'
 import LogoMark from '../../components/shared/LogoMark/LogoMark.jsx'
 import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
+import { PaginationDemo } from '../../components/shared/Pagination/Pagination.jsx'
+import { SearchFilterDemo } from '../../components/shared/SearchFilter/SearchFilter.jsx'
 
 // NewsDetail blocks
 import NewsHero from '../../components/shared/NewsDetail/NewsHero/NewsHero.jsx'
@@ -230,6 +232,26 @@ export const COMPONENTS = [
       </div>
     ),
   },
+  {
+    id: 'pagination',
+    category: 'shared',
+    name: 'Pagination',
+    subtitle: 'Phân trang · 1 dòng tối giản',
+    desc: 'Component phân trang gọn một dòng: mũi tên tròn 2 đầu + số có ellipsis thông minh, gạch vàng dưới số active. Props: current, total, onChange, siblings, tone (light/dark).',
+    tag: 'Pagination',
+    path: 'src/components/shared/Pagination/',
+    render: () => <PaginationDemo />,
+  },
+  {
+    id: 'search-filter',
+    category: 'shared',
+    name: 'SearchFilter',
+    subtitle: 'Ô tìm kiếm · Tab danh mục · Dropdown phụ',
+    desc: 'Bộ lọc chuẩn dùng chung cho mọi trang có danh sách: ô search + dải tab + dropdown bên phải. Tabs và dropdown tuỳ chọn — truyền gì thì hiện nấy. Props: query/onQueryChange, searchPlaceholder, tabs/tabValue/onTabChange, selectOptions/selectValue/onSelectChange, active.',
+    tag: 'SearchFilter',
+    path: 'src/components/shared/SearchFilter/',
+    render: () => <SearchFilterDemo />,
+  },
 
   // =========== NEWS DETAIL ===========
   {
@@ -245,9 +267,9 @@ export const COMPONENTS = [
         article={article}
         crumb={
           <>
-            <a href="#/">Trang chủ</a>
+            <a href="/">Trang chủ</a>
             <span className="sep" aria-hidden>/</span>
-            <a href="#/tin-tuc">Tin tức</a>
+            <a href="/tin-tuc">Tin tức</a>
             <span className="sep" aria-hidden>/</span>
             <span className="current">{article.category}</span>
           </>

@@ -10,7 +10,7 @@ export default function ProjectsCTA() {
             <span>Sẵn sàng đồng hành</span>
           </span>
           <h2 id="prj-cta-title" className="prj-cta__title">
-            Bạn đang tìm Tổng thầu cho <em>dự án kế tiếp?</em>
+            Bạn đang tìm thầu cho <em>dự án kế tiếp?</em>
           </h2>
           <p className="prj-cta__lead">
             Đội ngũ Newtecons sẵn sàng lắng nghe ý tưởng của Chủ đầu tư và
@@ -19,13 +19,13 @@ export default function ProjectsCTA() {
           </p>
         </div>
         <div className="prj-cta__actions">
-          <a className="prj-cta__btn" href="#/lien-he">
+          <a className="prj-cta__btn" href="/lien-he">
             <span>Liên hệ tư vấn</span>
             <svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden>
               <path d="M1 6h19m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
           </a>
-          <a className="prj-cta__btn prj-cta__btn--ghost" href="#/gioi-thieu">
+          <a className="prj-cta__btn prj-cta__btn--ghost" href="/gioi-thieu">
             <span>Hồ sơ năng lực</span>
             <svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden>
               <path d="M1 6h19m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />

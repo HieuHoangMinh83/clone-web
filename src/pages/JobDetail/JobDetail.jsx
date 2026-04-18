@@ -44,7 +44,7 @@ export default function JobDetail({ jobId }) {
               Vui lòng quay lại danh sách tuyển dụng hoặc gửi CV tự do cho HR.
             </p>
             <div className="jd-missing__ctas">
-              <a href="#/tuyen-dung" className="jd-btn jd-btn--primary">
+              <a href="/tuyen-dung" className="jd-btn jd-btn--primary">
                 <span>Về danh sách vị trí</span>
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
                   <path d="M1 5h11m0 0L8 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -80,9 +80,9 @@ export default function JobDetail({ jobId }) {
           <span className="jd-hero__glow" aria-hidden />
           <div className="jd-hero__inner">
             <nav className="jd-crumb" aria-label="breadcrumb">
-              <a href="#/">Trang chủ</a>
+              <a href="/">Trang chủ</a>
               <span className="jd-crumb__sep">/</span>
-              <a href="#/tuyen-dung">Tuyển dụng</a>
+              <a href="/tuyen-dung">Tuyển dụng</a>
               <span className="jd-crumb__sep">/</span>
               <strong>{job.deptLabel}</strong>
             </nav>
@@ -169,7 +169,7 @@ export default function JobDetail({ jobId }) {
                   <path d="M1 5h11m0 0L8 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
-              <a href="#/tuyen-dung" className="jd-btn jd-btn--ghost">
+              <a href="/tuyen-dung" className="jd-btn jd-btn--ghost">
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
                   <path d="M13 5H2m0 0l4-4m-4 4l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -283,7 +283,7 @@ export default function JobDetail({ jobId }) {
                   <ul className="jd-related">
                     {related.map((r) => (
                       <li key={r.id}>
-                        <a href={`#/tuyen-dung/${r.id}`} className="jd-related__item">
+                        <a href={`/tuyen-dung/${r.id}`} className="jd-related__item">
                           <span className="jd-related__title">{r.title}</span>
                           <span className="jd-related__meta">
                             {r.locationLabel} · {r.exp}
@@ -318,7 +318,7 @@ export default function JobDetail({ jobId }) {
                   <path d="M1 5h11m0 0L8 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
-              <a href="#/tuyen-dung" className="jd-btn jd-btn--ghost">
+              <a href="/tuyen-dung" className="jd-btn jd-btn--ghost">
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
                   <path d="M13 5H2m0 0l4-4m-4 4l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

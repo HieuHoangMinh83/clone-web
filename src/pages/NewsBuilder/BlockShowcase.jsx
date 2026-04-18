@@ -119,9 +119,9 @@ export default function BlockShowcase() {
             article={article}
             crumb={
               <>
-                <a href="#/">Trang chủ</a>
+                <a href="/">Trang chủ</a>
                 <span className="sep" aria-hidden>/</span>
-                <a href="#/tin-tuc">Tin tức</a>
+                <a href="/tin-tuc">Tin tức</a>
                 <span className="sep" aria-hidden>/</span>
                 <span className="current">{article.category}</span>
               </>
@@ -184,7 +184,7 @@ function LibraryView({ article, setActiveId, renderBlock }) {
     <div className="bs-lib">
       <header className="bs-lib__bar">
         <div className="bs-lib__bar-left">
-          <a className="bs-lib__back" href="#/tin-tuc-builder">← Trình thiết kế</a>
+          <a className="bs-lib__back" href="/tin-tuc-builder">← Trình thiết kế</a>
           <span className="bs-lib__bar-sep" aria-hidden />
           <span className="bs-lib__bar-title">Thư viện khối · Tin tức</span>
         </div>

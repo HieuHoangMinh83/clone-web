@@ -161,8 +161,13 @@
 .ach__word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(28px) translateZ(0);
   filter: blur(5px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: flat;
+  transform-style: flat;
+  will-change: transform, opacity, filter;
 }
 
 .ach.is-in .ach__word {
@@ -173,7 +178,7 @@
 @keyframes achWordReveal {
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
     filter: blur(0);
   }
 }

@@ -15,7 +15,7 @@ import ComponentLibrary from './pages/ComponentLibrary/ComponentLibrary.jsx'
 import LogoDemo from './pages/LogoDemo.jsx'
 
 function parseRoute() {
-  const h = window.location.hash.replace(/^#/, '') || '/'
+  const h = window.location.pathname || '/'
   if (h.startsWith('/gioi-thieu')) return { name: 'intro' }
   if (h.startsWith('/linh-vuc')) return { name: 'fields' }
   if (h.startsWith('/du-an/')) {
@@ -45,9 +45,35 @@ export default function App() {
   const [route, setRoute] = useState(parseRoute)
 
   useEffect(() => {
-    const onHash = () => setRoute(parseRoute())
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    const onPop = () => setRoute(parseRoute())
+    window.addEventListener('popstate', onPop)
+
+    // Intercept clicks on internal <a href="/..."> và dùng history.pushState
+    // thay cho full page reload — cho phép SPA mà không cần # trong URL.
+    const onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0) return
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      const a = e.target.closest('a')
+      if (!a) return
+      const href = a.getAttribute('href')
+      if (!href) return
+      if (a.target && a.target !== '_self') return
+      if (a.hasAttribute('download')) return
+      // Chỉ handle link nội bộ dạng "/..." (không phải "//..." external, không phải "#...")
+      if (!href.startsWith('/') || href.startsWith('//')) return
+      e.preventDefault()
+      if (href !== window.location.pathname + window.location.search + window.location.hash) {
+        window.history.pushState({}, '', href)
+        setRoute(parseRoute())
+        window.scrollTo(0, 0)
+      }
+    }
+    document.addEventListener('click', onClick)
+
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      document.removeEventListener('click', onClick)
+    }
   }, [])
 
   if (route.name === 'intro') return <IntroPage />

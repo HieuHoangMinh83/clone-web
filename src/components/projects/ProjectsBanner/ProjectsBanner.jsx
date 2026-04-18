@@ -51,10 +51,7 @@ export default function ProjectsBanner() {
 
       <div className="prj-container prj-hero__container">
         <div className="prj-hero__main">
-          <span className="prj-hero__kicker">
-            <span className="prj-hero__kicker-line" aria-hidden />
-            <span>Dự án · Công trình tiêu biểu</span>
-          </span>
+          
 
           <h1 className="prj-hero__heading">
             <span className="prj-hero__heading-mask">
@@ -64,11 +61,12 @@ export default function ProjectsBanner() {
               <span className="prj-hero__heading-row prj-hero__heading-row--2">
                 <em>định hình</em>
                 <span className="prj-hero__heading-amp"> &amp; </span>
+                <em>dấu ấn</em>
               </span>
             </span>
             <span className="prj-hero__heading-mask">
               <span className="prj-hero__heading-row prj-hero__heading-row--3">
-                <em>dấu ấn</em> một thời đại
+                 một thời đại
               </span>
             </span>
           </h1>
@@ -86,35 +84,45 @@ export default function ProjectsBanner() {
                 <path d="M1 5h15m0 0l-4-4m4 4l-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
             </a>
-            <a className="prj-hero__cta prj-hero__cta--ghost" href="#/lien-he">
+            <a className="prj-hero__cta prj-hero__cta--ghost" href="/lien-he">
               <span>Liên hệ hợp tác</span>
             </a>
           </div>
         </div>
 
-        <aside className="prj-hero__feature" aria-live="polite">
-          <div className="prj-hero__feature-head">
-            <span className="prj-hero__feature-n">
-              N°{String(idx + 1).padStart(2, '0')} / {String(FEATURED.length).padStart(2, '0')}
-            </span>
-            <span>{current.categoryLabel}</span>
+        <div className="prj-hero__feature-wrap">
+          <aside className="prj-hero__feature" aria-live="polite">
+            <div className="prj-hero__feature-head">
+
+            </div>
+            <h3 className="prj-hero__feature-title">
+              {current.title.split(' ').slice(0, -1).join(' ')}{' '}
+              <em>{current.title.split(' ').slice(-1)[0]}</em>
+            </h3>
+            <p className="prj-hero__feature-sub">{current.excerpt}</p>
+            <dl className="prj-hero__feature-meta">
+              <dt>Chủ đầu tư</dt>
+              <dd>{current.client}</dd>
+              <dt>Địa điểm</dt>
+              <dd>{current.location}</dd>
+              <dt>Quy mô</dt>
+              <dd>{current.scale}</dd>
+              <dt>Hoàn thành</dt>
+              <dd>{current.year}</dd>
+            </dl>
+          </aside>
+          <div className="prj-hero__feature-dots" role="tablist" aria-label="Chuyển dự án nổi bật">
+            {FEATURED.map((p, i) => (
+              <button
+                key={p.slug}
+                className={`prj-hero__feature-dot${i === idx ? ' is-active' : ''}`}
+                onClick={() => setIdx(i)}
+                aria-label={`Xem ${p.title}`}
+                aria-selected={i === idx}
+              />
+            ))}
           </div>
-          <h3 className="prj-hero__feature-title">
-            {current.title.split(' ').slice(0, -1).join(' ')}{' '}
-            <em>{current.title.split(' ').slice(-1)[0]}</em>
-          </h3>
-          <p className="prj-hero__feature-sub">{current.excerpt}</p>
-          <dl className="prj-hero__feature-meta">
-            <dt>Chủ đầu tư</dt>
-            <dd>{current.client}</dd>
-            <dt>Địa điểm</dt>
-            <dd>{current.location}</dd>
-            <dt>Quy mô</dt>
-            <dd>{current.scale}</dd>
-            <dt>Hoàn thành</dt>
-            <dd>{current.year}</dd>
-          </dl>
-        </aside>
+        </div>
 
         <div className="prj-hero__foot">
           <p className="prj-hero__foot-tagline">
@@ -136,22 +144,6 @@ export default function ProjectsBanner() {
         </div>
       </div>
 
-      <div className="prj-hero__dots" role="tablist" aria-label="Chuyển dự án nổi bật">
-        {FEATURED.map((p, i) => (
-          <button
-            key={p.slug}
-            className={`prj-hero__dot${i === idx ? ' is-active' : ''}`}
-            onClick={() => setIdx(i)}
-            aria-label={`Xem ${p.title}`}
-            aria-selected={i === idx}
-          />
-        ))}
-      </div>
-
-      <span className="prj-hero__scroll" aria-hidden>
-        <span>Scroll</span>
-        <span className="prj-hero__scroll-line" />
-      </span>
     </section>
   )
 }

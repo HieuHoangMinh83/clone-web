@@ -606,7 +606,7 @@
   letter-spacing: -0.018em;
   color: var(--navy-900);
   margin: 0;
-  max-width: 16ch;
+  white-space: nowrap;
 }
 .pd-rel__title em {
   font-family: var(--prj-serif);

@@ -74,7 +74,7 @@ export default function NewsGrid() {
             const dt = parseDate(p.date)
             return (
               <article key={p.slug} className="post-card" style={{ '--i': i }}>
-                <a className="post-card__link" href={`#/tin-tuc/${p.slug}`}>
+                <a className="post-card__link" href={`/tin-tuc/${p.slug}`}>
                   <div className="post-card__media">
                     <img src={p.image} alt={p.title} loading="lazy" />
                     <span className="post-card__shine" aria-hidden />

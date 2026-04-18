@@ -43,9 +43,7 @@ export default function ProjectsSpotlight() {
         </span>
 
         <div className="prj-spot__body">
-          <span className="prj-spot__n">
-            <em>N°</em>01
-          </span>
+         
           <div className="prj-spot__stack">
             <h2 id="prj-spot-title" className="prj-spot__title">
               <span className="prj-spot__title-mask">
@@ -85,7 +83,7 @@ export default function ProjectsSpotlight() {
               <dd>{SPOTLIGHT.year}</dd>
             </div>
           </dl>
-          <a className="prj-spot__cta" href={`#/du-an/${SPOTLIGHT.slug}`}>
+          <a className="prj-spot__cta" href={`/du-an/${SPOTLIGHT.slug}`}>
             <span>Khám phá dự án</span>
             <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden>
               <path d="M1 6h23m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

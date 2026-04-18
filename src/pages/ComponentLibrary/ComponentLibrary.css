@@ -30,102 +30,33 @@
 
 .cl__bar {
   flex-shrink: 0;
-  height: var(--cl-bar-h);
-  background: var(--cl-navy-900);
-  color: #fff;
+  min-height: var(--cl-bar-h);
+  background: #fff;
+  color: var(--cl-ink);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  gap: 8px;
+  padding: 6px clamp(12px, 2vw, 20px);
+  border-bottom: 1px solid var(--cl-border);
+  box-shadow: 0 2px 10px rgba(15, 25, 40, 0.05);
   z-index: 20;
 }
-.cl__back {
-  appearance: none;
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #fff;
-  border-radius: 7px;
-  font-size: 16px;
-  text-decoration: none;
-  flex-shrink: 0;
-  transition: background 0.15s, border-color 0.15s;
-}
-.cl__back:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.32);
-}
-.cl__count {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: var(--cl-gold);
-  padding: 4px 10px;
-  border: 1px solid rgba(198, 161, 91, 0.4);
-  border-radius: 6px;
-  font-variant-numeric: tabular-nums;
-  flex-shrink: 0;
-}
-
-/* Tabs — giờ nằm trong topbar */
-.cl__tabs {
+.cl__bar-filter {
   flex: 1;
   min-width: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: thin;
 }
-.cl__tabs::-webkit-scrollbar { height: 4px; }
-.cl__tabs::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 2px; }
-.cl__tab {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: rgba(255, 255, 255, 0.66);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
-  flex-shrink: 0;
+.cl__bar-filter .search-filter {
+  margin-bottom: 0;
+  box-shadow: none;
+  border-color: var(--cl-border);
+  padding: 4px;
 }
-.cl__tab:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+.cl__bar-filter .search-filter__search,
+.cl__bar-filter .search-filter__select {
+  padding: 6px 12px;
 }
-.cl__tab.is-active {
-  background: var(--cl-gold);
-  color: #1a1a1a;
-  font-weight: 700;
-}
-.cl__tab-count {
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
-  font-variant-numeric: tabular-nums;
-}
-.cl__tab.is-active .cl__tab-count {
-  background: rgba(26, 26, 26, 0.15);
-  color: #1a1a1a;
-}
+.cl__bar-filter .search-filter__select { padding-right: 28px; }
+.cl__bar-filter .search-filter__tab { padding: 6px 10px; }
 
 /* Grid
    Card ratios:
@@ -666,6 +597,5 @@
 }
 @media (max-width: 640px) {
   .cl__grid { grid-template-columns: 1fr; }
-  .cl__tabs { padding: 0 12px; }
   .cl-det__tag { display: none; }
 }

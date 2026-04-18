@@ -1,0 +1,111 @@
+/* ============================================================
+ * Pagination — minimal one-line pager
+ * Tone: light (default) · dark
+ * ============================================================ */
+
+.pg {
+  --pg-navy: #0a1938;
+  --pg-ink: #5b6574;
+  --pg-ink-dim: #8791a3;
+  --pg-gold: #c6a15b;
+  --pg-line: rgba(10, 25, 56, 0.14);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--pg-navy);
+  font-family: inherit;
+}
+
+.pg--dark {
+  --pg-navy: #ffffff;
+  --pg-ink: rgba(255, 255, 255, 0.65);
+  --pg-ink-dim: rgba(255, 255, 255, 0.4);
+  --pg-line: rgba(255, 255, 255, 0.18);
+}
+
+/* ---------- Arrows ---------- */
+.pg__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--pg-line);
+  background: transparent;
+  border-radius: 50%;
+  color: var(--pg-navy);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.pg__arrow:hover:not([disabled]) {
+  border-color: var(--pg-gold);
+  color: var(--pg-gold);
+}
+.pg__arrow[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ---------- Number list ---------- */
+.pg__list {
+  list-style: none;
+  margin: 0 4px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.pg__num {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  color: var(--pg-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: color .2s, background .2s;
+}
+.pg__num:hover:not(.is-active) {
+  color: var(--pg-navy);
+}
+.pg__num.is-active {
+  color: var(--pg-navy);
+  font-weight: 700;
+  position: relative;
+}
+.pg__num.is-active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 14px;
+  height: 2px;
+  background: var(--pg-gold);
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+/* ---------- Ellipsis ---------- */
+.pg__dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 34px;
+  color: var(--pg-ink-dim);
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+}
+
+@media (max-width: 479px) {
+  .pg__num { min-width: 30px; height: 30px; font-size: 12px; padding: 0 6px; }
+  .pg__arrow { width: 30px; height: 30px; }
+}
