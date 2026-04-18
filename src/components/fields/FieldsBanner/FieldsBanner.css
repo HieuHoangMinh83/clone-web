@@ -119,10 +119,11 @@
 }
 
 .fp-banner__title {
+  font-family: var(--fp-display);
   font-size: clamp(56px, 8vw, 120px);
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.018em;
   margin: 0;
   color: #fff;
 }
@@ -143,7 +144,7 @@
 
 .fp-banner__title-row--accent em {
   font-style: italic;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--gold-500);
 }
 
@@ -171,8 +172,10 @@
 @keyframes markGrow { to { width: 80px; } }
 
 .fp-banner__sub {
+  font-family: var(--fp-body);
   font-size: clamp(15px, 1.25vw, 18px);
-  line-height: 1.65;
+  line-height: 1.7;
+  font-weight: 300;
   color: rgba(255,255,255,0.82);
   max-width: 640px;
   margin: 0 auto 40px;

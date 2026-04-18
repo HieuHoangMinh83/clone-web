@@ -1,0 +1,361 @@
+/* ============================================================
+ * FieldsISO — Hệ thống quản lý
+ * Paper · 3 ISO medal cards · PDCA cycle · footer note
+ * ============================================================ */
+
+.fp-iso {
+  background: var(--fp-paper);
+  color: var(--fp-navy);
+}
+
+.fp-iso__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 20%, rgba(36, 86, 146, 0.10), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 15% 80%, rgba(221, 169, 105, 0.12), transparent 65%);
+}
+
+.fp-iso__grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(6, 18, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 18, 42, 0.04) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  opacity: 0;
+}
+.fp-iso.is-in .fp-iso__grid { animation: fade-in 1.4s ease .4s both; }
+
+.fp-iso__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 12px) 56px 32px;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  gap: 28px;
+  text-align: center;
+}
+
+/* Override marker for paper bg */
+.fp-iso .fp-marker {
+  -webkit-text-stroke: 1px rgba(6, 18, 42, 0.1);
+}
+.fp-iso .fp-crosshair { border-color: rgba(6, 18, 42, 0.18); }
+
+/* ---------- HEAD ---------- */
+.fp-iso__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.fp-iso__kicker {
+  color: #cb232b;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fp-iso.is-in .fp-iso__kicker { animation: fade-up .8s cubic-bezier(.2,.7,.2,1) .5s both; }
+.fp-iso.is-in .fp-iso__kicker .fp-kicker__rule { animation: lineGrow 1s ease .9s both; }
+
+.fp-iso__title {
+  color: var(--fp-navy);
+  font-size: clamp(34px, 4.2vw, 54px);
+}
+.fp-iso__title em {
+  color: var(--gold-500);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.fp-iso__lede {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(6, 18, 42, 0.65);
+  max-width: 580px;
+  margin: 4px auto 0;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fp-iso.is-in .fp-iso__lede { animation: fade-up .85s cubic-bezier(.2,.7,.2,1) 1.4s both; }
+
+/* ---------- CARDS GRID ---------- */
+.fp-iso__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fp-iso__card {
+  --i: 0;
+  --tone: var(--fp-navy);
+  position: relative;
+  padding: 28px 26px 24px;
+  background: #fff;
+  border: 1px solid rgba(6, 18, 42, 0.10);
+  text-align: left;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease, border-color .45s ease;
+  display: flex;
+  flex-direction: column;
+}
+.fp-iso.is-in .fp-iso__card {
+  animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay: calc(1.6s + var(--i) * 0.15s);
+}
+.fp-iso__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 56px rgba(6, 18, 42, 0.14);
+  border-color: var(--tone);
+}
+
+.fp-iso__card--navy  { --tone: rgba(36, 86, 146, 0.55); }
+.fp-iso__card--green { --tone: rgba(34, 139, 79, 0.55); }
+.fp-iso__card--red   { --tone: rgba(203, 35, 43, 0.55); }
+
+.fp-iso__card-corner {
+  position: absolute;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  border-top: 28px solid var(--gold-500);
+  border-left: 28px solid transparent;
+}
+
+/* Medal */
+.fp-iso__card-medal {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+}
+.fp-iso__card-medal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(221, 169, 105, 0.45);
+}
+.fp-iso__card-medal-ring--inner {
+  inset: 8%;
+  border: 1.5px dashed rgba(221, 169, 105, 0.7);
+  animation: fp-iso-spin 18s linear infinite;
+}
+@keyframes fp-iso-spin { to { transform: rotate(360deg); } }
+.fp-iso__card-medal::before {
+  content: '';
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(221,169,105,0.18), transparent 70%);
+  border: 1px solid rgba(221, 169, 105, 0.35);
+}
+.fp-iso__card-medal-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  line-height: 1;
+}
+.fp-iso__card-medal-iso {
+  font-family: var(--fp-display);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fp-navy);
+  letter-spacing: -0.02em;
+}
+.fp-iso__card-medal-num {
+  font-family: var(--fp-mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gold-500);
+  letter-spacing: -0.02em;
+}
+
+.fp-iso__card-year {
+  font-family: var(--fp-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  color: rgba(6, 18, 42, 0.55);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.fp-iso__card-name {
+  font-family: var(--fp-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fp-navy);
+  margin: 0 0 10px;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+
+.fp-iso__card-rule {
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--gold-500);
+  margin-bottom: 12px;
+  transition: width .4s cubic-bezier(.7,0,.2,1);
+}
+.fp-iso__card:hover .fp-iso__card-rule { width: 56px; }
+
+.fp-iso__card-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(6, 18, 42, 0.7);
+  margin: 0 0 18px;
+  font-weight: 300;
+  flex: 1;
+}
+
+.fp-iso__card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fp-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  color: rgba(6, 18, 42, 0.6);
+  text-transform: uppercase;
+}
+.fp-iso__card-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: #16a34a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.55);
+  animation: fp-iso-blink 2.4s ease-in-out infinite;
+}
+@keyframes fp-iso-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* ---------- PDCA cycle row ---------- */
+.fp-iso__pdca {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(6, 18, 42, 0.10);
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.fp-iso.is-in .fp-iso__pdca {
+  animation: fade-up .85s cubic-bezier(.2,.7,.2,1) 2.1s both;
+}
+.fp-iso__pdca-label {
+  font-family: var(--fp-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(6, 18, 42, 0.55);
+}
+.fp-iso__pdca-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.fp-iso__pdca-item {
+  --p: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px 0 0;
+  position: relative;
+}
+.fp-iso__pdca-item + .fp-iso__pdca-item {
+  padding-left: 18px;
+  border-left: 1px solid rgba(6, 18, 42, 0.10);
+}
+.fp-iso__pdca-k {
+  font-family: var(--fp-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--gold-500);
+}
+.fp-iso__pdca-text { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
+.fp-iso__pdca-l {
+  font-family: var(--fp-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fp-navy);
+}
+.fp-iso__pdca-d {
+  font-family: var(--fp-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: rgba(6, 18, 42, 0.55);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ---------- Footer note ---------- */
+.fp-iso__foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(6, 18, 42, 0.12);
+  font-family: var(--fp-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: rgba(6, 18, 42, 0.6);
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fp-iso.is-in .fp-iso__foot {
+  animation: fade-up .85s cubic-bezier(.2,.7,.2,1) 2.4s both;
+}
+.fp-iso__foot strong {
+  color: var(--fp-navy);
+  font-weight: 700;
+}
+.fp-iso__foot-dot { color: var(--gold-500); font-weight: 700; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .fp-iso__inner { padding: calc(var(--header-h) + 16px) 28px 24px; gap: 20px; }
+  .fp-iso__cards { grid-template-columns: 1fr; gap: 14px; max-width: 480px; }
+  .fp-iso__card { padding: 22px 22px 20px; }
+  .fp-iso__pdca { grid-template-columns: 1fr; gap: 14px; text-align: center; }
+  .fp-iso__pdca-list { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .fp-iso__pdca-item + .fp-iso__pdca-item { border-left: 0; padding-left: 0; }
+  .fp-iso__foot { flex-direction: column; gap: 8px; text-align: center; }
+}
+@media (max-width: 720px) {
+  .fp-iso__inner { padding-left: 20px; padding-right: 20px; }
+  .fp-iso__pdca-list { grid-template-columns: 1fr; }
+}

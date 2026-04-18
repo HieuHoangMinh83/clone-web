@@ -5,7 +5,7 @@ import About from '../../components/home/About/About.jsx'
 import Achievements from '../../components/home/Achievements/Achievements.jsx'
 import Fields from '../../components/home/Fields/Fields.jsx'
 import Projects from '../../components/home/Projects/Projects.jsx'
-import News from '../../components/home/News/News.jsx'
+import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 
@@ -13,7 +13,6 @@ const SECTION_LABELS = [
   'Banner',
   'Giới thiệu',
   'Thành tựu',
-  'Lĩnh vực',
   'Dự án',
   'Tin tức',
   'Liên hệ',
@@ -127,7 +126,7 @@ export default function HomePage() {
         <Achievements />
         {/* <Fields /> */}
         <Projects />
-        <News />
+        <NewsFeatured />
         <Contact />
       </div>
       <SectionIndicator

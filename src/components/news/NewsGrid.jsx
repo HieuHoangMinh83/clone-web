@@ -1,118 +1,154 @@
 import { useEffect, useMemo, useState } from 'react'
-import { NEWS_LIST } from './newsData.js'
+import { CATEGORIES, NEWS_LIST } from './newsData.js'
 
-const PER_PAGE = 6
+const PER_PAGE = 3
+
+function parseDate(s) {
+  const [d, m, y] = s.split('/')
+  return { d, m, y }
+}
 
 export default function NewsGrid() {
   const [page, setPage] = useState(1)
+  const [cat, setCat] = useState('all')
   const [mount, setMount] = useState(false)
-  const totalPages = Math.max(1, Math.ceil(NEWS_LIST.length / PER_PAGE))
 
   useEffect(() => {
     const r = requestAnimationFrame(() => setMount(true))
     return () => cancelAnimationFrame(r)
   }, [])
 
+  const filtered = useMemo(() => {
+    if (cat === 'all') return NEWS_LIST
+    return NEWS_LIST.filter((p) => p.category === cat)
+  }, [cat])
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE))
+  const currentPage = Math.min(page, totalPages)
+
   const items = useMemo(() => {
-    const start = (page - 1) * PER_PAGE
-    return NEWS_LIST.slice(start, start + PER_PAGE)
-  }, [page])
+    const start = (currentPage - 1) * PER_PAGE
+    return filtered.slice(start, start + PER_PAGE)
+  }, [filtered, currentPage])
+
+  const onCat = (key) => {
+    setCat(key)
+    setPage(1)
+  }
 
   return (
     <section className={`news-sec news-grid-sec ${mount ? 'is-in' : ''}`}>
       <div className="news-grid__bg" aria-hidden>
         <span className="news-grid__bg-grid" />
-        <span className="news-grid__bg-watermark">N</span>
+        <span className="news-grid__bg-watermark">Newsroom</span>
       </div>
 
-      <div className="news-container">
+      <div className="news-container news-grid__container">
         <header className="news-grid__head">
           <div className="news-grid__head-left">
-            <span className="news-grid__eyebrow">
-              <span className="news-grid__eyebrow-line" />
-              TẤT CẢ BÀI VIẾT
-            </span>
+            
             <h2 className="news-grid__heading">
-              <span>Bản tin</span> <strong>Newtecons</strong>
+              Tin tức <em>Newtecons</em>
             </h2>
           </div>
-          <div className="news-grid__meta">
-            <span className="news-grid__meta-k">{NEWS_LIST.length.toString().padStart(2, '0')}</span>
-            <span className="news-grid__meta-v">
-              bài viết · Trang {page.toString().padStart(2, '0')}/{totalPages.toString().padStart(2, '0')}
-            </span>
+          <div className="news-grid__tools">
+            <div className="news-grid__filters" role="tablist">
+              {CATEGORIES.map((c, i) => (
+                <button
+                  key={c.key}
+                  className={`news-grid__filter${cat === c.key ? ' is-active' : ''}`}
+                  style={{ '--i': i }}
+                  onClick={() => onCat(c.key)}
+                  role="tab"
+                  aria-selected={cat === c.key}
+                >
+                  <span>{c.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 
         <div className="news-grid__list">
-          {items.map((p, i) => (
-            <article key={p.title} className="post-card" style={{ '--i': i }}>
-              <a className="post-card__link" href="#">
-                <div className="post-card__media">
-                  <img src={p.image} alt={p.title} loading="lazy" />
-                  <span className="post-card__scrim" />
-                  <span className="post-card__date">
-                    <span className="post-card__day">{p.date.split('/')[0]}</span>
-                    <span className="post-card__ym">
-                      {p.date.split('/')[1]}/{p.date.split('/')[2]}
-                    </span>
-                  </span>
-                </div>
-                <div className="post-card__body">
-                  <h3 className="post-card__title">{p.title}</h3>
-                  <span className="post-card__more">
-                    Đọc tiếp
-                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-                      <path
-                        d="M1 5h11m0 0L8 1m4 4l-4 4"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </div>
-              </a>
-            </article>
-          ))}
-        </div>
-
-        <nav className="news-grid__pager" aria-label="Phân trang">
-          <button
-            className="news-grid__pager-btn news-grid__pager-btn--nav"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            aria-label="Trang trước"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          {Array.from({ length: totalPages }).map((_, i) => {
-            const n = i + 1
+          {items.map((p, i) => {
+            const dt = parseDate(p.date)
             return (
-              <button
-                key={n}
-                className={`news-grid__pager-btn${page === n ? ' is-active' : ''}`}
-                onClick={() => setPage(n)}
-                aria-current={page === n ? 'page' : undefined}
-              >
-                {n.toString().padStart(2, '0')}
-              </button>
+              <article key={p.slug} className="post-card" style={{ '--i': i }}>
+                <a className="post-card__link" href={`#/tin-tuc/${p.slug}`}>
+                  <div className="post-card__media">
+                    <img src={p.image} alt={p.title} loading="lazy" />
+                    <span className="post-card__shine" aria-hidden />
+                    <span className="post-card__date">
+                      <span className="post-card__date-d">{dt.d}</span>
+                      <span className="post-card__date-sep" aria-hidden />
+                      <span className="post-card__date-my">{dt.m}.{dt.y}</span>
+                    </span>
+                  </div>
+                  <div className="post-card__body">
+                    <div className="post-card__kicker">
+                      <span className="post-card__cat">{p.category}</span>
+                      <span className="post-card__kicker-dot" aria-hidden />
+                      <span className="post-card__rt">{p.readTime}</span>
+                    </div>
+                    <h3 className="post-card__title">{p.title}</h3>
+                    <p className="post-card__excerpt">{p.excerpt}</p>
+                    
+                  </div>
+                  <span className="post-card__rule" aria-hidden />
+                </a>
+              </article>
             )
           })}
-          <button
-            className="news-grid__pager-btn news-grid__pager-btn--nav"
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages}
-            aria-label="Trang sau"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </nav>
+          {items.length === 0 && (
+            <p className="news-grid__empty">
+              Chưa có bài viết cho chuyên mục này.
+            </p>
+          )}
+        </div>
+
+        {totalPages > 1 && (
+          <nav className="news-grid__pager" aria-label="Phân trang">
+            <button
+              className="news-grid__pager-nav"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              aria-label="Trang trước"
+            >
+              <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M19 5H1m0 0l4-4M1 5l4 4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Trước</span>
+            </button>
+            <ol className="news-grid__pager-list">
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const n = i + 1
+                const active = currentPage === n
+                return (
+                  <li key={n}>
+                    <button
+                      className={`news-grid__pager-num${active ? ' is-active' : ''}`}
+                      onClick={() => setPage(n)}
+                      aria-current={active ? 'page' : undefined}
+                    >
+                      {n.toString().padStart(2, '0')}
+                    </button>
+                  </li>
+                )
+              })}
+            </ol>
+            <button
+              className="news-grid__pager-nav"
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              aria-label="Trang sau"
+            >
+              <span>Sau</span>
+              <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M1 5h18m0 0l-4-4m4 4l-4 4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </nav>
+        )}
       </div>
     </section>
   )

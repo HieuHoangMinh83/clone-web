@@ -1,5 +1,23 @@
-/* Shared shell styles for the Lĩnh vực page */
+/* ============================================================
+ * Fields page — shared shell, design tokens, fonts
+ * ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 
+:root {
+  --fp-paper: #f4f1ea;
+  --fp-paper-deep: #ebe4d4;
+  --fp-navy: #06122a;
+  --fp-navy-soft: #0a1c3a;
+  --fp-ink-soft: rgba(255, 255, 255, 0.78);
+  --fp-ink-dim: rgba(255, 255, 255, 0.55);
+  --fp-line-light: rgba(255, 255, 255, 0.12);
+  --fp-red: #cb232b;
+  --fp-display: 'Playfair Display', Georgia, serif;
+  --fp-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --fp-body: 'Manrope', system-ui, sans-serif;
+}
+
+/* ---------- Section shell ---------- */
 .fp-sec {
   position: relative;
   width: 100vw;
@@ -7,9 +25,115 @@
   overflow: hidden;
   color: #fff;
   isolation: isolate;
+  font-family: var(--fp-body);
 }
 
-/* ---------- Shared keyframes (used by 2+ sections) ---------- */
+/* ---------- Section number marker (chapter mark in corner) ---------- */
+.fp-marker {
+  position: absolute;
+  top: calc(var(--header-h) + 16px);
+  right: 48px;
+  font-family: var(--fp-mono);
+  font-size: clamp(120px, 14vw, 220px);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0;
+}
+.fp-sec--paper .fp-marker {
+  -webkit-text-stroke: 1px rgba(6, 18, 42, 0.1);
+}
+.fp-sec.is-in .fp-marker {
+  animation: fp-marker-in 1.4s cubic-bezier(.2,.7,.2,1) .4s forwards;
+}
+@keyframes fp-marker-in {
+  to { opacity: 1; }
+}
+.fp-marker__small {
+  font-size: 0.32em;
+  vertical-align: top;
+  letter-spacing: 0;
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* ---------- Crosshair registration marks (corner ticks) ---------- */
+.fp-crosshair {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(255, 255, 255, 0.18);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+.fp-sec--paper .fp-crosshair { border-color: rgba(6, 18, 42, 0.18); }
+.fp-crosshair--tl { top: calc(var(--header-h) + 24px); left: 32px; border-top-width: 1px; border-left-width: 1px; }
+.fp-crosshair--tr { top: calc(var(--header-h) + 24px); right: 32px; border-top-width: 1px; border-right-width: 1px; }
+.fp-crosshair--bl { bottom: 32px; left: 32px; border-bottom-width: 1px; border-left-width: 1px; }
+.fp-crosshair--br { bottom: 32px; right: 32px; border-bottom-width: 1px; border-right-width: 1px; }
+.fp-sec.is-in .fp-crosshair {
+  animation: fade-in 1s ease 1.2s forwards;
+}
+
+/* ---------- Editorial kicker (mono label) ---------- */
+.fp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--fp-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+}
+.fp-kicker__rule {
+  width: 0; height: 1px;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* ---------- Display heading helper ---------- */
+.fp-display {
+  font-family: var(--fp-display);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  color: #fff;
+  margin: 0;
+}
+.fp-display em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-500);
+}
+
+/* ---------- Title-mask reveal pattern ---------- */
+.fp-mask {
+  display: block;
+  overflow: hidden;
+  line-height: 1.04;
+  padding: 0.06em 0;
+}
+.fp-row {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+.fp-sec.is-in .fp-row {
+  animation: rowRise 1.1s cubic-bezier(.7,0,.2,1) forwards;
+  animation-delay: calc(.7s + var(--rd, 0) * .15s);
+}
+
+/* ---------- Shared keyframes ---------- */
 @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
 @keyframes fade-in { to { opacity: 1; } }
 @keyframes lineGrow { to { width: 40px; } }
@@ -20,12 +144,11 @@
 }
 @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
-/* ---------- Responsive: cross-section ---------- */
+/* ---------- Cross-section responsive ---------- */
 @media (max-width: 720px) {
-  .fp-db__inner, .fp-outro__inner, .fp-panel__inner {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
+  .fp-marker { right: 24px; font-size: clamp(96px, 22vw, 140px); }
+  .fp-crosshair--tl, .fp-crosshair--bl { left: 16px; }
+  .fp-crosshair--tr, .fp-crosshair--br { right: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -33,4 +156,6 @@
     animation: none !important;
     transition-duration: .01ms !important;
   }
+  .fp-marker, .fp-crosshair { opacity: 1 !important; }
+  .fp-row { opacity: 1 !important; transform: none !important; }
 }

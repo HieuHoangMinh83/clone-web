@@ -1,0 +1,168 @@
+/* ================================================================
+   ProjectsMilestones — horizontal timeline 2004 — 2024
+   ================================================================ */
+.prj-miles {
+  padding: clamp(80px, 10vw, 140px) 0 clamp(60px, 8vw, 120px);
+  background:
+    linear-gradient(180deg, #fafcff 0%, var(--prj-cream) 100%);
+  color: var(--ink-700);
+}
+.prj-miles__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 72px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(26, 60, 107, 0.08);
+}
+.prj-miles__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--prj-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  color: var(--gold-500);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  grid-column: 1 / -1;
+}
+.prj-miles__eyebrow-line {
+  width: 56px;
+  height: 1px;
+  background: currentColor;
+}
+.prj-miles__title {
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 4.6vw, 72px);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  color: var(--navy-900);
+  margin: 0;
+  max-width: 14ch;
+}
+.prj-miles__title em {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--navy-700);
+}
+.prj-miles__title-amp {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  color: var(--gold-500);
+  margin: 0 .08em;
+}
+.prj-miles__lead {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.7;
+  color: var(--ink-500);
+  max-width: 44ch;
+  margin: 0;
+  padding-left: 32px;
+  border-left: 2px solid var(--gold-500);
+}
+
+.prj-miles__list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.prj-miles__list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(26,60,107,.18) 8%, rgba(26,60,107,.18) 92%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s cubic-bezier(.2,.7,.2,1) .3s;
+}
+.prj-miles.is-in .prj-miles__list::before { transform: scaleX(1); }
+
+.prj-miles__item {
+  --i: 0;
+  position: relative;
+  padding-top: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.prj-miles.is-in .prj-miles__item {
+  animation: prj-fade-up .9s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay: calc(.4s + var(--i) * 140ms);
+}
+.prj-miles__dot {
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--gold-500);
+  box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(221, 169, 105, .3);
+}
+.prj-miles__item:nth-child(odd) .prj-miles__dot {
+  background: var(--navy-900);
+  box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(26, 60, 107, .2);
+}
+.prj-miles__year {
+  display: block;
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(28px, 2.6vw, 42px);
+  color: var(--navy-900);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.prj-miles__label {
+  display: block;
+  font-family: var(--prj-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  margin-bottom: 14px;
+}
+.prj-miles__name {
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1vw, 16px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--navy-900);
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+}
+.prj-miles__note {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-500);
+  margin: 0;
+}
+
+@media (max-width: 1023px) {
+  .prj-miles__head { grid-template-columns: 1fr; gap: 24px; }
+  .prj-miles__lead { padding-left: 20px; }
+  .prj-miles__list { grid-template-columns: repeat(2, 1fr); gap: 48px 24px; }
+  .prj-miles__list::before { display: none; }
+  .prj-miles__item { padding-top: 0; padding-left: 28px; }
+  .prj-miles__dot { left: 0; top: 10px; }
+}
+@media (max-width: 639px) {
+  .prj-miles__list { grid-template-columns: 1fr; }
+}

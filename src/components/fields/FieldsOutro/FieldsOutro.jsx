@@ -22,6 +22,11 @@ export default function FieldsOutro({ active }) {
       />
       <div className="fp-outro__scrim" />
 
+      <span className="fp-marker" aria-hidden>09<span className="fp-marker__small">/09</span></span>
+      <span className="fp-crosshair fp-crosshair--tl" aria-hidden />
+      <span className="fp-crosshair fp-crosshair--tr" aria-hidden />
+      <span className="fp-crosshair fp-crosshair--bl" aria-hidden />
+
       <div className="fp-outro__inner">
         <div className="fp-outro__copy">
           <span className="fp-outro__eyebrow">

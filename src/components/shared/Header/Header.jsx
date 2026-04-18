@@ -2,17 +2,25 @@ import { useEffect, useRef, useState } from 'react'
 import './Header.css'
 
 const LINKS = [
-  { key: 'home', href: '#/', label: 'Trang chủ', desc: 'Tổng quan Newtecons' },
-  { key: 'intro', href: '#/gioi-thieu', label: 'Giới thiệu', desc: 'Câu chuyện & đội ngũ' },
-  { key: 'fields', href: '#/linh-vuc', label: 'Lĩnh vực', desc: 'Dịch vụ & năng lực' },
-  { key: 'news', href: '#/tin-tuc', label: 'Tin tức', desc: 'Sự kiện & truyền thông' },
+  { key: 'home', href: '#/', label: 'Trang chủ' },
+  { key: 'intro', href: '#/gioi-thieu', label: 'Giới thiệu' },
+  { key: 'fields', href: '#/linh-vuc', label: 'Lĩnh vực hoạt động' },
+  { key: 'projects', href: '#/du-an', label: 'Dự án' },
+  { key: 'news', href: '#/tin-tuc', label: 'Tin tức' },
+  { key: 'recruit', href: '#/tuyen-dung', label: 'Tuyển dụng' },
+  { key: 'contact', href: '#/lien-he', label: 'Liên hệ' },
+  { key: 'news-builder', href: '#/tin-tuc-builder', label: 'Thiết kế tin tức' },
 ]
 
 function getRouteKey() {
   const h = (typeof window !== 'undefined' ? window.location.hash : '') || ''
   if (h.startsWith('#/gioi-thieu')) return 'intro'
   if (h.startsWith('#/linh-vuc')) return 'fields'
+  if (h.startsWith('#/du-an')) return 'projects'
+  if (h.startsWith('#/tin-tuc-builder')) return 'news-builder'
   if (h.startsWith('#/tin-tuc')) return 'news'
+  if (h.startsWith('#/tuyen-dung')) return 'recruit'
+  if (h.startsWith('#/lien-he')) return 'contact'
   return 'home'
 }
 
@@ -136,20 +144,34 @@ export default function Header({ variant = 'default', navStyle }) {
         onMouseEnter={cancelClose}
         onMouseLeave={scheduleClose}
       >
+        <svg className="nav-drawer__watermark" viewBox="0 0 145.8 175" aria-hidden>
+          <polygon
+            points="43.74 21.87 102.06 117.3 102.06 76.34 55.4 0 0 0 0 174.96 21.87 174.96 54.67 174.96 54.67 153.09 21.87 153.09 21.87 21.87 43.74 21.87"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <polygon
+            points="102.06 153.09 43.74 57.66 43.74 98.61 90.39 174.96 145.8 174.96 145.8 0 123.93 0 91.12 0 91.12 21.87 123.93 21.87 123.93 153.09 102.06 153.09"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        </svg>
+
         <div className="nav-drawer__head">
-          <div className="nav-drawer__brand">
-            <span className="nav-drawer__mark">N</span>
-            <div>
-              <div className="nav-drawer__brand-name">NEWTECONS</div>
-              <div className="nav-drawer__brand-tag">Build on trust</div>
-            </div>
-          </div>
+          <button className="nav-drawer__icon" aria-label="Tìm kiếm">
+            <svg width="18" height="18" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <circle cx="6.5" cy="6.5" r="4.5" />
+              <line x1="10" y1="10" x2="13.5" y2="13.5" strokeLinecap="round" />
+            </svg>
+          </button>
           <button
-            className="nav-drawer__close"
+            className="nav-drawer__icon nav-drawer__close"
             aria-label="Đóng menu"
             onClick={() => setOpen(false)}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
             </svg>
           </button>
@@ -164,23 +186,7 @@ export default function Header({ variant = 'default', navStyle }) {
                 style={{ '--i': i }}
               >
                 <a href={link.href} onClick={() => setOpen(false)}>
-                  <span className="nav-drawer__item-idx">0{i + 1}</span>
-                  <span className="nav-drawer__item-body">
-                    <span className="nav-drawer__item-label">{link.label}</span>
-                    <span className="nav-drawer__item-desc">{link.desc}</span>
-                  </span>
-                  <svg
-                    className="nav-drawer__item-arrow"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    aria-hidden
-                  >
-                    <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <span className="nav-drawer__item-label">{link.label}</span>
                 </a>
               </li>
             ))}
@@ -188,10 +194,21 @@ export default function Header({ variant = 'default', navStyle }) {
         </nav>
 
         <footer className="nav-drawer__foot">
-          <div className="nav-drawer__foot-title">Liên hệ</div>
-          <a href="tel:+842835146699">(+84) 28 3514 6699</a>
-          <a href="mailto:contact@newtecons.vn">contact@newtecons.vn</a>
-          <div className="nav-drawer__copy">© 2021 Newtecons</div>
+          <a className="nav-drawer__social" href="#" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.3-1.5 1.5-1.5h1.6V3.6c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H8v3.1h2.7V21h2.8z"/>
+            </svg>
+          </a>
+          <a className="nav-drawer__social" href="#" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8 1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/>
+            </svg>
+          </a>
+          <a className="nav-drawer__social" href="#" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M6.9 8.4H4.1V20h2.8V8.4zM5.5 4a1.7 1.7 0 100 3.4 1.7 1.7 0 000-3.4zM20 13.6c0-2.7-1.7-3.8-3.3-3.8-1.6 0-2.4.9-2.7 1.5V8.4H11c0 .8 0 11.6 0 11.6h2.9v-6.5c0-.3 0-.5.1-.7.2-.5.7-1.1 1.5-1.1 1.1 0 1.5.8 1.5 2V20H20v-6.4z"/>
+            </svg>
+          </a>
         </footer>
       </aside>
     </>

@@ -3,18 +3,24 @@ import SectionIndicator from '../../components/shared/SectionIndicator/SectionIn
 import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
 import FieldsBanner from '../../components/fields/FieldsBanner/FieldsBanner.jsx'
 import FieldsDB from '../../components/fields/FieldsDB/FieldsDB.jsx'
-import FieldsPanel from '../../components/fields/FieldsPanel/FieldsPanel.jsx'
+import FieldsConstruction from '../../components/fields/FieldsConstruction/FieldsConstruction.jsx'
+import FieldsMEP from '../../components/fields/FieldsMEP/FieldsMEP.jsx'
+import FieldsSafety from '../../components/fields/FieldsSafety/FieldsSafety.jsx'
+import FieldsHR from '../../components/fields/FieldsHR/FieldsHR.jsx'
+import FieldsEquipment from '../../components/fields/FieldsEquipment/FieldsEquipment.jsx'
+import FieldsISO from '../../components/fields/FieldsISO/FieldsISO.jsx'
 import FieldsOutro from '../../components/fields/FieldsOutro/FieldsOutro.jsx'
-import { FIELDS_DATA } from '../../components/fields/fieldsData.js'
 import '../../components/fields/fields-shared.css'
 
 const SECTION_LABELS = [
   'Banner',
   'Tổng thầu D&B',
-  'Dân dụng',
-  'Công nghiệp',
-  'Hạ tầng',
+  'Xây dựng',
   'Cơ điện',
+  'An toàn',
+  'Nhân lực',
+  'Thiết bị',
+  'Chứng nhận',
   'Liên hệ',
 ]
 
@@ -25,6 +31,8 @@ const SECTION_TONES = [
   'light',
   'light',
   'light',
+  'light',
+  'paper',
   'light',
 ]
 
@@ -41,17 +49,13 @@ export default function FieldsPage() {
       >
         <FieldsBanner active={index === 0} />
         <FieldsDB active={index === 1} />
-        {FIELDS_DATA.map((f, i) => (
-          <FieldsPanel
-            key={f.id}
-            field={f}
-            index={i + 1}
-            total={FIELDS_DATA.length}
-            active={index === i + 2}
-            reversed={i % 2 === 1}
-          />
-        ))}
-        <FieldsOutro active={index === total - 1} />
+        <FieldsConstruction active={index === 2} />
+        <FieldsMEP active={index === 3} />
+        <FieldsSafety active={index === 4} />
+        <FieldsHR active={index === 5} />
+        <FieldsEquipment active={index === 6} />
+        <FieldsISO active={index === 7} />
+        <FieldsOutro active={index === 8} />
       </div>
       <SectionIndicator
         current={index}

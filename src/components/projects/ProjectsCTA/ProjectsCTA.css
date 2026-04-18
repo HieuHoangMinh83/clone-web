@@ -1,0 +1,131 @@
+/* ================================================================
+   ProjectsCTA — dark navy gradient strip with gold CTA buttons
+   ================================================================ */
+.prj-cta {
+  position: relative;
+  padding: clamp(80px, 11vw, 140px) 0;
+  background: linear-gradient(135deg, var(--prj-ink-deep) 0%, var(--navy-900) 60%, #0f2854 100%);
+  color: #fff;
+  overflow: hidden;
+}
+.prj-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at 70% 20%, #000 0%, transparent 60%);
+  pointer-events: none;
+}
+.prj-cta::after {
+  content: '';
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(221,169,105,.22) 0%, transparent 65%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.prj-cta__container {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.prj-cta__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--prj-mono);
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  color: var(--gold-500);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.prj-cta__kicker-line {
+  width: 50px;
+  height: 1px;
+  background: currentColor;
+}
+.prj-cta__title {
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 4vw, 64px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 20px;
+  max-width: 16ch;
+}
+.prj-cta__title em {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-500);
+}
+.prj-cta__lead {
+  font-family: var(--prj-serif);
+  font-style: italic;
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.75;
+  color: rgba(255,255,255,.78);
+  max-width: 48ch;
+  margin: 0;
+}
+.prj-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-self: end;
+  width: 100%;
+  max-width: 380px;
+}
+.prj-cta__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  background: var(--gold-500);
+  color: var(--navy-900);
+  font-family: var(--prj-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  transition: background .3s, transform .3s;
+  position: relative;
+  overflow: hidden;
+}
+.prj-cta__btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  transition: transform .7s;
+}
+.prj-cta__btn:hover { background: #fff; transform: translateX(4px); }
+.prj-cta__btn:hover::after { transform: translateX(120%) skewX(-18deg); }
+.prj-cta__btn--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.3);
+}
+.prj-cta__btn--ghost:hover {
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  border-color: #fff;
+}
+.prj-cta__btn svg { transition: transform .3s; }
+.prj-cta__btn:hover svg { transform: translateX(6px); }
+
+@media (max-width: 1023px) {
+  .prj-cta__container { grid-template-columns: 1fr; gap: 36px; }
+  .prj-cta__actions { justify-self: start; }
+}

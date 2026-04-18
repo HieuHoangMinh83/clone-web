@@ -57,3 +57,6 @@ coverage/
 *.tsbuildinfo
 .eslintcache
 .stylelintcache
+
+# Local dev scripts (không push lên GitHub)
+scripts/

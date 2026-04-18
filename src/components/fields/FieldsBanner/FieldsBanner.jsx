@@ -36,8 +36,12 @@ export default function FieldsBanner({ active }) {
         </svg>
       </div>
 
+      <span className="fp-marker" aria-hidden>01<span className="fp-marker__small">/09</span></span>
+      <span className="fp-crosshair fp-crosshair--tl" aria-hidden />
+      <span className="fp-crosshair fp-crosshair--bl" aria-hidden />
+      <span className="fp-crosshair fp-crosshair--br" aria-hidden />
+
       <div className="fp-banner__inner">
-        
         <h1 className="fp-banner__title">
           <span className="fp-banner__title-mask">
             <span className="fp-banner__title-row">Lĩnh vực</span>
@@ -50,13 +54,10 @@ export default function FieldsBanner({ active }) {
         </h1>
         <span className="fp-banner__mark" />
         <p className="fp-banner__sub">
-          Sáu trụ cột chuyên môn — từ xây dựng dân dụng, công nghiệp, hạ tầng
-          đến cơ điện và nội thất — kiến tạo hệ sinh thái phát triển toàn diện.
+          Tám trụ cột năng lực — từ tổng thầu D&amp;B, xây dựng dân dụng & công nghiệp,
+          cơ điện thông minh đến văn hoá an toàn và hệ thống quản trị quốc tế.
         </p>
-       
       </div>
-
-      
     </section>
   )
 }

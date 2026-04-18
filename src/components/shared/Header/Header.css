@@ -288,8 +288,8 @@
   top: 0;
   right: 0;
   height: 100vh;
-  width: min(420px, 92vw);
-  background: linear-gradient(165deg, #0a1a38 0%, #12305c 55%, #1a3c6b 100%);
+  width: min(360px, 88vw);
+  background: #285aa4;
   color: #fff;
   z-index: 100;
   transform: translateX(100%);
@@ -300,82 +300,62 @@
   font-family: var(--font-sans);
   overflow: hidden;
 }
-.nav-drawer::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 100% 0%, rgba(221, 169, 105, 0.22), rgba(221, 169, 105, 0) 55%),
-    radial-gradient(ellipse at 0% 100%, rgba(27, 205, 212, 0.15), rgba(27, 205, 212, 0) 60%);
-  pointer-events: none;
-}
 .nav-drawer.is-open {
   transform: translateX(0);
 }
 
+/* Watermark N in background */
+.nav-drawer__watermark {
+  position: absolute;
+  left: -60px;
+  bottom: -40px;
+  width: 380px;
+  height: auto;
+  color: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
 .nav-drawer__head {
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 24px 28px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 28px 36px 20px;
 }
-.nav-drawer__brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.nav-drawer__mark {
-  width: 40px;
-  height: 40px;
+.nav-drawer__icon {
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
-  background: var(--gold-500);
-  color: var(--navy-900);
-  font-weight: 900;
-  border-radius: 6px;
-  font-size: 20px;
-}
-.nav-drawer__brand-name {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
   color: #fff;
-}
-.nav-drawer__brand-tag {
-  font-size: 10.5px;
-  color: var(--gold-500);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-.nav-drawer__close {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  transition: background 0.2s, transform 0.2s;
+  background: transparent;
+  border: none;
   cursor: pointer;
+  transition: opacity 0.2s, transform 0.25s;
+}
+.nav-drawer__icon:hover {
+  opacity: 0.75;
 }
 .nav-drawer__close:hover {
-  background: var(--gold-500);
-  color: var(--navy-900);
   transform: rotate(90deg);
 }
 
 .nav-drawer__nav {
   position: relative;
+  z-index: 2;
   flex: 1;
   overflow-y: auto;
-  padding: 20px 0;
+  overflow-x: hidden;
+  padding: 8px 36px 10px;
 }
 .nav-drawer__nav ul {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  text-align: right;
 }
 .nav-drawer__item {
   position: relative;
@@ -385,116 +365,63 @@
               transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
 }
 .nav-drawer.is-open .nav-drawer__item {
-  --d: calc(0.15s + var(--i, 0) * 0.08s);
+  --d: calc(0.18s + var(--i, 0) * 0.07s);
   opacity: 1;
   transform: translateX(0);
 }
 .nav-drawer__item a {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 18px;
-  padding: 20px 28px;
-  color: #fff;
-  position: relative;
-  transition: background 0.25s, padding-left 0.25s;
-}
-.nav-drawer__item a::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 20px;
-  bottom: 20px;
-  width: 3px;
-  background: var(--gold-500);
-  transform: scaleY(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-.nav-drawer__item a:hover {
-  background: rgba(255, 255, 255, 0.05);
-  padding-left: 36px;
-}
-.nav-drawer__item a:hover::before {
-  transform: scaleY(1);
-}
-.nav-drawer__item.is-active a {
-  background: rgba(221, 169, 105, 0.08);
-}
-.nav-drawer__item.is-active a::before {
-  transform: scaleY(1);
-}
-.nav-drawer__item-idx {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  color: var(--gold-500);
-  opacity: 0.85;
-}
-.nav-drawer__item-body {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  display: inline-block;
+  padding: 14px 2px;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+  transition: color 0.25s, letter-spacing 0.25s, transform 0.25s;
 }
 .nav-drawer__item-label {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-.nav-drawer__item-desc {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.55);
-  letter-spacing: 0.02em;
+.nav-drawer__item a:hover {
+  color: #fff;
+  letter-spacing: 0.16em;
+}
+.nav-drawer__item.is-active a {
+  color: #fff;
+  font-weight: 800;
 }
 .nav-drawer__item.is-active .nav-drawer__item-label {
-  color: var(--gold-500);
-}
-.nav-drawer__item-arrow {
-  color: rgba(255, 255, 255, 0.4);
-  transition: transform 0.25s, color 0.25s;
-}
-.nav-drawer__item a:hover .nav-drawer__item-arrow {
-  color: var(--gold-500);
-  transform: translateX(4px);
+  font-weight: 800;
 }
 
 .nav-drawer__foot {
   position: relative;
-  padding: 20px 28px 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 2;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.78);
+  justify-content: center;
+  gap: 14px;
+  padding: 24px 36px 36px;
 }
-.nav-drawer__foot-title {
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold-500);
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.nav-drawer__foot a {
+.nav-drawer__social {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
   color: #fff;
-  font-weight: 600;
-  transition: color 0.2s;
+  display: grid;
+  place-items: center;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
 }
-.nav-drawer__foot a:hover {
-  color: var(--gold-500);
-}
-.nav-drawer__copy {
-  margin-top: 10px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.04em;
+.nav-drawer__social:hover {
+  background: #fff;
+  color: #285aa4;
+  transform: translateY(-3px);
 }
 
 @media (max-width: 639px) {
   .nav-drawer { width: 100vw; }
-  .nav-drawer__item-label { font-size: 18px; }
+  .nav-drawer__item-label { font-size: 15px; }
+  .nav-drawer__watermark { width: 300px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

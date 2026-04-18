@@ -3,7 +3,7 @@ import Header from '../../components/shared/Header/Header.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import NewsBanner from '../../components/news/NewsBanner.jsx'
-import NewsFeatured from '../../components/news/NewsFeatured.jsx'
+import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
 import NewsGrid from '../../components/news/NewsGrid.jsx'
 import './NewsPage.css'
 

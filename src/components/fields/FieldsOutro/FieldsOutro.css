@@ -49,9 +49,10 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  font-family: var(--fp-mono);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.26em;
+  font-weight: 500;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold-500);
   margin-bottom: 18px;
@@ -73,10 +74,11 @@
 }
 
 .fp-outro__title {
-  font-size: clamp(36px, 4.6vw, 60px);
+  font-family: var(--fp-display);
+  font-size: clamp(38px, 4.6vw, 64px);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  line-height: 1.04;
+  letter-spacing: -0.018em;
   margin: 0 0 24px;
   color: #fff;
 }
@@ -96,7 +98,7 @@
 
 .fp-outro__title-row--accent em {
   font-style: italic;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--gold-500);
 }
 
@@ -107,8 +109,10 @@
 .fp-outro.is-in .fp-outro__title-row--accent { animation-delay: 1s; }
 
 .fp-outro__lede {
+  font-family: var(--fp-body);
   font-size: 16px;
   line-height: 1.75;
+  font-weight: 300;
   color: rgba(255,255,255,0.82);
   max-width: 480px;
   margin: 0 0 36px;
@@ -138,9 +142,10 @@
   gap: 12px;
   padding: 0 30px;
   height: 52px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-family: var(--fp-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
@@ -209,16 +214,19 @@
 }
 
 .fp-outro__info-k {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.24em;
+  font-family: var(--fp-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold-500);
 }
 
 .fp-outro__info-v {
+  font-family: var(--fp-body);
   font-size: 14px;
   line-height: 1.6;
+  font-weight: 300;
   color: rgba(255,255,255,0.86);
 }
 
@@ -227,9 +235,11 @@
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-family: var(--fp-mono);
+  font-size: 10.5px;
   color: rgba(255,255,255,0.55);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   z-index: 2;
 }
 

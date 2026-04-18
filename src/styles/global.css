@@ -23,6 +23,14 @@ body {
   overscroll-behavior: none;
 }
 
+html.is-scroll-page,
+body.is-scroll-page {
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: auto !important;
+}
+
 img,
 picture,
 svg {
