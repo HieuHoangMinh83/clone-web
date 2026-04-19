@@ -28,12 +28,12 @@ import NewsClosing from '../../components/shared/NewsDetail/NewsClosing/NewsClos
 import NewsRelated from '../../components/shared/NewsDetail/NewsRelated/NewsRelated.jsx'
 
 // Homepage sections
-import HomeHero from '../../components/home/Hero/Hero.jsx'
-import HomeAbout from '../../components/home/About/About.jsx'
-import HomeFields from '../../components/home/Fields/Fields.jsx'
-import HomeProjects from '../../components/home/Projects/Projects.jsx'
-import HomeAchievements from '../../components/home/Achievements/Achievements.jsx'
-import HomeNews from '../../components/home/News/News.jsx'
+import HomeHero from '../HomePage/Hero/Hero.jsx'
+import HomeAbout from '../HomePage/About/About.jsx'
+import HomeFields from '../HomePage/Fields/Fields.jsx'
+import HomeProjects from '../HomePage/Projects/Projects.jsx'
+import HomeAchievements from '../HomePage/Achievements/Achievements.jsx'
+import HomeNews from '../HomePage/News/News.jsx'
 
 // Intro page
 import IntroBanner from '../../components/intro/IntroBanner/IntroBanner.jsx'
@@ -344,7 +344,7 @@ export const COMPONENTS = [
     subtitle: 'Slider banner tự chạy · 6 slide',
     desc: 'Hero banner trang chủ với slider autoplay 7s, progress indicator dọc và CTA overlay.',
     tag: 'Hero',
-    path: 'src/components/home/Hero/',
+    path: 'src/pages/HomePage/Hero/',
     render: () => <HomeHero />,
   },
   {
@@ -354,7 +354,7 @@ export const COMPONENTS = [
     subtitle: 'Giới thiệu · Tower + Logo',
     desc: 'Khối giới thiệu trang chủ: ảnh tower Newtecons + logo paper + text scroll animation.',
     tag: 'About',
-    path: 'src/components/home/About/',
+    path: 'src/pages/HomePage/About/',
     render: () => <HomeAbout />,
   },
   {
@@ -364,7 +364,7 @@ export const COMPONENTS = [
     subtitle: '6 lĩnh vực hoạt động',
     desc: 'Lưới 6 lĩnh vực: Civil, Industrial, Infrastructure, MEP, Real Estate, Interior với ảnh hover.',
     tag: 'Fields',
-    path: 'src/components/home/Fields/',
+    path: 'src/pages/HomePage/Fields/',
     render: () => <HomeFields />,
   },
   {
@@ -374,7 +374,7 @@ export const COMPONENTS = [
     subtitle: 'Dự án nổi bật · Cards',
     desc: 'Showcase các dự án tiêu biểu (sân bay, căn hộ, khách sạn, hạ tầng).',
     tag: 'Projects',
-    path: 'src/components/home/Projects/',
+    path: 'src/pages/HomePage/Projects/',
     render: () => <HomeProjects />,
   },
   {
@@ -384,7 +384,7 @@ export const COMPONENTS = [
     subtitle: 'Thành tựu · Quote + BG',
     desc: 'Khối thành tựu trang chủ với quote + ảnh engineers.',
     tag: 'Achievements',
-    path: 'src/components/home/Achievements/',
+    path: 'src/pages/HomePage/Achievements/',
     render: () => <HomeAchievements />,
   },
   {
@@ -394,7 +394,7 @@ export const COMPONENTS = [
     subtitle: 'Tin tức nổi bật · Featured + grid',
     desc: 'Khối tin tức trang chủ: 1 bài featured lớn + 3 bài phụ ở bên cạnh.',
     tag: 'News',
-    path: 'src/components/home/News/',
+    path: 'src/pages/HomePage/News/',
     render: () => <HomeNews />,
   },
 
