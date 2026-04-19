@@ -69,10 +69,10 @@ import ProjectsPartners from '../ProjectsPage/ProjectsPartners/ProjectsPartners.
 import ProjectsCTA from '../ProjectsPage/ProjectsCTA/ProjectsCTA.jsx'
 
 // Recruit page
-import RecruitBanner from '../../components/recruit/RecruitBanner.jsx'
-import RecruitWhy from '../../components/recruit/RecruitWhy.jsx'
-import RecruitLife from '../../components/recruit/RecruitLife.jsx'
-import RecruitJobs from '../../components/recruit/RecruitJobs.jsx'
+import RecruitBanner from '../RecruitPage/RecruitBanner/RecruitBanner.jsx'
+import RecruitWhy from '../RecruitPage/RecruitWhy/RecruitWhy.jsx'
+import RecruitLife from '../RecruitPage/RecruitLife/RecruitLife.jsx'
+import RecruitJobs from '../RecruitPage/RecruitJobs/RecruitJobs.jsx'
 
 // Sample data cho NewsDetail blocks
 import { FEATURED, getRelatedArticles } from '../../components/news/newsData.js'
@@ -664,7 +664,7 @@ export const COMPONENTS = [
     subtitle: 'Banner Tuyển dụng',
     desc: 'Banner mở đầu trang Tuyển dụng — ảnh công trường + slogan tuyển dụng.',
     tag: 'RecruitBanner',
-    path: 'src/components/recruit/RecruitBanner.jsx',
+    path: 'src/pages/RecruitPage/RecruitBanner/',
     render: () => <RecruitBanner />,
   },
   {
@@ -674,7 +674,7 @@ export const COMPONENTS = [
     subtitle: 'Vì sao chọn Newtecons · Pillars',
     desc: 'Khối 4 trụ cột lý do chọn làm việc tại Newtecons (với icon tự vẽ).',
     tag: 'RecruitWhy',
-    path: 'src/components/recruit/RecruitWhy.jsx',
+    path: 'src/pages/RecruitPage/RecruitWhy/',
     render: () => <RecruitWhy />,
   },
   {
@@ -684,7 +684,7 @@ export const COMPONENTS = [
     subtitle: 'Cuộc sống tại Newtecons',
     desc: 'Khối cuộc sống / văn hoá làm việc tại Newtecons — tab + ảnh.',
     tag: 'RecruitLife',
-    path: 'src/components/recruit/RecruitLife.jsx',
+    path: 'src/pages/RecruitPage/RecruitLife/',
     render: () => <RecruitLife />,
   },
   {
@@ -694,7 +694,7 @@ export const COMPONENTS = [
     subtitle: 'Danh sách công việc · 6/trang',
     desc: 'Danh sách vị trí tuyển dụng với filter + phân trang 6 mỗi trang.',
     tag: 'RecruitJobs',
-    path: 'src/components/recruit/RecruitJobs.jsx',
+    path: 'src/pages/RecruitPage/RecruitJobs/',
     render: () => <RecruitJobs />,
   },
 ]

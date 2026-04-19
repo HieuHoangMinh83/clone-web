@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { DEPARTMENTS, LOCATIONS, JOBS } from './recruitData.js'
-import Pagination from '../shared/Pagination/Pagination.jsx'
-import SearchFilter from '../shared/SearchFilter/SearchFilter.jsx'
+import { DEPARTMENTS, LOCATIONS, JOBS } from '../recruitData.js'
+import Pagination from '../../../components/shared/Pagination/Pagination.jsx'
+import SearchFilter from '../../../components/shared/SearchFilter/SearchFilter.jsx'
 
 // Tablet dọc (≤1199px, aspect ratio dọc): grid 2×3 = 6 tin/trang để fill đầy stage.
 // Desktop & landscape: 3×2 = 6 tin/trang.

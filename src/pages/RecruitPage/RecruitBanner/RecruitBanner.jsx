@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { RECRUIT_BANNER_BG, BANNER_STATS, BANNER_QUOTE } from './recruitData.js'
-import cardImg from '../../assets/images/projects/grand-marina-saigon.jpg'
+import { RECRUIT_BANNER_BG, BANNER_STATS, BANNER_QUOTE } from '../recruitData.js'
+import cardImg from '../../../assets/images/projects/grand-marina-saigon.jpg'
 
 export default function RecruitBanner() {
   const [mount, setMount] = useState(false)
