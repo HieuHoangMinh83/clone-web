@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
@@ -49,16 +50,44 @@ const NAV_TRANSPARENT = [
   false, // 8 Liên hệ
 ]
 
+/* Slide mode chỉ bật khi viewport đang landscape (ngang).
+   Portrait (dọc — iPad dựng đứng, mobile) → scroll thường. */
+const SLIDE_QUERY = '(orientation: landscape)'
+
 export default function IntroPage() {
   const total = SECTION_LABELS.length
-  const { index, goTo } = useFullpageScroll(total)
+  const [isSlide, setIsSlide] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.matchMedia(SLIDE_QUERY).matches
+  })
+  const { index, goTo, setIndex } = useFullpageScroll(total, isSlide)
+
+  useEffect(() => {
+    const mq = window.matchMedia(SLIDE_QUERY)
+    const handler = (e) => {
+      setIsSlide(e.matches)
+      if (!e.matches) setIndex(0)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [setIndex])
+
+  useEffect(() => {
+    if (isSlide) return
+    document.body.classList.add('is-scroll-page')
+    document.documentElement.classList.add('is-scroll-page')
+    return () => {
+      document.body.classList.remove('is-scroll-page')
+      document.documentElement.classList.remove('is-scroll-page')
+    }
+  }, [isSlide])
 
   return (
     <>
       <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
       <div
-        className="fullpage"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
+        className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
+        style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
         <IntroBanner />
         <IntroChairman />
@@ -70,13 +99,15 @@ export default function IntroPage() {
         <IntroPartners />
         <Contact />
       </div>
-      <SectionIndicator
-        current={index}
-        total={total}
-        onNav={goTo}
-        labels={SECTION_LABELS}
-        tone={SECTION_TONES[index]}
-      />
+      {isSlide && (
+        <SectionIndicator
+          current={index}
+          total={total}
+          onNav={goTo}
+          labels={SECTION_LABELS}
+          tone={SECTION_TONES[index]}
+        />
+      )}
     </>
   )
 }

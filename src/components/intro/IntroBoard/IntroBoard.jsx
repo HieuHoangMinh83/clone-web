@@ -5,6 +5,24 @@ import ceo from '../../../assets/images/intro/managers/board-ceo.png'
 import DIRECTORS from '../directors.js'
 import './IntroBoard.css'
 
+/* Portrait (<1200, dọc) — carousel 3 card/trang. Landscape/desktop full grid. */
+const PER_PAGE_PORTRAIT = 3
+const PORTRAIT_QUERY = '(orientation: portrait) and (max-width: 1199px)'
+
+function Chevron({ dir = 'right' }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d={dir === 'right' ? 'M9 5l7 7-7 7' : 'M15 5l-7 7 7 7'}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 const CEO = {
   name: 'VÕ THANH LIÊM',
   role: 'Tổng Giám đốc',
@@ -72,6 +90,21 @@ export default function IntroBoard() {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
   const [selected, setSelected] = useState(null)
+  const [isPortrait, setIsPortrait] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia(PORTRAIT_QUERY).matches
+  })
+  const [page, setPage] = useState(0)
+
+  useEffect(() => {
+    const mq = window.matchMedia(PORTRAIT_QUERY)
+    const handler = (e) => {
+      setIsPortrait(e.matches)
+      setPage(0)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     const el = sectionRef.current
@@ -83,6 +116,13 @@ export default function IntroBoard() {
     io.observe(el)
     return () => io.disconnect()
   }, [])
+
+  const perPage = isPortrait ? PER_PAGE_PORTRAIT : DIRECTORS.length
+  const totalPages = Math.ceil(DIRECTORS.length / perPage)
+  const visible = DIRECTORS.slice(page * perPage, page * perPage + perPage)
+  const hasPagination = isPortrait && totalPages > 1
+  const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages)
+  const next = () => setPage((p) => (p + 1) % totalPages)
 
   return (
     <section
@@ -124,30 +164,54 @@ export default function IntroBoard() {
           </div>
         </div>
 
-        <div className="intro-board__grid">
-          {DIRECTORS.map((d, i) => (
-            <div
-              className="intro-board__card"
-              key={d.name}
-              style={{ '--ci': i }}
+        <div className="intro-board__stage">
+          {hasPagination && (
+            <button
+              type="button"
+              className="intro-board__arrow intro-board__arrow--prev"
+              onClick={prev}
+              aria-label="Trang trước"
             >
-              <div className="intro-board__avatar">
-                <img src={d.img} alt={d.name} loading="lazy" />
-                <button
-                  type="button"
-                  className="intro-board__go"
-                  aria-label={`Xem chi tiết ${d.name}`}
-                  onClick={() => setSelected(d)}
-                >
-                  <Arrow />
-                </button>
+              <Chevron dir="left" />
+            </button>
+          )}
+
+          <div className="intro-board__grid" key={page}>
+            {visible.map((d, i) => (
+              <div
+                className="intro-board__card"
+                key={d.name}
+                style={{ '--ci': i }}
+              >
+                <div className="intro-board__avatar">
+                  <img src={d.img} alt={d.name} loading="lazy" />
+                  <button
+                    type="button"
+                    className="intro-board__go"
+                    aria-label={`Xem chi tiết ${d.name}`}
+                    onClick={() => setSelected(d)}
+                  >
+                    <Arrow />
+                  </button>
+                </div>
+                <div className="intro-board__meta">
+                  <div className="intro-board__name">{d.name}</div>
+                  <div className="intro-board__role">{d.role}</div>
+                </div>
               </div>
-              <div className="intro-board__meta">
-                <div className="intro-board__name">{d.name}</div>
-                <div className="intro-board__role">{d.role}</div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {hasPagination && (
+            <button
+              type="button"
+              className="intro-board__arrow intro-board__arrow--next"
+              onClick={next}
+              aria-label="Trang sau"
+            >
+              <Chevron dir="right" />
+            </button>
+          )}
         </div>
       </div>
       {selected && (

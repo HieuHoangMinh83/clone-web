@@ -490,6 +490,117 @@
   }
 }
 
+/* ---------- TABLET PORTRAIT (iPad dọc) — editorial luxury redesign ---------- */
+@media (orientation: portrait) and (min-width: 640px) and (max-width: 1180px) {
+  .intro-partners {
+    min-height: auto;
+  }
+
+  .intro-partners__spine {
+    left: 36px;
+    top: 8%;
+    bottom: 8%;
+  }
+
+  .intro-partners__container {
+    gap: clamp(44px, 6vh, 76px);
+    padding: clamp(48px, 9vh, 104px) 0 clamp(48px, 7vh, 80px);
+  }
+
+  /* ----- HEAD: dramatic display type ----- */
+  .intro-partners__head {
+    max-width: 720px;
+    padding-left: 28px;
+  }
+  .intro-partners__title {
+    font-size: clamp(46px, 7.2vw, 74px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    margin: 0 0 26px;
+  }
+  .intro-partners__lead {
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 580px;
+  }
+
+  /* ----- STATS: 2×2 architectural grid, big display numerals ----- */
+  .intro-partners__stats {
+    padding: 0 28px;
+  }
+  .intro-partners__stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    row-gap: 44px;
+    column-gap: 56px;
+    padding: 48px 0;
+  }
+  .intro-partners__stat {
+    padding: 4px 0 4px 28px;
+    border-left: 1px solid var(--line);
+  }
+  .intro-partners__stat:first-child { padding-left: 28px; }
+  .intro-partners__stat::after { display: none !important; }
+  .intro-partners__stat-value {
+    font-size: clamp(56px, 9vw, 86px);
+    margin-bottom: 14px;
+  }
+  .intro-partners__stat-label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+  }
+
+  /* ----- PULLQUOTE: full-width editorial block with soft gold wash ----- */
+  .intro-partners__pullquote {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 40px 44px 36px 52px;
+    margin: 0 28px;
+    border-left: 3px solid var(--gold-500);
+    background: linear-gradient(
+      90deg,
+      rgba(221, 169, 105, 0.07) 0%,
+      rgba(221, 169, 105, 0) 55%
+    );
+  }
+  .intro-partners__pullquote-mark {
+    font-size: 148px;
+    top: -32px;
+    left: 28px;
+    opacity: 0.2;
+  }
+  .intro-partners__pullquote-body {
+    font-size: clamp(19px, 2.4vw, 24px);
+    line-height: 1.6;
+    max-width: 100%;
+  }
+  .intro-partners__pullquote-attr {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
+    padding: 20px 0 0;
+    border-left: none;
+    border-top: 1px solid var(--line);
+    min-width: 0;
+  }
+  .intro-partners__pullquote-name { font-size: 14px; }
+  .intro-partners__pullquote-role {
+    font-size: 12px;
+    margin-top: 0;
+  }
+
+  /* ----- MARQUEE: bigger tiles, slower for presence ----- */
+  .intro-partners__marquee-track {
+    gap: 18px;
+    animation-duration: 38s;
+  }
+  .intro-partners__logo {
+    width: 172px;
+    height: 112px;
+    padding: 14px 22px;
+  }
+}
+
 @media (max-width: 639px) {
   .intro-partners__spine { display: none; }
   .intro-partners__title {

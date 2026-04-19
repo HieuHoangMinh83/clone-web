@@ -84,3 +84,16 @@
     font-size: clamp(36px, 8vw, 72px);
   }
 }
+
+/* Portrait tablet — giảm chiều cao banner để không quá dài trên iPad
+   dựng đứng (820×1180, 1024×1366...) */
+@media (max-width: 1199px) and (orientation: portrait) {
+  .intro-banner {
+    height: auto;
+    min-height: 0;
+    max-height: min(70vh, 680px);
+  }
+  .intro-banner__inner {
+    padding-top: calc(var(--header-h) + 40px);
+  }
+}

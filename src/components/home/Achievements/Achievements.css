@@ -183,7 +183,7 @@
   }
 }
 
-/* ---------- Stats grid (2x2) ---------- */
+/* ---------- Stats grid (2×2, label luôn 1 dòng) ---------- */
 .ach__stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -192,6 +192,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  align-items: start;
 }
 
 .stat {
@@ -255,7 +256,10 @@
 
 .stat__label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.4em;
+  white-space: nowrap;
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -265,12 +269,12 @@
   padding-top: 6px;
 }
 
-.stat__label-line { display: block; }
+.stat__label-line { display: inline; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1120px) {
   .ach__content { padding: 0 40px; }
-  .ach__stats { gap: 36px 40px; max-width: 440px; }
+  .ach__stats { gap: 30px 36px; max-width: 440px; }
   .ach__bg-veil {
     background:
       linear-gradient(90deg,
@@ -286,7 +290,54 @@
   .ach__quote { padding-left: 24px; }
   .ach__quote-text { font-size: 22px; }
   .ach__bg-img { object-position: 70% center; }
-  .ach__stats { gap: 28px 32px; }
+  .ach__stats {
+    gap: 24px 24px;
+  }
+}
+
+/* Tablet (640–1199px — Home ở scroll mode, breakpoint 1200px)
+   Achievements lock min-height 50vh, content nén lại để KHÔNG vượt 50vh.
+   Padding dọc trước đây dùng % (tính theo width) → trên iPad width 1024
+   quy ra hơn 280px khiến section phồng lên ~640px. Đổi sang vh/px để
+   gắn chặt với chiều cao viewport. */
+@media (min-width: 640px) and (max-width: 1199px) and (orientation: portrait) {
+  /* Ép height thực (không chỉ min-height) để .ach__content {height:100%}
+     resolve đúng, justify-content:center mới hoạt động → text luôn ở giữa */
+  .fullpage--scroll > .ach.section {
+    height: 50vh !important;
+    min-height: 50vh;
+  }
+  .ach__content {
+    height: 100%;
+    justify-content: center;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    gap: 40px;
+  }
+  .ach__quote { padding-left: 26px; }
+  .ach__quote-mark { width: 28px; height: 22px; margin-bottom: 10px; }
+  .ach__quote-text { font-size: clamp(14px, 1.6vw, 18px); line-height: 1.4; }
+  .ach__stats {
+    grid-template-columns: auto auto;
+    justify-content: start;
+    gap: 32px 44px;
+    max-width: 100%;
+  }
+  .stat { gap: 4px; }
+  .stat__num { font-size: clamp(22px, 2.2vw, 28px); }
+  .stat__unit { font-size: 11px; top: -2px; }
+  .stat__num-underline { bottom: -6px; }
+  .stat__label { font-size: 10.5px; padding-top: 2px; }
+  .ach__frame { inset: 20px; }
+}
+
+/* Landscape tablet (<1200px) — thêm padding đều 2 bên để content không
+   bám sát viền */
+@media (max-width: 1199px) and (orientation: landscape) {
+  .ach__content {
+    padding-left: clamp(40px, 6vw, 80px);
+    padding-right: clamp(40px, 6vw, 80px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

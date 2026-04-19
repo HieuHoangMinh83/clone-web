@@ -255,3 +255,39 @@
     padding-top: 24px;
   }
 }
+
+/* ---------- TABLET PORTRAIT (slide mode) ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  .fp-outro__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: calc(var(--header-h) + 40px) 36px 72px;
+    align-content: center;
+  }
+  .fp-outro__eyebrow { font-size: 10px; letter-spacing: 0.22em; margin-bottom: 14px; }
+  .fp-outro__title {
+    font-size: clamp(42px, 6.4vw, 60px);
+    margin-bottom: 18px;
+  }
+  .fp-outro__lede {
+    font-size: 14.5px;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 26px;
+  }
+  .fp-outro__ctas { gap: 12px; }
+  .fp-outro__cta { height: 46px; padding: 0 24px; font-size: 10px; letter-spacing: 0.2em; }
+  .fp-outro__info {
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-left: 0;
+    padding-top: 20px;
+    gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+  }
+  .fp-outro__info-item { transform: translateY(12px); }
+  .fp-outro__info-v { font-size: 13px; }
+  .fp-outro__footer { bottom: 18px; font-size: 9.5px; letter-spacing: 0.16em; }
+}

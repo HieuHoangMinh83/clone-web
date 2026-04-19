@@ -89,3 +89,44 @@
     padding-bottom: 32px;
   }
 }
+
+/* Landscape tablet (<1200px) — thêm padding 2 bên cho các section còn lại
+   (History / VisionMission / Values / Board / Managers / Partners) để
+   content không bám sát mép viewport. Chairman + Banner xử lý riêng. */
+@media (max-width: 1199px) and (orientation: landscape) {
+  .intro-history .intro-container,
+  .intro-vm .intro-container,
+  .intro-values .intro-container,
+  .intro-partners .intro-container,
+  .intro-board__container,
+  .intro-mgr__container {
+    padding-left: clamp(56px, 7vw, 120px);
+    padding-right: clamp(56px, 7vw, 120px);
+  }
+}
+
+/* IntroManagers + IntroPartners — cần padding sớm hơn (dưới 1400px)
+   vì content rộng hơn các section khác */
+@media (max-width: 1399px) {
+  .intro-mgr__container,
+  .intro-partners .intro-container {
+    padding-left: clamp(56px, 5vw, 120px);
+    padding-right: clamp(56px, 5vw, 120px);
+  }
+}
+
+/* Scroll mode (IntroPage portrait — màn hình đọc): rút gọn
+   IntroHistory và IntroVisionMission mỗi cái 50vh để 2 section
+   khớp đúng 1 màn viewport, dễ đọc song song */
+.fullpage--scroll .intro-history,
+.fullpage--scroll .intro-vm {
+  height: 50vh;
+  min-height: 50vh;
+}
+.fullpage--scroll .intro-history .intro-container,
+.fullpage--scroll .intro-vm .intro-container {
+  padding-top: calc(var(--header-h) + 10px);
+  padding-bottom: 20px;
+  padding-left: clamp(32px, 6vw, 72px);
+  padding-right: clamp(32px, 6vw, 72px);
+}

@@ -4,7 +4,9 @@ import bg from '../../../assets/images/intro/bg/managers.png'
 import MANAGERS from '../managers.js'
 import './IntroManagers.css'
 
-const PER_PAGE = 5
+const PER_PAGE_DEFAULT = 5
+const PER_PAGE_PORTRAIT = 3
+const PORTRAIT_QUERY = '(orientation: portrait) and (max-width: 1199px)'
 const AUTO_MS = 5000
 
 function Chevron({ dir = 'right' }) {
@@ -69,9 +71,24 @@ export default function IntroManagers() {
   const [page, setPage] = useState(0)
   const [paused, setPaused] = useState(false)
   const [selected, setSelected] = useState(null)
+  const [perPage, setPerPage] = useState(() => {
+    if (typeof window === 'undefined') return PER_PAGE_DEFAULT
+    return window.matchMedia(PORTRAIT_QUERY).matches ? PER_PAGE_PORTRAIT : PER_PAGE_DEFAULT
+  })
 
-  const totalPages = Math.ceil(MANAGERS.length / PER_PAGE)
-  const visible = MANAGERS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE)
+  useEffect(() => {
+    const mq = window.matchMedia(PORTRAIT_QUERY)
+    const handler = (e) => {
+      setPerPage(e.matches ? PER_PAGE_PORTRAIT : PER_PAGE_DEFAULT)
+      setPage(0)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const totalPages = Math.ceil(MANAGERS.length / perPage)
+  const visible = MANAGERS.slice(page * perPage, page * perPage + perPage)
+  const isShortPage = visible.length < perPage
 
   useEffect(() => {
     const el = sectionRef.current
@@ -138,7 +155,10 @@ export default function IntroManagers() {
             <Chevron dir="left" />
           </button>
 
-          <div className="intro-mgr__row">
+          <div
+            className={`intro-mgr__row${isShortPage ? ' intro-mgr__row--short' : ''}`}
+            style={isShortPage ? { '--n': visible.length } : undefined}
+          >
             {visible.map((m, i) => (
               <article
                 key={m.name}

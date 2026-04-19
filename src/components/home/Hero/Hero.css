@@ -77,3 +77,52 @@
   border-radius: 6px;
   border-color: #fff;
 }
+
+/* Portrait tablet (640–1199px) — Hero cao ăn theo độ rộng
+   (aspect banner 2048×1147 ≈ 16:9), About lấp phần còn lại.
+   Landscape dùng config desktop (slide mode). */
+@media (min-width: 640px) and (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll > .hero.section {
+    height: auto !important;
+    min-height: 0;
+    aspect-ratio: 2048 / 1147;
+  }
+  .hero__track {
+    height: 100%;
+    align-items: stretch;
+  }
+  .hero__slide {
+    height: 100%;
+  }
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero__dots {
+    bottom: 24px;
+  }
+}
+
+/* Mobile (<640px) scroll mode — Hero 50vh, ảnh crop theo khung */
+@media (max-width: 639px) {
+  .fullpage--scroll > .hero.section {
+    height: 50vh !important;
+    min-height: 50vh;
+  }
+  .hero__track {
+    height: 100%;
+    align-items: stretch;
+  }
+  .hero__slide {
+    height: 100%;
+  }
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero__dots {
+    bottom: 18px;
+  }
+}

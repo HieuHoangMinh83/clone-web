@@ -9,14 +9,14 @@ const QUOTE_WORDS = [
 
 const STATS = [
   { prefix: '+', value: 1000, label: 'NHÂN SỰ' },
-  { prefix: '', value: 21, label: 'NĂM\nHOẠT ĐỘNG' },
+  { prefix: '', value: 21, label: 'NĂM HOẠT ĐỘNG' },
   { prefix: '+', value: 150, label: 'DỰ ÁN' },
   {
     prefix: '',
     value: 11500,
     suffix: ' tỷ đồng',
     format: 'thousands',
-    label: 'TỔNG DOANH THU\nNĂM 2023',
+    label: 'TỔNG DOANH THU 2023',
   },
 ]
 

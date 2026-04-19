@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 const TRANSITION_MS = 900
 
-export default function useFullpageScroll(total) {
+export default function useFullpageScroll(total, enabled = true) {
   const [index, setIndex] = useState(0)
   const lockRef = useRef(false)
   const indexRef = useRef(0)
@@ -22,6 +22,7 @@ export default function useFullpageScroll(total) {
   )
 
   useEffect(() => {
+    if (!enabled) return
     const onWheel = (e) => {
       e.preventDefault()
       if (lockRef.current) return
@@ -68,7 +69,7 @@ export default function useFullpageScroll(total) {
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [goTo, total])
+  }, [goTo, total, enabled])
 
-  return { index, goTo }
+  return { index, goTo, setIndex }
 }

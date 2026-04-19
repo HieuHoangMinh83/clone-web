@@ -294,6 +294,50 @@
   .fp-mep__list { grid-template-columns: 1fr; }
   .fp-mep__item { border-right: 0; }
 }
+/* ---------- TABLET PORTRAIT (slide mode) — editorial text-first ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  /* Ẩn circuit visual — orbs absolutely-positioned dễ lộn xộn ở portrait */
+  .fp-mep__visual { display: none; }
+
+  .fp-mep__inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    padding: calc(var(--header-h) + 40px) 44px 48px;
+    align-content: center;
+  }
+  .fp-mep__head {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .fp-mep__title {
+    font-size: clamp(44px, 7.2vw, 66px);
+    line-height: 1.04;
+    margin-bottom: 22px;
+  }
+  .fp-mep__lede {
+    font-size: 15.5px;
+    line-height: 1.72;
+    margin-bottom: 28px;
+    max-width: 620px;
+  }
+  .fp-mep__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 32px;
+    margin-bottom: 24px;
+  }
+  .fp-mep__item { grid-template-columns: 34px 1fr; gap: 14px; padding: 10px 0; }
+  .fp-mep__item:last-child { grid-column: 1 / -1; }
+  .fp-mep__item-icon { width: 34px; height: 34px; }
+  .fp-mep__item-title { font-size: 15px; }
+  .fp-mep__item-hint { font-size: 10.5px; letter-spacing: 0.04em; }
+  .fp-mep__std { padding: 14px 0 16px; margin-bottom: 16px; gap: 10px; }
+  .fp-mep__std-label { font-size: 10px; letter-spacing: 0.22em; }
+  .fp-mep__std-pill { font-size: 10.5px; padding: 6px 11px; letter-spacing: 0.12em; }
+  .fp-mep__tech { font-size: 10.5px; gap: 14px; letter-spacing: 0.14em; }
+}
+
 @media (max-width: 720px) {
   .fp-mep__inner { padding-left: 20px; padding-right: 20px; }
   .fp-mep__title { font-size: clamp(30px, 9vw, 44px); }

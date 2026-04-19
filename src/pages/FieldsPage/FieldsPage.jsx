@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
@@ -36,34 +37,64 @@ const SECTION_TONES = [
   'light',
 ]
 
+/* Slide mode chỉ bật khi viewport landscape.
+   Portrait (iPad dọc, mobile) → scroll thường. */
+const SLIDE_QUERY = '(orientation: landscape)'
+
 export default function FieldsPage() {
   const total = SECTION_LABELS.length
-  const { index, goTo } = useFullpageScroll(total)
+  const [isSlide, setIsSlide] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.matchMedia(SLIDE_QUERY).matches
+  })
+  const { index, goTo, setIndex } = useFullpageScroll(total, isSlide)
+
+  useEffect(() => {
+    const mq = window.matchMedia(SLIDE_QUERY)
+    const handler = (e) => {
+      setIsSlide(e.matches)
+      if (!e.matches) setIndex(0)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [setIndex])
+
+  useEffect(() => {
+    if (isSlide) return
+    document.body.classList.add('is-scroll-page')
+    document.documentElement.classList.add('is-scroll-page')
+    return () => {
+      document.body.classList.remove('is-scroll-page')
+      document.documentElement.classList.remove('is-scroll-page')
+    }
+  }, [isSlide])
 
   return (
     <>
       <Header />
       <div
-        className="fullpage"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
+        className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
+        style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
-        <FieldsBanner active={index === 0} />
-        <FieldsDB active={index === 1} />
-        <FieldsConstruction active={index === 2} />
-        <FieldsMEP active={index === 3} />
-        <FieldsSafety active={index === 4} />
-        <FieldsHR active={index === 5} />
-        <FieldsEquipment active={index === 6} />
-        <FieldsISO active={index === 7} />
-        <FieldsOutro active={index === 8} />
+        <FieldsBanner active={!isSlide || index === 0} />
+        <FieldsDB active={!isSlide || index === 1} />
+        <FieldsConstruction active={!isSlide || index === 2} />
+        <FieldsMEP active={!isSlide || index === 3} />
+        <FieldsSafety active={!isSlide || index === 4} />
+        <FieldsHR active={!isSlide || index === 5} />
+        <FieldsEquipment active={!isSlide || index === 6} />
+        <FieldsISO active={!isSlide || index === 7} />
+        <FieldsOutro active={!isSlide || index === 8} />
       </div>
-      <SectionIndicator
-        current={index}
-        total={total}
-        onNav={goTo}
-        labels={SECTION_LABELS}
-        tone={SECTION_TONES[index]}
-      />
+      {isSlide && (
+        <SectionIndicator
+          current={index}
+          total={total}
+          onNav={goTo}
+          labels={SECTION_LABELS}
+          tone={SECTION_TONES[index]}
+        />
+      )}
     </>
   )
 }

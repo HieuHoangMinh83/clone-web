@@ -73,8 +73,8 @@ p {
 }
 
 /* Fullpage viewport — mỗi .section child là 1 màn 100vh.
-   Dùng cho desktop/tablet (>= 768px). Trên mobile, hệ thống chuyển
-   sang scroll thường qua class .fullpage--scroll. */
+   Dùng cho laptop/desktop (>= 1024px). Dưới 1024px (mobile + tablet),
+   hệ thống chuyển sang scroll thường qua class .fullpage--scroll. */
 .fullpage {
   position: fixed;
   inset: 0;
@@ -100,6 +100,14 @@ p {
   width: 100% !important;
   height: auto !important;
   min-height: 100vh;
+}
+
+/* Portrait viewport (scroll mode) — mỗi section chỉ chiếm 50vh
+   để xem gọn hơn. Landscape dùng config desktop (slide mode). */
+@media (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll > .section {
+    min-height: 50vh;
+  }
 }
 
 .section {

@@ -42,8 +42,9 @@
   position: relative;
   z-index: 2;
   margin-left: auto;
-  width: min(52%, 580px);
+  width: min(60%, 580px);
   color: #fff;
+  text-align: justify;
 }
 .intro-chairman__eyebrow {
   display: inline-flex;
@@ -67,6 +68,7 @@
   flex-direction: column;
   line-height: 1.1;
   margin: 0 0 10px;
+  padding-left: 19px;
   color: #fff;
   font-size: clamp(30px, 3.2vw, 44px);
   letter-spacing: 0.01em;
@@ -215,12 +217,68 @@
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1199px) {
   .intro-chairman .intro-container {
     align-items: flex-start;
   }
   .intro-chairman__copy {
     width: min(64%, 520px);
+    padding-right: 40px;
+  }
+}
+
+/* Portrait tablet — giảm chiều cao section & banner photo theo
+   aspect-ratio của viewport gốc để text + ảnh nền cân đối.
+   Chia 2 range: "rộng" (iPad aspect ≥ 3/5) và "cao" (phone aspect < 3/5) */
+
+/* Portrait rộng: iPad 820×1180 (0.69), 768×1024 (0.75), iPad Pro 1024×1366 (0.75)
+   — aspect ≥ 3/5. Cap bằng min(vh, px) để viewport cao (1366) không phồng to */
+@media (max-width: 1199px) and (orientation: portrait) and (min-aspect-ratio: 3/5) {
+  .intro-chairman {
+    height: auto;
+    min-height: 0;
+    max-height: min(72vh, 720px);
+  }
+  .intro-chairman .intro-container {
+    padding-top: calc(var(--header-h) - 30px);
+  }
+  .intro-chairman__photo {
+    width: min(88vw, 720px);
+    max-height: 42vh;
+  }
+  .intro-chairman__copy {
+    width: min(86%, 620px);
+  }
+  .intro-chairman__watermark {
+    font-size: clamp(110px, 16vw, 200px);
+  }
+}
+
+/* Portrait cao: phone ~ 390×844 (0.46), 412×915 (0.45) — aspect < 3/5 */
+@media (max-width: 1199px) and (orientation: portrait) and (max-aspect-ratio: 3/5) {
+  .intro-chairman {
+    height: auto;
+    min-height: 0;
+    max-height: min(58vh, 560px);
+  }
+  .intro-chairman__photo {
+    width: 100vw;
+    max-height: 32vh;
+  }
+  .intro-chairman__copy {
+    width: 100%;
+    padding: 0 16px;
+  }
+  .intro-chairman__watermark {
+    font-size: clamp(80px, 18vw, 140px);
+  }
+}
+
+/* Landscape tablet (<1200px) — pad đều 4 phía để copy không dán sát
+   mép ảnh chairman đằng sau */
+@media (max-width: 1199px) and (orientation: landscape) {
+  .intro-chairman__copy {
+    padding: 24px 61px;
   }
   .intro-chairman__photo {
     width: min(78vw, 760px);

@@ -355,6 +355,45 @@
   .fp-iso__pdca-item + .fp-iso__pdca-item { border-left: 0; padding-left: 0; }
   .fp-iso__foot { flex-direction: column; gap: 8px; text-align: center; }
 }
+/* ---------- TABLET PORTRAIT (slide mode) ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  .fp-iso__inner {
+    padding: calc(var(--header-h) + 16px) 36px 24px;
+    gap: 18px;
+  }
+  .fp-iso__title { font-size: clamp(34px, 5.4vw, 48px); }
+  .fp-iso__lede { font-size: 13.5px; line-height: 1.65; max-width: 620px; }
+  .fp-iso__cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 100%;
+  }
+  .fp-iso__card { padding: 18px 16px 16px; }
+  .fp-iso__card-medal { width: 68px; height: 68px; margin-bottom: 10px; }
+  .fp-iso__card-medal-iso { font-size: 13px; }
+  .fp-iso__card-medal-num { font-size: 14px; }
+  .fp-iso__card-year { font-size: 9.5px; letter-spacing: 0.16em; }
+  .fp-iso__card-name { font-size: 16px; margin-bottom: 8px; }
+  .fp-iso__card-rule { margin-bottom: 8px; }
+  .fp-iso__card-desc { font-size: 11.5px; line-height: 1.5; margin-bottom: 12px; }
+  .fp-iso__card-tag { font-size: 9px; letter-spacing: 0.18em; }
+  .fp-iso__pdca {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .fp-iso__pdca-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .fp-iso__pdca-item { padding: 0 10px 0 0; gap: 8px; }
+  .fp-iso__pdca-item + .fp-iso__pdca-item { padding-left: 10px; border-left: 1px solid rgba(6, 18, 42, 0.10); }
+  .fp-iso__pdca-l { font-size: 13px; }
+  .fp-iso__pdca-d { font-size: 8.5px; letter-spacing: 0.14em; }
+  .fp-iso__foot { font-size: 10px; letter-spacing: 0.14em; gap: 10px; padding-top: 12px; }
+}
+
 @media (max-width: 720px) {
   .fp-iso__inner { padding-left: 20px; padding-right: 20px; }
   .fp-iso__pdca-list { grid-template-columns: 1fr; }

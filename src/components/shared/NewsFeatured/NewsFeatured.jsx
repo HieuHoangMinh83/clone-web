@@ -56,7 +56,7 @@ export default function NewsFeatured() {
   return (
     <section
       ref={sectionRef}
-      className={`news-sec news-featured ${inView ? 'is-in' : ''}`}
+      className={`news-sec news-featured section ${inView ? 'is-in' : ''}`}
     >
       <div className="news-featured__bg" aria-hidden>
         <span className="news-featured__bg-grid" />

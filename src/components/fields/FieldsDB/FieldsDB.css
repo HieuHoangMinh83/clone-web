@@ -273,6 +273,35 @@
   .fp-db__headline { gap: 14px; }
   .fp-db__headline-text { white-space: normal; }
 }
+/* ---------- TABLET PORTRAIT (slide mode) ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  .fp-db__inner {
+    padding: calc(var(--header-h) + 24px) 36px 40px;
+    justify-content: center;
+  }
+  .fp-db__head { max-width: 680px; }
+  .fp-db__title { font-size: clamp(38px, 6vw, 56px); margin-top: 8px; }
+  .fp-db__lede {
+    font-size: 14.5px;
+    line-height: 1.72;
+    margin-top: 22px;
+    max-width: 640px;
+  }
+  .fp-db__headline { margin-top: 26px; gap: 14px; }
+  .fp-db__headline-text { font-size: 12px; white-space: normal; letter-spacing: 0.1em; }
+  .fp-db__cards {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 40px 0 0;
+    row-gap: 24px;
+  }
+  .fp-db__card:nth-child(3)::before,
+  .fp-db__card:nth-child(3)::after { display: none; }
+  .fp-db__card { padding: 18px 22px 10px; }
+  .fp-db__card-icon { width: 44px; height: 44px; margin-bottom: 14px; }
+  .fp-db__card-title { font-size: 15.5px; min-height: 2.4em; margin-bottom: 8px; }
+  .fp-db__card-desc { font-size: 12.5px; line-height: 1.6; }
+}
+
 @media (max-width: 720px) {
   .fp-db__inner { padding: calc(var(--header-h) + 32px) 24px 32px; }
   .fp-db__cards { grid-template-columns: 1fr; margin-top: 32px; }

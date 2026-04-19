@@ -244,3 +244,26 @@
   0%, 100% { transform: scaleY(1); transform-origin: top; opacity: 0.4; }
   50% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
 }
+
+/* ---------- TABLET PORTRAIT (slide mode) ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  .fp-banner__inner {
+    padding: calc(var(--header-h) + 48px) 32px 110px;
+    justify-content: center;
+  }
+  .fp-banner__kicker { font-size: 11px; letter-spacing: 0.36em; margin-bottom: 22px; }
+  .fp-banner__title {
+    font-size: clamp(64px, 13vw, 112px);
+    line-height: 1.02;
+  }
+  .fp-banner__mark { margin: 24px auto 20px; }
+  .fp-banner__sub {
+    font-size: clamp(15px, 2vw, 17px);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 30px;
+  }
+  .fp-banner__crumb { font-size: 11px; padding: 9px 20px; letter-spacing: 0.2em; }
+  .fp-banner__scroll { bottom: 28px; font-size: 10px; letter-spacing: 0.28em; }
+  .fp-banner__scroll-line { height: 36px; }
+}

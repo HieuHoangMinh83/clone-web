@@ -265,6 +265,49 @@
   .fp-cons__badge { right: -8px; }
   .fp-cons__dim { display: none; }
 }
+/* ---------- TABLET PORTRAIT (slide mode) — editorial text-first ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  /* Ẩn plate trang trí — background image + bgtint đã đủ không khí */
+  .fp-cons__plate { display: none; }
+
+  .fp-cons__inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    padding: calc(var(--header-h) + 40px) 44px 48px;
+    align-content: center;
+  }
+  .fp-cons__head {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .fp-cons__title {
+    font-size: clamp(44px, 7.2vw, 68px);
+    line-height: 1.04;
+    margin-bottom: 22px;
+  }
+  .fp-cons__lede {
+    font-size: 15.5px;
+    line-height: 1.72;
+    margin-bottom: 34px;
+    max-width: 620px;
+  }
+  .fp-cons__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 36px;
+  }
+  .fp-cons__item {
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--fp-line-light);
+  }
+  .fp-cons__node { width: 32px; height: 32px; }
+  .fp-cons__item-title { font-size: 16.5px; margin-bottom: 4px; }
+  .fp-cons__item-desc { font-size: 13px; line-height: 1.6; }
+}
+
 @media (max-width: 720px) {
   .fp-cons__inner { padding-left: 20px; padding-right: 20px; }
 }

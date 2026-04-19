@@ -78,10 +78,11 @@
   50% { transform: translate(-30px, -40px) scale(1.1); }
 }
 
-/* --- Grid (tiles flush to viewport right, wider) --- */
+/* --- Grid (tiles flush to viewport right, wider) ---
+   Cột tiles (2 ảnh) tối đa 50vw để trên màn nhỏ không nuốt hết phần intro */
 .about__grid {
   display: grid;
-  grid-template-columns: 1fr 760px;
+  grid-template-columns: 1fr min(50vw, 760px);
   height: 100%;
   align-items: stretch;
   width: 100%;
@@ -557,12 +558,20 @@
    RESPONSIVE
    - 1024px–1199px (tablet landscape / small desktop): vẫn 2 cột,
      text rộng hơn, 2 tiles bên phải nhỏ lại
-   - 768px–1023px (tablet portrait): 1 cột stack
-   - < 768px (mobile): 1 cột + tiles stack
+   - 640px–1023px (tablet): giữ nguyên 2 cột (intro trái + 2 tiles
+     phải), chỉ thu nhỏ cột tiles và giảm padding
+   - < 640px (mobile): 1 cột + tiles stack
    ================================================================ */
-@media (min-width: 1024px) and (max-width: 1199px) {
+@media (min-width: 1024px) and (max-width: 1199px) and (orientation: portrait) {
+  /* About lấy phần còn lại của viewport sau khi Hero chiếm
+     (100vw × 1147 / 2048) theo aspect-ratio ảnh banner */
+  .fullpage--scroll > .about.section {
+    height: calc(100vh - 100vw * 1147 / 2048) !important;
+    min-height: calc(100vh - 100vw * 1147 / 2048);
+  }
   .about__grid {
-    grid-template-columns: 1.5fr 480px;
+    grid-template-columns: 1.5fr min(50vw, 480px);
+    height: 100%;
   }
   .about__intro {
     padding: 100px 40px 60px clamp(40px, 5vw, 64px);
@@ -591,22 +600,72 @@
   .tile__title-bot { font-size: 22px; }
 }
 
-@media (max-width: 1023px) {
+@media (min-width: 640px) and (max-width: 1023px) and (orientation: portrait) {
+  /* About lấy phần viewport còn lại sau Hero (aspect 2048/1147)
+     để tổng Hero + About = 100vh */
+  .fullpage--scroll > .about.section {
+    height: calc(100vh - 100vw * 1147 / 2048) !important;
+    min-height: calc(100vh - 100vw * 1147 / 2048);
+  }
+  .about__grid {
+    grid-template-columns: 1fr clamp(320px, 44vw, 520px);
+    grid-template-rows: none;
+    height: 100%;
+    min-height: 0;
+  }
+  .about__intro {
+    padding: clamp(80px, 10vw, 120px) clamp(24px, 3vw, 40px) clamp(40px, 6vw, 64px) clamp(24px, 4vw, 48px);
+    max-width: 100%;
+    min-height: 0;
+  }
+  .about__title {
+    font-size: clamp(28px, 4.6vw, 42px);
+  }
+  .about__title-brand {
+    letter-spacing: -0.02em;
+  }
+  .about__body {
+    max-width: 100%;
+    font-size: clamp(13px, 1.6vw, 15px);
+    line-height: 1.65;
+  }
+  .about__tag {
+    max-width: 100%;
+    font-size: clamp(14px, 1.7vw, 16px);
+  }
+  .about__glyph {
+    width: 160px;
+    height: 180px;
+    top: -24px;
+    left: -36px;
+  }
+  .about__tiles {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tile {
+    padding: 24px 14px 20px;
+    min-height: 0;
+  }
+  .tile__title-top { font-size: 13px; }
+  .tile__title-bot { font-size: 20px; }
+  .tile__cta { font-size: 10px; }
+}
+
+@media (max-width: 639px) {
   .about__grid {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     height: 100%;
   }
   .about__intro {
-    padding: clamp(80px, 12vh, 120px) clamp(24px, 4vw, 48px) clamp(20px, 3vh, 32px);
+    padding: 72px 20px 20px;
     max-width: 100%;
     min-height: 0;
   }
   .about__title {
-    font-size: clamp(30px, 5.4vw, 46px);
+    font-size: clamp(26px, 7vw, 36px);
   }
   .about__title-brand {
-    /* Khi viewport hẹp, chữ NEWTECONS có thể wrap — cho phép nó co lại */
     letter-spacing: -0.02em;
   }
   .about__body {
@@ -617,32 +676,6 @@
   .about__tag {
     max-width: 100%;
     font-size: clamp(13px, 1.7vw, 16px);
-  }
-  .about__glyph {
-    width: 160px;
-    height: 180px;
-    top: -20px;
-    left: -30px;
-  }
-  .about__tiles {
-    grid-template-columns: 1fr 1fr;
-    min-height: clamp(180px, 28vh, 260px);
-  }
-  .tile {
-    padding: 24px 16px 20px;
-    min-height: 0;
-  }
-  .tile__title-top { font-size: 13px; }
-  .tile__title-bot { font-size: 18px; }
-  .tile__cta { font-size: 10px; }
-}
-
-@media (max-width: 639px) {
-  .about__intro {
-    padding: 72px 20px 20px;
-  }
-  .about__title {
-    font-size: clamp(26px, 7vw, 36px);
   }
   .about__glyph {
     display: none;

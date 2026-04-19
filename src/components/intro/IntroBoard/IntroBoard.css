@@ -48,14 +48,14 @@
 /* TITLE */
 .intro-board__title-block {
   position: relative;
-  text-align: center;
+  text-align: left;
   flex-shrink: 0;
 }
 .intro-board__title {
   font-family: var(--font-sans);
   font-size: clamp(32px, 3.4vw, 46px);
   font-weight: 500;
-  line-height: 1.18;
+  line-height: 1.1;
   color: #245692;
   text-transform: uppercase;
   margin: 0;
@@ -68,18 +68,27 @@
 .intro-board__title-accent {
   width: 56px;
   height: 3px;
-  margin: 18px auto 0;
-  background: linear-gradient(90deg, transparent, #3681dd, transparent);
+  margin: 14px 0 0;
+  background: linear-gradient(90deg, #3681dd, transparent);
   border-radius: 2px;
 }
 
-/* FEATURED (title | avatar | name — all in a row) */
+/* FEATURED (title | avatar | name — all in a row, cùng 1 hàng ngang giữa)
+   Dùng grid 1fr auto 1fr để avatar luôn ở chính giữa, hai khối 2 bên
+   cân đối, bất kể độ rộng nội dung khác nhau. */
 .intro-board__featured {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: center;
-  gap: 36px;
-  flex-wrap: wrap;
+  justify-items: center;
+  gap: 44px;
+  width: 100%;
+}
+.intro-board__featured > .intro-board__title-block {
+  justify-self: end;
+}
+.intro-board__featured > .intro-board__meta--lg {
+  justify-self: start;
 }
 
 /* AVATAR (plain image, no border, no card, no hover) */
@@ -135,12 +144,14 @@
 /* META */
 .intro-board__meta {
   text-align: center;
-  max-width: 170px;
+  max-width: none;
 }
 .intro-board__meta--lg {
   text-align: left;
   max-width: 260px;
   flex-shrink: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid #3681dd;
 }
 .intro-board__name {
   font-family: var(--font-sans);
@@ -150,9 +161,11 @@
   color: #004a99;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 .intro-board__meta--lg .intro-board__name {
-  font-size: 16px;
+  font-size: 17px;
+  letter-spacing: 0.04em;
 }
 .intro-board__role {
   font-size: 12px;
@@ -166,32 +179,66 @@
   margin-top: 6px;
 }
 
-/* GRID */
-.intro-board__grid {
+/* STAGE (carousel wrapper — arrows ẩn ở desktop, hiện ở portrait) */
+.intro-board__stage {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 48px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.intro-board__arrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 74, 153, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+  color: #004a99;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.intro-board__arrow:hover {
+  background: var(--blue-500);
+  color: #fff;
+  transform: translateX(0);
+}
+.intro-board__arrow--prev:hover { transform: translateX(-2px); }
+.intro-board__arrow--next:hover { transform: translateX(2px); }
+
+/* GRID — desktop 5 card dàn đều full width (space-between),
+   portrait 3 card center (override riêng trong portrait media query) */
+.intro-board__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 24px;
   width: 100%;
   max-width: 1100px;
-  justify-items: stretch;
+  margin: 0 auto;
+  animation: board-page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Desktop không có arrow → grid là con duy nhất của stage (grid 3 cột).
+   Cho nó span đủ 3 cột để margin: 0 auto căn giữa đúng 2 bên. */
+.intro-board__stage > .intro-board__grid:only-child {
+  grid-column: 1 / -1;
 }
 .intro-board__card {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  width: 100%;
+  flex: 0 0 auto;
+  width: 180px;
   opacity: 0;
   transform: translateY(24px);
+  animation: board-card-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--ci, 0) * 0.08s + 0.08s);
 }
-@keyframes board-card-in {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.intro-board.is-in .intro-board__card {
-  animation: board-card-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--ci, 0) * 0.1s + 0.5s);
-}
+/* Card animation đã đặt trên .intro-board__card base (board-card-page-in)
+   — replay cả khi section enter (mount) lẫn khi đổi page (key remount) */
 
 /* ENTRANCE */
 @keyframes board-head-in {
@@ -223,8 +270,111 @@
     gap: 14px;
   }
 }
-@media (max-width: 768px) {
+
+/* Portrait scroll mode — rút chiều cao section còn 50vh, container canh
+   giữa dọc, bỏ hết padding để content không bị cắt */
+@media (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll .intro-board {
+    height: 50vh;
+    min-height: 50vh;
+  }
+  .fullpage--scroll .intro-board .intro-board__container {
+    padding: 0;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+/* iPad landscape 1366×1024 — section 100vh slide còn cao, thu container gọn */
+@media (min-width: 1024px) and (max-width: 1400px) and (max-height: 1100px) and (orientation: landscape) {
+  .intro-board__container {
+    padding-top: calc(var(--header-h) + 2px);
+    padding-bottom: 24px;
+    gap: 14px;
+  }
+  .intro-board__title { font-size: clamp(26px, 2.6vw, 34px); }
+  .intro-board__title-accent { margin-top: 10px; }
+  .intro-board__featured { gap: 24px; }
+  .intro-board__avatar--lg { width: clamp(200px, 22vh, 260px); }
+  .intro-board__grid { gap: 24px; }
+}
+
+/* Portrait (dọc, <1200) — stack featured dọc, carousel 3 card/trang +
+   hiệu ứng fade/slide mỗi lần chuyển trang */
+@media (max-width: 1199px) and (orientation: portrait) {
+  .intro-board__container {
+    padding: 0;
+    justify-content: center;
+    gap: 16px;
+  }
   .intro-board__featured {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    gap: clamp(16px, 3vw, 28px);
+    flex-wrap: nowrap;
+  }
+  .intro-board__featured > .intro-board__title-block,
+  .intro-board__featured > .intro-board__meta--lg {
+    justify-self: auto;
+  }
+  .intro-board__title-block { text-align: left; }
+  .intro-board__title {
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.1;
+  }
+  .intro-board__title-accent {
+    margin: 10px 0 0;
+    width: 40px;
+    background: linear-gradient(90deg, #3681dd, transparent);
+  }
+  .intro-board__meta--lg {
+    text-align: left;
+    max-width: 180px;
+    padding: 4px 0 4px 14px;
+  }
+  .intro-board__meta--lg .intro-board__name {
+    font-size: 13.5px;
+    white-space: normal;
+  }
+  .intro-board__meta--lg .intro-board__role {
+    font-size: 11.5px;
+  }
+  .intro-board__avatar--lg {
+    width: clamp(150px, 22vw, 210px);
+  }
+  .intro-board__stage {
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .intro-board__grid {
+    justify-content: center;
+    column-gap: 20px;
+    row-gap: 20px;
+    max-width: 680px;
+  }
+  .intro-board__grid .intro-board__card {
+    width: calc((100% - 40px) / 3);
+    max-width: 200px;
+    animation: board-card-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--ci, 0) * 0.08s + 0.08s);
+  }
+}
+
+@keyframes board-page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes board-card-page-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+/* Mobile thực sự (<768) — mới stack column. 768+ portrait giữ flex-row
+   (đã xử lý ở rule (max-width:1199) and (orientation:portrait) phía trên) */
+@media (max-width: 767px) {
+  .intro-board__featured {
+    display: flex;
     flex-direction: column;
     text-align: center;
     gap: 16px;

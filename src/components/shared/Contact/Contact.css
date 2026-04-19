@@ -16,6 +16,22 @@
   background: linear-gradient(120deg, #3a6fb0 0%, #4a82c4 40%, #5a95d4 75%, #7bb0e5 100%);
 }
 
+/* Scroll mode (HomePage <1200px): bỏ min-height 100vh/50vh của global,
+   để Contact bó sát chiều cao content, không còn dải xanh trống dưới chân */
+.fullpage--scroll > .contact.section {
+  min-height: 0;
+}
+
+/* Portrait tablet (640–1199) — Contact + NewsFeatured phải tổng
+   đúng 100vh, mỗi section 50vh. Landscape dùng config desktop. */
+@media (min-width: 640px) and (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll > .contact.section {
+    height: 50vh !important;
+    min-height: 50vh;
+    max-height: 50vh;
+  }
+}
+
 /* ---------- Background ---------- */
 .contact__bg {
   position: absolute;
@@ -505,11 +521,11 @@
 
 /* ================================================================
    RESPONSIVE
-   - 1024px–1199px: 2 cột, pane to hơn, ảnh visual nhỏ lại
-   - 768px–1023px : 1 cột, pane scroll trong section, ẩn visual
+   - 1025px–1199px: 2 cột, pane to hơn, ảnh visual nhỏ lại (small desktop)
+   - 768px–1024px : tablet/iPad Pro — visual phủ full, pane overlay
    - < 768px      : 1 cột, padding nhỏ, font giảm
    ================================================================ */
-@media (min-width: 1024px) and (max-width: 1199px) {
+@media (min-width: 1025px) and (max-width: 1199px) and (orientation: portrait) {
   .contact__layout {
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   }
@@ -523,8 +539,9 @@
   .contact__group { gap: 5px; }
 }
 
-/* Tablet (iPad) — visual phủ full section, pane overlay trong suốt */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* Portrait tablet (768–1024px) — visual phủ full, pane overlay trong suốt.
+   Landscape dùng config desktop. */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .contact__layout {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;

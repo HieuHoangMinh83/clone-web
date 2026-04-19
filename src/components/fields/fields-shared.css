@@ -151,6 +151,33 @@
   .fp-crosshair--tr, .fp-crosshair--br { right: 16px; }
 }
 
+/* ---------- TABLET PORTRAIT — slide mode shared adjustments ---------- */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
+  .fp-marker {
+    top: calc(var(--header-h) + 10px);
+    right: 24px;
+    font-size: clamp(90px, 16vw, 150px);
+  }
+  .fp-crosshair--tl, .fp-crosshair--tr {
+    top: calc(var(--header-h) + 14px);
+  }
+  .fp-crosshair--tl, .fp-crosshair--bl { left: 20px; }
+  .fp-crosshair--tr, .fp-crosshair--br { right: 20px; }
+  .fp-crosshair--bl, .fp-crosshair--br { bottom: 20px; }
+}
+
+/* ---------- Scroll mode: section co theo content, không ép 100vh ---------- */
+.fullpage--scroll .fp-sec {
+  height: auto;
+  min-height: 0;
+}
+.fullpage--scroll .fp-sec > [class$="__inner"],
+.fullpage--scroll .fp-sec > [class*="__inner "] {
+  height: auto;
+}
+/* Banner giữ một khoảng hero */
+.fullpage--scroll .fp-banner { min-height: 80vh; }
+
 @media (prefers-reduced-motion: reduce) {
   .fp-sec *, .fp-panel * {
     animation: none !important;

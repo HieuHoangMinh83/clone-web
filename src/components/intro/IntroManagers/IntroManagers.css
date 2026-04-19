@@ -25,7 +25,7 @@
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  margin-bottom: clamp(14px, 1.8vh, 24px);
+  margin-bottom: clamp(32px, 4.5vh, 56px);
   text-align: center;
 }
 .intro-mgr__title {
@@ -81,6 +81,21 @@
   gap: clamp(14px, 1.4vw, 24px);
   align-items: center;
   min-width: 0;
+  justify-content: center;
+  /* Fix chiều cao theo card full (220px × 4/3 photo + meta) + dự phòng
+     zigzag ±40 → chuyển page short không co chiều cao parent. */
+  min-height: 420px;
+}
+/* Page không đầy (1-2 người lẻ) — co cột về đúng max-width của card và
+   center cụm lại thay vì dàn đều theo full width của row.
+   Card-w ở short page nhỏ hơn full page (220→170) để 1-2 người không
+   to quá, trông cân đối hơn. Specificity bump để thắng override trong MQ. */
+.intro-mgr__row.intro-mgr__row--short {
+  --card-w: 170px;
+  grid-template-columns: repeat(var(--n, 1), minmax(0, var(--card-w)));
+}
+.intro-mgr__row.intro-mgr__row--short .intro-mgr__card {
+  max-width: var(--card-w);
 }
 
 /* ========== ARROW BUTTONS ========== */
@@ -129,7 +144,8 @@
               0 10px 28px rgba(2, 45, 95, 0.14);
 }
 
-/* zigzag — chẵn lên, lẻ xuống (dùng margin để không đụng transform animation) */
+/* zigzag — chẵn lên, lẻ xuống (dùng margin để không đụng transform animation).
+   Chỉ áp dụng ở desktop/tablet (đủ 5 hoặc 4 card); portrait sẽ override = 0. */
 .intro-mgr__card--up   { margin-top: -40px; }
 .intro-mgr__card--down { margin-top: 40px; }
 
@@ -291,8 +307,68 @@
   .intro-mgr__row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
+    min-height: 380px;
   }
   .intro-mgr__card:nth-child(5) { display: none; }
+}
+
+/* Portrait (dọc, <1200) — redesign gọn lại: section cap 50vh, typography
+   scale nhỏ, tắt zigzag, card nhỏ hơn, arrow nhẹ, cân đối với IntroBoard */
+@media (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll .intro-mgr {
+    height: auto;
+    min-height: 50vh;
+    max-height: 58vh;
+  }
+  .intro-mgr__container {
+    padding: calc(var(--header-h) + 8px) 0 16px;
+    gap: 10px;
+    justify-content: center;
+  }
+  .intro-mgr__head {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .intro-mgr__title {
+    font-size: clamp(20px, 3.2vw, 28px);
+    gap: 10px;
+    letter-spacing: 0.03em;
+  }
+  .intro-mgr__title-dash {
+    width: clamp(28px, 4vw, 48px);
+  }
+  .intro-mgr__desc {
+    font-size: clamp(11px, 1.4vw, 13px);
+    line-height: 1.55;
+    max-width: 92%;
+  }
+  .intro-mgr__stage {
+    gap: clamp(20px, 3.5vw, 44px);
+    padding: 6px 0;
+  }
+  .intro-mgr__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .intro-mgr__card {
+    max-width: 170px;
+  }
+  .intro-mgr__row {
+    min-height: 280px;
+  }
+  .intro-mgr__row.intro-mgr__row--short { --card-w: 140px; }
+  .intro-mgr__card--up,
+  .intro-mgr__card--down { margin-top: 0; }
+  .intro-mgr__photo { border-radius: 10px; }
+  .intro-mgr__meta { padding: 8px 2px 0; }
+  .intro-mgr__name { font-size: 11.5px; letter-spacing: 0.03em; }
+  .intro-mgr__role { font-size: 10.5px; }
+  .intro-mgr__arrow { width: 36px; height: 36px; }
+  .intro-mgr__dots { margin-top: 10px; }
+  .intro-mgr__dot { width: 8px; height: 8px; }
+  .intro-mgr__dot.is-active { width: 22px; }
 }
 @media (max-width: 767px) {
   .intro-mgr__container {

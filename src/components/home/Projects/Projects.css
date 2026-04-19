@@ -146,14 +146,14 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.7) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
-  opacity: 0.6;
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, transparent 50%);
+  opacity: 0.35;
   transition: opacity 0.5s ease;
 }
 
 .pcard.is-active .pcard__shade {
-  opacity: 1;
+  opacity: 0.7;
 }
 
 /* ====== Body (active card) ====== */
@@ -261,7 +261,16 @@
 }
 
 /* ====== Responsive ====== */
-@media (max-width: 1024px) {
+/* Portrait tablet (640–1199) — ép height thực để rail/pcard {height:100%}
+   resolve đúng. Landscape dùng config desktop. */
+@media (min-width: 640px) and (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll > .projects.section {
+    height: 50vh !important;
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
   .projects__head {
     display: none;
   }
@@ -271,7 +280,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 639px) {
   .projects {
     height: auto;
     min-height: 100vh;

@@ -10,8 +10,10 @@ import './IntroValues.css'
    x/y = phần trăm viewport. x=50 luôn là giữa màn hình, y=100 là đáy màn hình.
    ===================================================================== */
 
-// Ngưỡng chia breakpoint (px). Viewport >= BP_LARGE → dùng LG, ngược lại → SM
-const BP_LARGE = 1700
+// Ngưỡng chia breakpoint (px). Viewport >= BP_LARGE → dùng LG, ngược lại → SM.
+// Giữ BP_LARGE ở ngưỡng rất cao để luôn dùng SM — arc kiến trúc thống nhất
+// trên mọi màn ngang (feet 24/76 bung rộng, apex 46). LG giữ lại cho tham khảo.
+const BP_LARGE = 99999
 
 // ---------- 📐 CONFIG cho MÀN ≥ 1700 (LG) ----------
 const LG = {

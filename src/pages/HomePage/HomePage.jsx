@@ -44,7 +44,9 @@ const NAV_TRANSPARENT = [
 ]
 
 const TRANSITION_MS = 900
-const SLIDE_BREAKPOINT = '(min-width: 768px)' // tablet trở lên dùng slide
+/* Slide mode bật ở landscape (ngang) và desktop ≥1200px.
+   Portrait (iPad dựng đứng, mobile) → scroll thường dùng config tablet riêng. */
+const SLIDE_BREAKPOINT = '(orientation: landscape), (min-width: 1200px)'
 
 export default function HomePage() {
   const total = SECTION_LABELS.length
