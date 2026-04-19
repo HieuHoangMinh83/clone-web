@@ -14,6 +14,21 @@ import './NewsDetail.css'
 const SECTION_LABELS = ['Mở đầu', 'Giới thiệu', 'Trích dẫn', 'Con số', 'Kết luận', 'Liên quan', 'Liên hệ']
 const SECTION_TONES = ['light', 'paper', 'dark', 'dark', 'paper', 'paper', 'light']
 const TRANSITION_MS = 900
+const PORTRAIT_QUERY = '(orientation: portrait)'
+
+function useIsPortrait() {
+  const get = () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia(PORTRAIT_QUERY).matches
+  const [p, setP] = useState(get)
+  useEffect(() => {
+    const mq = window.matchMedia(PORTRAIT_QUERY)
+    const handler = () => setP(mq.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return p
+}
 
 function NotFoundPage() {
   return (
@@ -37,10 +52,22 @@ export default function NewsDetail({ slug }) {
   const article = useMemo(() => findArticleBySlug(slug), [slug])
   const related = useMemo(() => getRelatedArticles(slug, 3), [slug])
   const total = SECTION_LABELS.length
+  const isPortrait = useIsPortrait()
 
   const [index, setIndex] = useState(0)
   const lockRef = useRef(false)
   const indexRef = useRef(0)
+
+  useEffect(() => {
+    if (!isPortrait) return
+    document.documentElement.classList.add('is-scroll-page')
+    document.body.classList.add('is-scroll-page')
+    window.scrollTo(0, 0)
+    return () => {
+      document.documentElement.classList.remove('is-scroll-page')
+      document.body.classList.remove('is-scroll-page')
+    }
+  }, [isPortrait, slug])
 
   const goTo = useCallback(
     (target) => {
@@ -63,7 +90,7 @@ export default function NewsDetail({ slug }) {
   }, [slug])
 
   useEffect(() => {
-    if (!article) return
+    if (!article || isPortrait) return
     const onWheel = (e) => {
       e.preventDefault()
       if (lockRef.current) return
@@ -108,7 +135,7 @@ export default function NewsDetail({ slug }) {
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [article, goTo, total])
+  }, [article, goTo, total, isPortrait])
 
   if (!article) return <NotFoundPage />
 
@@ -120,15 +147,15 @@ export default function NewsDetail({ slug }) {
 
   return (
     <>
-      <Header variant={index === 0 ? 'dark' : 'default'} />
+      <Header variant={isPortrait ? 'default' : index === 0 ? 'dark' : 'default'} />
       <div
-        className="fullpage"
-        style={{ transform: `translateY(-${index * 100}vh)` }}
+        className={isPortrait ? 'nd-scroll-root' : 'fullpage'}
+        style={isPortrait ? undefined : { transform: `translateY(-${index * 100}vh)` }}
       >
         {/* S1 */}
         <NewsHero
           article={article}
-          active={index === 0}
+          active={isPortrait || index === 0}
           crumb={
             <>
               <a href="/">Trang chủ</a>
@@ -144,7 +171,7 @@ export default function NewsDetail({ slug }) {
         <NewsOpening
           sections={openingSecs}
           facts={facts}
-          active={index === 1}
+          active={isPortrait || index === 1}
           subtitle="Hai phần đầu của bài viết đưa bạn vào ngữ cảnh dự án và những nội dung then chốt được Newtecons công bố."
         />
 
@@ -153,13 +180,13 @@ export default function NewsDetail({ slug }) {
           text={quote.text}
           attribution={quote.attribution}
           bgImage={gallery?.[0]}
-          active={index === 2}
+          active={isPortrait || index === 2}
         />
 
         {/* S4 */}
         <NewsStats
           items={stats}
-          active={index === 3}
+          active={isPortrait || index === 3}
           subtitle={`Những con số minh hoạ sức vóc của ${article.category.toLowerCase()} mà Newtecons đang triển khai.`}
         />
 
@@ -170,11 +197,11 @@ export default function NewsDetail({ slug }) {
           figureCaption={article.title}
           tags={tags}
           shareTitle={article.title}
-          active={index === 4}
+          active={isPortrait || index === 4}
         />
 
         {/* S6 */}
-        <NewsRelated articles={related} active={index === 5} />
+        <NewsRelated articles={related} active={isPortrait || index === 5} />
 
         {/* ============================================================
             S7 — CONTACT
@@ -182,13 +209,15 @@ export default function NewsDetail({ slug }) {
         <Contact />
       </div>
 
-      <SectionIndicator
-        current={index}
-        total={total}
-        onNav={goTo}
-        labels={SECTION_LABELS}
-        tone={SECTION_TONES[index]}
-      />
+      {!isPortrait && (
+        <SectionIndicator
+          current={index}
+          total={total}
+          onNav={goTo}
+          labels={SECTION_LABELS}
+          tone={SECTION_TONES[index]}
+        />
+      )}
     </>
   )
 }

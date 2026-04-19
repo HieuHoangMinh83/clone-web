@@ -428,14 +428,32 @@ export default function NewsBuilder() {
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [editorOpen, setEditorOpen] = useState(true)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [isPortrait, setIsPortrait] = useState(() =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(orientation: portrait) and (max-width: 1023px)').matches,
+  )
   const slideIndexRef = useRef(0)
   const slideLockRef = useRef(false)
   const previewRef = useRef(null)
   const totalSlides = draft.blocks.length
 
+  // Theo dõi orientation: màn hình dọc thì dùng scroll thuần, không fullpage
+  useEffect(() => {
+    const mq = window.matchMedia('(orientation: portrait) and (max-width: 1023px)')
+    const onChange = (e) => setIsPortrait(e.matches)
+    if (mq.addEventListener) mq.addEventListener('change', onChange)
+    else mq.addListener(onChange)
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', onChange)
+      else mq.removeListener(onChange)
+    }
+  }, [])
+
   // Khi editor đóng => bật fullpage scroll cho preview (wheel / key / touch)
+  // Bỏ qua nếu đang ở màn hình dọc (scroll thuần)
   useEffect(() => {
     if (editorOpen) return
+    if (isPortrait) return
     if (totalSlides === 0) return
 
     const goTo = (next) => {
@@ -495,7 +513,7 @@ export default function NewsBuilder() {
       window.removeEventListener('touchstart', onTouchStart)
       window.removeEventListener('touchend', onTouchEnd)
     }
-  }, [editorOpen, galleryOpen, totalSlides])
+  }, [editorOpen, galleryOpen, totalSlides, isPortrait])
 
   // Clamp slideIndex khi số block thay đổi
   useEffect(() => {
@@ -621,9 +639,9 @@ export default function NewsBuilder() {
         </div>
       </header>
 
-      <div className={`nb__body ${editorOpen ? 'is-editor-open' : ''}`}>
+      <div className={`nb__body ${editorOpen ? 'is-editor-open' : ''} ${isPortrait ? 'is-portrait' : ''}`}>
         <main className="nb__preview" ref={previewRef}>
-          <Preview draft={draft} slideIndex={editorOpen ? null : slideIndex} />
+          <Preview draft={draft} slideIndex={editorOpen || isPortrait ? null : slideIndex} />
         </main>
 
         <aside className="nb__editor" aria-hidden={!editorOpen}>
@@ -696,7 +714,7 @@ export default function NewsBuilder() {
         </aside>
       </div>
 
-      {!editorOpen && totalSlides > 0 && (
+      {!editorOpen && !isPortrait && totalSlides > 0 && (
         <SectionIndicator
           current={slideIndex}
           total={totalSlides}

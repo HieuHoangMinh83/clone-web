@@ -124,6 +124,29 @@
   .nd-sec * { animation: none !important; transition: none !important; }
 }
 
+/* Portrait → scroll thuần. Baseline 50vh/section, grow theo content (2-4 sub-items). */
+@media (orientation: portrait) {
+  .nd-scroll-root {
+    position: static;
+    width: 100%;
+  }
+  .nd-scroll-root .nd-sec {
+    height: auto;
+    min-height: 50vh;
+    overflow: visible;
+  }
+  .nd-scroll-root .nd-container {
+    height: auto;
+    padding: 16px 0;
+  }
+  /* S1 Hero là section đầu — cần chừa chỗ cho fixed header */
+  .nd-scroll-root > .nd-sec:first-child .nd-container {
+    padding-top: calc(var(--header-h) + 8px);
+  }
+  /* S3 Quote: clip background scale(1.08) trong wrapper, không cho leak ra ngoài */
+  .nd-scroll-root .nd-s3__bg { overflow: hidden; }
+}
+
 /* ---------- Responsive chung cho column & container ---------- */
 @media (max-width: 639px) {
   .nd-container { padding: calc(var(--header-h) + 8px) 0 20px; }

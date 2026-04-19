@@ -3,7 +3,7 @@ import { DEPARTMENTS, LOCATIONS, JOBS } from './recruitData.js'
 import Pagination from '../shared/Pagination/Pagination.jsx'
 import SearchFilter from '../shared/SearchFilter/SearchFilter.jsx'
 
-// Tablet dọc (≤1199px, aspect ratio dọc): grid 2×2 = 4 tin/trang cho cân đối.
+// Tablet dọc (≤1199px, aspect ratio dọc): grid 2×3 = 6 tin/trang để fill đầy stage.
 // Desktop & landscape: 3×2 = 6 tin/trang.
 // Dùng max-aspect-ratio thay vì (orientation: portrait) vì Chrome DevTools
 // responsive mode có thể không sync orientation toggle với kích thước viewport.
@@ -13,7 +13,7 @@ const TABLET_PORTRAIT_QUERY =
 function usePageSize() {
   const getSize = () => {
     if (typeof window === 'undefined') return 6
-    return window.matchMedia(TABLET_PORTRAIT_QUERY).matches ? 4 : 6
+    return 6
   }
   const [size, setSize] = useState(getSize)
 
@@ -104,6 +104,8 @@ export default function RecruitJobs() {
                   <span className="rec-job__rail" aria-hidden />
 
                   {j.hot && <span className="rec-job__hot">HOT</span>}
+
+                  {j.level && <span className="rec-job__level">{j.level}</span>}
 
                   <h3 className="rec-job__title">{j.title}</h3>
 

@@ -1,7 +1,24 @@
 import { useEffect, useMemo, useState } from 'react'
 import { CATEGORIES, NEWS_LIST } from './newsData.js'
 
-const PER_PAGE = 3
+// Tablet dọc dùng grid 2 cột → 4 tin lấp đầy 2×2. Desktop/landscape giữ 3 tin.
+const TABLET_PORTRAIT_QUERY =
+  '(min-width: 500px) and (max-width: 1199px) and (orientation: portrait)'
+
+function usePerPage() {
+  const getSize = () => {
+    if (typeof window === 'undefined') return 3
+    return window.matchMedia(TABLET_PORTRAIT_QUERY).matches ? 4 : 3
+  }
+  const [size, setSize] = useState(getSize)
+  useEffect(() => {
+    const mq = window.matchMedia(TABLET_PORTRAIT_QUERY)
+    const handler = () => setSize(getSize())
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return size
+}
 
 function parseDate(s) {
   const [d, m, y] = s.split('/')
@@ -12,6 +29,7 @@ export default function NewsGrid() {
   const [page, setPage] = useState(1)
   const [cat, setCat] = useState('all')
   const [mount, setMount] = useState(false)
+  const PER_PAGE = usePerPage()
 
   useEffect(() => {
     const r = requestAnimationFrame(() => setMount(true))

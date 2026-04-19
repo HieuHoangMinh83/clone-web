@@ -26,6 +26,25 @@ export default function JobDetail({ jobId }) {
     }
   }, [jobId])
 
+  useEffect(() => {
+    if (!mount) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-inview')
+            io.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    )
+    document
+      .querySelectorAll('.jd-reveal')
+      .forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [mount, jobId])
+
   const related = useMemo(() => {
     if (!job) return []
     return JOBS.filter((j) => j.id !== job.id && j.dept === job.dept).slice(0, 3)
@@ -184,7 +203,7 @@ export default function JobDetail({ jobId }) {
           <div className="jd-body__inner">
             <article className="jd-main">
               {detail?.context && (
-                <section className="jd-context">
+                <section className="jd-context jd-reveal">
                   <span className="jd-context__eyebrow">Bối cảnh vị trí</span>
                   <p className="jd-context__text">{detail.context}</p>
                 </section>
@@ -226,14 +245,14 @@ export default function JobDetail({ jobId }) {
                 variant="gold"
               />
 
-              <section className="jd-process">
+              <section className="jd-process jd-reveal">
                 <span className="jd-process__eyebrow">Quy trình ứng tuyển</span>
                 <h2 className="jd-process__heading">
                   Quy trình ứng tuyển tại Newtecons
                 </h2>
                 <ol className="jd-process__list">
-                  {JOB_PROCESS.map((p) => (
-                    <li key={p.k} className="jd-step">
+                  {JOB_PROCESS.map((p, i) => (
+                    <li key={p.k} className="jd-step jd-reveal" style={{ '--jd-reveal-i': i }}>
                       <span className="jd-step__no">{p.k}</span>
                       <div>
                         <h3 className="jd-step__label">{p.label}</h3>
@@ -246,7 +265,7 @@ export default function JobDetail({ jobId }) {
             </article>
 
             <aside className="jd-side">
-              <div className="jd-card jd-card--apply">
+              <div className="jd-card jd-card--apply jd-reveal">
                 <span className="jd-card__eyebrow">Sẵn sàng ứng tuyển?</span>
                 <h3 className="jd-card__title">Gửi hồ sơ trước hạn {job.deadline}</h3>
                 <p className="jd-card__text">
@@ -265,7 +284,7 @@ export default function JobDetail({ jobId }) {
               </div>
 
               {job.skills?.length > 0 && (
-                <div className="jd-card">
+                <div className="jd-card jd-reveal">
                   <span className="jd-card__eyebrow">Kỹ năng trọng yếu</span>
                   <ul className="jd-chips">
                     {job.skills.map((s) => (
@@ -278,7 +297,7 @@ export default function JobDetail({ jobId }) {
               )}
 
               {related.length > 0 && (
-                <div className="jd-card">
+                <div className="jd-card jd-reveal">
                   <span className="jd-card__eyebrow">Vị trí liên quan</span>
                   <ul className="jd-related">
                     {related.map((r) => (
@@ -301,7 +320,7 @@ export default function JobDetail({ jobId }) {
         <section className="jd-cta">
           <span className="jd-cta__grid" aria-hidden />
           <div className="jd-cta__inner">
-            <div className="jd-cta__text">
+            <div className="jd-cta__text jd-reveal">
               <span className="jd-cta__kicker">Build on Trust</span>
               <h2 className="jd-cta__title">
                 Cùng Newtecons kiến tạo những công trình biểu tượng
@@ -311,7 +330,7 @@ export default function JobDetail({ jobId }) {
                 Hồ sơ ứng tuyển được tiếp nhận và phản hồi trong 3–5 ngày làm việc.
               </p>
             </div>
-            <div className="jd-cta__actions">
+            <div className="jd-cta__actions jd-reveal" style={{ '--jd-reveal-i': 1 }}>
               <a href={mailtoApply} className="jd-btn jd-btn--primary">
                 <span>Ứng tuyển {job.id.toUpperCase()}</span>
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
@@ -345,7 +364,7 @@ function Info({ icon, label, value, highlight }) {
 
 function Block({ no, eyebrow, title, items, variant }) {
   return (
-    <section className={`jd-block ${variant ? `jd-block--${variant}` : ''}`}>
+    <section className={`jd-block jd-reveal ${variant ? `jd-block--${variant}` : ''}`}>
       <header className="jd-block__head">
         <span className="jd-block__no">{no}</span>
         <div>
@@ -355,7 +374,11 @@ function Block({ no, eyebrow, title, items, variant }) {
       </header>
       <ul className="jd-block__list">
         {items.map((item, i) => (
-          <li key={i} className="jd-block__item">
+          <li
+            key={i}
+            className="jd-block__item jd-reveal"
+            style={{ '--jd-reveal-i': i }}
+          >
             <span className="jd-block__bullet" aria-hidden />
             <span>{item}</span>
           </li>

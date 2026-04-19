@@ -3,10 +3,16 @@
    Navy-900 core + gold-500 accents, matches Recruit section tone.
    ================================================================ */
 
-html.is-scroll-page,
-body.is-scroll-page {
-  overflow: auto !important;
+html.is-scroll-page:has(.jd) {
+  overflow-y: auto !important;
   overflow-x: hidden !important;
+  height: auto !important;
+  overscroll-behavior: auto !important;
+}
+html.is-scroll-page body.is-scroll-page:has(.jd) {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
   height: auto !important;
   overscroll-behavior: auto !important;
 }
@@ -568,9 +574,23 @@ body.is-scroll-page {
   flex-direction: column;
   gap: 16px;
   position: sticky;
-  top: calc(var(--header-h) + 20px);
+  top: 40px;
+  align-self: start;
   min-width: 0;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 60, 107, 0.18) transparent;
+  padding-right: 4px;
 }
+.jd-side::-webkit-scrollbar { width: 5px; }
+.jd-side::-webkit-scrollbar-track { background: transparent; }
+.jd-side::-webkit-scrollbar-thumb {
+  background: rgba(26, 60, 107, 0.18);
+  border-radius: 999px;
+}
+.jd-side::-webkit-scrollbar-thumb:hover { background: rgba(26, 60, 107, 0.32); }
 .jd-card {
   background: #fff;
   border-radius: 4px;
@@ -821,6 +841,30 @@ body.is-scroll-page {
   to { opacity: 1; transform: none; }
 }
 
+/* Scroll-reveal: fade-up khi enter viewport */
+.jd-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+  --jd-reveal-i: 0;
+}
+.jd-reveal.is-inview {
+  animation: jd-reveal-up .75s cubic-bezier(.2, .7, .2, 1) both;
+  animation-delay: calc(var(--jd-reveal-i) * 70ms);
+}
+@keyframes jd-reveal-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* List items nhẹ hơn một chút */
+.jd-block__item.jd-reveal {
+  transform: translateY(14px);
+}
+.jd-step.jd-reveal {
+  transform: translateY(18px);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1023px) {
   .jd-body__inner { grid-template-columns: 1fr; }
@@ -830,6 +874,135 @@ body.is-scroll-page {
   .jd-info:first-child, .jd-info { padding-left: 0; padding-right: 0; }
   .jd-process__list { grid-template-columns: 1fr; }
 }
+
+/* ---------- Tablet portrait (≈768) ---------- */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .jd-hero {
+    padding: calc(var(--header-h) + 36px) 0 36px;
+  }
+  .jd-hero__inner,
+  .jd-body__inner,
+  .jd-cta__inner {
+    width: min(var(--container), calc(100% - 56px));
+  }
+  .jd-hero__title { font-size: 40px; line-height: 1.08; }
+  .jd-hero__lead  { font-size: 15px; max-width: 640px; }
+  .jd-highlights { gap: 7px; margin-bottom: 24px; }
+  .jd-highlight { padding: 8px 13px; font-size: 12px; }
+
+  /* Info bar → 2-col card grid, salary prominent full-width on top */
+  .jd-hero__bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0;
+    margin-bottom: 24px;
+    border: 0;
+  }
+  .jd-info {
+    padding: 12px 14px;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    transition: background .25s, border-color .25s, transform .25s;
+  }
+  .jd-info:hover {
+    background: rgba(221, 169, 105, 0.08);
+    border-color: rgba(221, 169, 105, 0.3);
+    transform: translateY(-2px);
+  }
+  .jd-info__icon { width: 26px; height: 26px; }
+  .jd-info__label { font-size: 9.5px; letter-spacing: 0.2em; }
+  .jd-info__value { font-size: 14px; }
+  .jd-info--hl {
+    order: -1;
+    grid-column: 1 / -1;
+    background:
+      radial-gradient(circle at 90% 50%, rgba(221, 169, 105, 0.18), transparent 60%),
+      rgba(221, 169, 105, 0.08);
+    border-color: rgba(221, 169, 105, 0.45);
+    padding: 14px 18px;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+  .jd-info--hl .jd-info__icon {
+    width: 34px; height: 34px;
+    background: rgba(221, 169, 105, 0.2);
+  }
+  .jd-info--hl .jd-info__icon svg { width: 16px; height: 16px; }
+  .jd-info--hl .jd-info__label {
+    order: 1; margin-left: auto;
+    color: rgba(221, 169, 105, 0.7);
+  }
+  .jd-info--hl .jd-info__value {
+    font-size: 18px; letter-spacing: 0.005em;
+  }
+
+  /* Body: tighter vertical rhythm, single column (sidebar hidden) */
+  .jd-body { padding: 52px 0 56px; }
+  .jd-body__inner { display: block; gap: 0; }
+
+  /* Sidebar stacked dọc thì thừa — hero CTA + bottom CTA đã cover */
+  .jd-side { display: none; }
+
+  /* Main blocks: tighter padding + 2-col list for density */
+  .jd-context { padding: 22px 24px; margin-bottom: 14px; }
+  .jd-context__text { font-size: 14px; line-height: 1.7; }
+  .jd-block { padding: 24px 24px; margin-bottom: 14px; }
+  .jd-block__head { gap: 14px; margin-bottom: 18px; padding-bottom: 14px; }
+  .jd-block__no { min-width: 48px; height: 48px; font-size: 15px; }
+  .jd-block__title { font-size: 19px; }
+  .jd-block__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 18px;
+  }
+  .jd-block__item {
+    font-size: 12.5px;
+    line-height: 1.55;
+    padding: 10px 12px;
+    background: rgba(26, 60, 107, 0.025);
+    border-radius: 3px;
+    border-left: 2px solid rgba(221, 169, 105, 0.35);
+  }
+  .jd-block__item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .jd-block__bullet { display: none; }
+  .jd-block--gold .jd-block__item {
+    border-left-color: var(--navy-900);
+    background: rgba(26, 60, 107, 0.03);
+  }
+  .jd-block--accent .jd-block__item { border-left-color: var(--navy-700); }
+
+  /* Process: keep 2 cols to save vertical space */
+  .jd-process { padding: 28px 28px; margin-top: 22px; }
+  .jd-process__heading { font-size: 22px; margin-bottom: 20px; }
+  .jd-process__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .jd-step { padding: 14px 16px; gap: 12px; }
+  .jd-step__no { width: 36px; height: 36px; font-size: 12px; }
+  .jd-step__label { font-size: 12.5px; }
+  .jd-step__body { font-size: 12px; line-height: 1.5; }
+
+  /* Related: 2-col tight list */
+  .jd-related { display: grid; grid-template-columns: 1fr; gap: 6px; }
+
+  /* Hero CTAs fill width pair */
+  .jd-hero__ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .jd-hero__ctas .jd-btn { justify-content: center; padding: 13px 16px; }
+
+  /* Bottom CTA: stack, but align actions left and grid into 2 cols */
+  .jd-cta { padding: 64px 0 68px; }
+  .jd-cta__inner { grid-template-columns: 1fr; gap: 26px; }
+  .jd-cta__title { font-size: 32px; }
+  .jd-cta__actions {
+    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .jd-cta__actions .jd-btn { justify-content: center; padding: 13px 16px; }
+}
 @media (max-width: 639px) {
   .jd-hero { padding: calc(var(--header-h) + 28px) 0 28px; }
   .jd-hero__bar { grid-template-columns: 1fr; padding: 14px 0; gap: 10px; }
@@ -838,6 +1011,11 @@ body.is-scroll-page {
   .jd-block__no { min-width: 44px; height: 44px; font-size: 14px; }
   .jd-process { padding: 22px 20px; }
   .jd-hero__ctas .jd-btn { justify-content: center; }
+
+  /* Sidebar thừa trên mobile: hero CTA + bottom CTA đã đủ apply,
+     related nhường chỗ cho nội dung chính */
+  .jd-side { display: none; }
+  .jd-body__inner { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {
