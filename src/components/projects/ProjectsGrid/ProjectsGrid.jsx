@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { CATEGORIES, PROJECTS } from '../projectsData.js'
 import './ProjectsGrid.css'
 
@@ -26,6 +26,19 @@ const SIZE_PATTERN = [
 export default function ProjectsGrid() {
   const [cat, setCat] = useState('all')
   const [page, setPage] = useState(1)
+  const filtersRef = useRef(null)
+
+  const goToPage = (next) => {
+    setPage(next)
+    const el = filtersRef.current
+    if (!el) return
+    const headerH = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue('--header-h'),
+      10,
+    ) || 0
+    const y = el.getBoundingClientRect().top + window.scrollY - headerH - 16
+    window.scrollTo({ top: y, behavior: 'smooth' })
+  }
 
   const filtered = useMemo(() => {
     if (cat === 'all') return PROJECTS
@@ -83,7 +96,7 @@ export default function ProjectsGrid() {
           </div>
         </header>
 
-        <div className="prj-mag__filters" role="tablist">
+        <div className="prj-mag__filters" role="tablist" ref={filtersRef}>
           {CATEGORIES.map((c) => (
             <button
               key={c.key}
@@ -113,7 +126,7 @@ export default function ProjectsGrid() {
                   <img src={p.image} alt={p.title} loading="lazy" />
                   <span className="prj-card__shine" aria-hidden />
                   <span className="prj-card__no">
-                    <em>N°</em>
+                  
                     {String(gi + 1).padStart(2, '0')}
                   </span>
                   <span className="prj-card__cat-chip">{p.categoryLabel}</span>
@@ -147,7 +160,7 @@ export default function ProjectsGrid() {
           <nav className="prj-mag__pager" aria-label="Phân trang">
             <button
               className="prj-mag__pager-nav"
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => goToPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
             >
               <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -161,7 +174,7 @@ export default function ProjectsGrid() {
             </span>
             <button
               className="prj-mag__pager-nav"
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => goToPage(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
             >
               <span>Trang sau</span>

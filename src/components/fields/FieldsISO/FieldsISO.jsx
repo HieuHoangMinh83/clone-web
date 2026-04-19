@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import useInViewActive from '../useInViewActive'
 import './FieldsISO.css'
 
 const CERTS = [
@@ -35,18 +35,12 @@ const PILLARS = [
   { k: '04', label: 'Cải tiến',   desc: 'Act' },
 ]
 
-export default function FieldsISO({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsISO({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-sec--paper fp-iso ${mount ? 'is-in' : ''}`}
       aria-label="Hệ thống quản lý"
     >
@@ -59,10 +53,7 @@ export default function FieldsISO({ active }) {
 
       <div className="fp-iso__inner">
         <header className="fp-iso__head">
-          <span className="fp-kicker fp-iso__kicker">
-            <span className="fp-kicker__rule" />
-            08 — Hệ thống quản lý
-          </span>
+         
           <h2 className="fp-display fp-iso__title">
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Tuân thủ chuẩn</span></span>
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}><em>quốc tế</em>.</span></span>

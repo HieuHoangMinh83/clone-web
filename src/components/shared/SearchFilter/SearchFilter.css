@@ -1,4 +1,6 @@
 .search-filter {
+  position: relative;
+  z-index: 5;
   display: grid;
   grid-template-columns: minmax(200px, 1fr) minmax(0, 2.4fr) minmax(170px, 0.8fr);
   gap: 8px;
@@ -12,6 +14,7 @@
   opacity: 0;
   transform: translateY(18px);
 }
+.search-filter.is-open-panel { z-index: 50; }
 /* Co giãn cột theo những phần tử thực sự có — cho phép dùng chỉ search,
    hoặc search + tabs, hoặc search + select... */
 .search-filter:not(:has(.search-filter__tabs)):not(:has(.search-filter__select)) {
@@ -73,13 +76,14 @@
   display: flex;
   gap: 2px;
   flex-wrap: nowrap;
-  justify-content: safe center;
+  justify-content: flex-start;
   overflow-x: auto;
   scrollbar-width: none;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
   scroll-behavior: smooth;
+  min-width: 0;
 }
 .search-filter__tabs::-webkit-scrollbar { display: none; }
 .search-filter__tabs.is-dragging {
@@ -110,9 +114,10 @@
   box-shadow: 0 4px 12px rgba(26, 60, 107, 0.28);
 }
 
-/* ---- Select ---- */
+/* ---- Select (custom dropdown) ---- */
 .search-filter__select {
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -120,11 +125,16 @@
   background: var(--blue-100);
   border-radius: 2px;
   color: var(--navy-700);
+  cursor: pointer;
+  transition: background .2s;
 }
+.search-filter__select.is-open { z-index: 60; }
+.search-filter__select.is-open,
+.search-filter__select:hover { background: rgba(26, 60, 107, 0.1); }
 .search-filter__select > svg { flex: none; }
-.search-filter__select select {
+
+.search-filter__select-trigger {
   appearance: none;
-  -webkit-appearance: none;
   flex: 1;
   font: inherit;
   font-size: 13px;
@@ -135,14 +145,120 @@
   outline: 0;
   cursor: pointer;
   min-width: 0;
+  text-align: left;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+.search-filter__select-trigger:focus-visible {
+  outline: 2px solid var(--navy-900);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
 .search-filter__select-caret {
   position: absolute;
   right: 12px;
   color: var(--navy-700);
   pointer-events: none;
+  transition: transform .2s;
+}
+.search-filter__select.is-open .search-filter__select-caret {
+  transform: rotate(180deg);
 }
 
-@media (max-width: 1023px) {
-  .search-filter { grid-template-columns: 1fr; }
+/* Popup panel — có padding bên trong, mỗi option đủ không gian để tap */
+.search-filter__select-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 100;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line-200);
+  border-radius: 3px;
+  box-shadow: 0 12px 32px rgba(10, 25, 56, 0.16), 0 2px 6px rgba(10, 25, 56, 0.06);
+  max-height: 280px;
+  overflow-y: auto;
+  animation: sf-dropdown-in .18s cubic-bezier(.2, .7, .2, 1);
+}
+@keyframes sf-dropdown-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+.search-filter__select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy-900);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.search-filter__select-option + .search-filter__select-option { margin-top: 2px; }
+.search-filter__select-option.is-active,
+.search-filter__select-option:hover {
+  background: var(--blue-100);
+}
+.search-filter__select-option.is-selected {
+  color: var(--gold-600, #b6884b);
+}
+.search-filter__select-option.is-selected.is-active,
+.search-filter__select-option.is-selected:hover {
+  background: rgba(221, 169, 105, 0.14);
+}
+.search-filter__select-option svg { flex: none; color: var(--gold-500); }
+
+/* Tablet (500–1023px): layout 2 hàng compact — search full width trên,
+   tabs + select ngang hàng dưới. Gọn hơn so với stack 3 hàng, tiết kiệm
+   chiều cao cho section 100vh. */
+@media (max-width: 1023px) and (min-width: 500px) {
+  /* Biến thể đầy đủ (search + tabs + select) */
+  .search-filter {
+    grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
+    grid-template-areas:
+      "search search"
+      "tabs   select";
+    row-gap: 8px;
+  }
+  /* Search + tabs (không select) */
+  .search-filter:has(.search-filter__tabs):not(:has(.search-filter__select)) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "search"
+      "tabs";
+  }
+  /* Search + select (không tabs) */
+  .search-filter:not(:has(.search-filter__tabs)):has(.search-filter__select) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "search"
+      "select";
+  }
+  /* Chỉ search */
+  .search-filter:not(:has(.search-filter__tabs)):not(:has(.search-filter__select)) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "search";
+  }
+  .search-filter__search { grid-area: search; }
+  .search-filter__tabs { grid-area: tabs; justify-content: flex-start; }
+  .search-filter__select { grid-area: select; }
+}
+
+/* Mobile (<500px): stack dọc 1 cột */
+@media (max-width: 499px) {
+  .search-filter,
+  .search-filter:has(.search-filter__tabs):not(:has(.search-filter__select)),
+  .search-filter:not(:has(.search-filter__tabs)):has(.search-filter__select) {
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
 }

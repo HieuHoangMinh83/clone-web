@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import bgImg from '../../../assets/images/projects/landmark-81.jpg'
+import useInViewActive from '../useInViewActive'
 import './FieldsDB.css'
 
 const IconClock = () => (
@@ -62,18 +62,12 @@ const BENEFITS = [
   },
 ]
 
-export default function FieldsDB({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsDB({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-db ${mount ? 'is-in' : ''}`}
       aria-label="Tổng thầu D&amp;B"
     >

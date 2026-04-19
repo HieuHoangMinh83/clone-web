@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './SearchFilter.css'
 
 // Drag-to-scroll cho dải tabs: giữ chuột kéo ngang khi có quá nhiều tab.
@@ -56,6 +56,117 @@ function useDragScroll() {
   }
 }
 
+// Custom dropdown — thay thế native <select> để kiểm soát padding/styling
+// của popup panel. Hỗ trợ keyboard: Arrow Up/Down, Enter, Escape.
+function CustomSelect({ value, onChange, options, ariaLabel, onOpenChange }) {
+  const [open, setOpen] = useState(false)
+  const [activeIdx, setActiveIdx] = useState(
+    Math.max(0, options.findIndex((o) => o.key === value)),
+  )
+  const rootRef = useRef(null)
+  const current = options.find((o) => o.key === value) || options[0]
+
+  useEffect(() => {
+    onOpenChange?.(open)
+  }, [open, onOpenChange])
+
+  useEffect(() => {
+    if (!open) return
+    const onDocClick = (e) => {
+      if (!rootRef.current?.contains(e.target)) setOpen(false)
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        rootRef.current?.querySelector('.search-filter__select-trigger')?.focus()
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        setActiveIdx((i) => Math.min(options.length - 1, i + 1))
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        setActiveIdx((i) => Math.max(0, i - 1))
+      } else if (e.key === 'Enter') {
+        e.preventDefault()
+        onChange(options[activeIdx].key)
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onDocClick)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDocClick)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open, activeIdx, options, onChange])
+
+  const toggle = () => {
+    setOpen((o) => !o)
+    setActiveIdx(Math.max(0, options.findIndex((o) => o.key === value)))
+  }
+
+  return (
+    <div
+      ref={rootRef}
+      className={`search-filter__select ${open ? 'is-open' : ''}`}
+    >
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+        <path d="M7 1c2.5 0 4.5 2 4.5 4.5C11.5 8.5 7 13 7 13S2.5 8.5 2.5 5.5C2.5 3 4.5 1 7 1Z" />
+        <circle cx="7" cy="5.5" r="1.5" />
+      </svg>
+      <button
+        type="button"
+        className="search-filter__select-trigger"
+        onClick={toggle}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={ariaLabel}
+      >
+        {current?.label}
+      </button>
+      <svg className="search-filter__select-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden>
+        <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+
+      {open && (
+        <ul
+          className="search-filter__select-panel"
+          role="listbox"
+          aria-label={ariaLabel}
+        >
+          {options.map((o, i) => (
+            <li
+              key={o.key}
+              role="option"
+              aria-selected={o.key === value}
+              className={`search-filter__select-option${
+                o.key === value ? ' is-selected' : ''
+              }${i === activeIdx ? ' is-active' : ''}`}
+              onMouseEnter={() => setActiveIdx(i)}
+              onClick={() => {
+                onChange(o.key)
+                setOpen(false)
+              }}
+            >
+              <span>{o.label}</span>
+              {o.key === value && (
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden>
+                  <path
+                    d="M1 5l3.5 3.5L11 1.5"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 /**
  * SearchFilter — khối bộ lọc chuẩn dùng chung cho các trang có danh sách:
  * ô tìm kiếm + dải tab danh mục + dropdown địa điểm / phân loại phụ.
@@ -86,9 +197,14 @@ export default function SearchFilter({
   active = true,
 }) {
   const tabsDrag = useDragScroll()
+  const [selectOpen, setSelectOpen] = useState(false)
 
   return (
-    <div className={`search-filter ${active ? 'is-in' : ''}`}>
+    <div
+      className={`search-filter ${active ? 'is-in' : ''}${
+        selectOpen ? ' is-open-panel' : ''
+      }`}
+    >
       <div className="search-filter__search">
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
           <circle cx="6.5" cy="6.5" r="4.5" />
@@ -137,26 +253,13 @@ export default function SearchFilter({
       )}
 
       {selectOptions.length > 0 && (
-        <div className="search-filter__select">
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
-            <path d="M7 1c2.5 0 4.5 2 4.5 4.5C11.5 8.5 7 13 7 13S2.5 8.5 2.5 5.5C2.5 3 4.5 1 7 1Z" />
-            <circle cx="7" cy="5.5" r="1.5" />
-          </svg>
-          <select
-            value={selectValue}
-            onChange={(e) => onSelectChange(e.target.value)}
-            aria-label={selectAriaLabel}
-          >
-            {selectOptions.map((o) => (
-              <option key={o.key} value={o.key}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-          <svg className="search-filter__select-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden>
-            <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+        <CustomSelect
+          value={selectValue}
+          onChange={onSelectChange}
+          options={selectOptions}
+          ariaLabel={selectAriaLabel}
+          onOpenChange={setSelectOpen}
+        />
       )}
     </div>
   )

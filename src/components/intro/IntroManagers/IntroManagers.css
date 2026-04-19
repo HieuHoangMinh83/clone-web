@@ -79,12 +79,14 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(14px, 1.4vw, 24px);
-  align-items: center;
+  /* align-items: start để các photo luôn top-align kể cả khi meta (name
+     1 dòng vs 2 dòng) cao khác nhau — tránh hiệu ứng ảnh cao ảnh thấp */
+  align-items: start;
   min-width: 0;
   justify-content: center;
-  /* Fix chiều cao theo card full (220px × 4/3 photo + meta) + dự phòng
-     zigzag ±40 → chuyển page short không co chiều cao parent. */
-  min-height: 420px;
+  /* Fix chiều cao theo card full (220px × 4/3 photo + meta) → chuyển
+     page short không co chiều cao parent. */
+  min-height: 350px;
 }
 /* Page không đầy (1-2 người lẻ) — co cột về đúng max-width của card và
    center cụm lại thay vì dàn đều theo full width của row.
@@ -144,10 +146,9 @@
               0 10px 28px rgba(2, 45, 95, 0.14);
 }
 
-/* zigzag — chẵn lên, lẻ xuống (dùng margin để không đụng transform animation).
-   Chỉ áp dụng ở desktop/tablet (đủ 5 hoặc 4 card); portrait sẽ override = 0. */
-.intro-mgr__card--up   { margin-top: -40px; }
-.intro-mgr__card--down { margin-top: 40px; }
+/* Zigzag đã bỏ hoàn toàn — card ngang hàng mọi chế độ */
+.intro-mgr__card--up,
+.intro-mgr__card--down { margin-top: 0; }
 
 @keyframes mgr-card-in {
   0%   { opacity: 0; transform: translateY(28px) scale(0.96); filter: blur(6px); }
@@ -307,7 +308,7 @@
   .intro-mgr__row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
-    min-height: 380px;
+    min-height: 320px;
   }
   .intro-mgr__card:nth-child(5) { display: none; }
 }

@@ -1,18 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import bannerBg from '../../../assets/images/fields/figma-header-bg.png'
+import useInViewActive from '../useInViewActive'
 import './FieldsBanner.css'
 
-export default function FieldsBanner({ active }) {
-  const [mount, setMount] = useState(false)
-  const ref = useRef(null)
-
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsBanner({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section

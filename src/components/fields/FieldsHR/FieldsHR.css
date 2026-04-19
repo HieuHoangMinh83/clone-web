@@ -353,7 +353,7 @@
 /* ---------- TABLET PORTRAIT (slide mode) ---------- */
 @media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
   .fp-hr__inner {
-    padding: calc(var(--header-h) + 16px) 36px 32px;
+    padding: 48px 36px 40px;
     grid-template-rows: auto auto auto;
     gap: 18px;
   }

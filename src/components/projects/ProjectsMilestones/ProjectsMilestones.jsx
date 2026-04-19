@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import bg from '../../../assets/images/intro/bg/history.png'
 import INTRO_MILESTONES from '../../intro/milestones.js'
 import useCarousel from '../../intro/useCarousel.js'
 import CarouselControls from '../../intro/CarouselControls.jsx'
@@ -6,7 +7,8 @@ import './ProjectsMilestones.css'
 
 const AWARD_REGEX = /(Top\s?\d+[^.,;]*)|(giải thưởng[^.,;]*)|(vinh danh[^.,;]*)|(bằng khen[^.,;]*)/gi
 const GAP = 32
-const BREAKPOINTS = [[640, 1], [1024, 2], [Infinity, 3]]
+// 15 mốc → perView phải là ước số của 15 (1, 3, 5) để tránh trang lẻ mồ côi
+const BREAKPOINTS = [[640, 1], [Infinity, 3]]
 
 function extractAwards(desc) {
   const matches = desc.match(AWARD_REGEX)
@@ -55,7 +57,9 @@ export default function ProjectsMilestones() {
   const itemW = perView > 0 && viewportW > 0
     ? (viewportW - (perView - 1) * GAP) / perView
     : 0
-  const offset = clampedPage * perView * (itemW + GAP)
+  const rawOffset = clampedPage * perView * (itemW + GAP)
+  const maxOffset = Math.max(0, MILESTONES.length * (itemW + GAP) - GAP - viewportW)
+  const offset = Math.min(rawOffset, maxOffset)
 
   return (
     <section
@@ -63,16 +67,20 @@ export default function ProjectsMilestones() {
       className={`prj-sec prj-miles ${inView ? 'is-in' : ''}`}
       aria-labelledby="prj-miles-title"
     >
+      <div
+        className="prj-sec__bg prj-miles__bg"
+        style={{ backgroundImage: `url(${bg})` }}
+      />
       <div className="prj-container">
         <header className="prj-miles__head">
-          <span className="prj-miles__eyebrow">
-            <span className="prj-miles__eyebrow-line" aria-hidden />
-            <span>Hành trình · 2003 — 2024</span>
-          </span>
+         
           <h2 id="prj-miles-title" className="prj-miles__title">
-            Hai thập kỷ <em>kiến tạo</em>
-            <span className="prj-miles__title-amp"> &amp; </span>
-            <em>thay đổi</em>
+            Hai thập kỷ{' '}
+            <span className="prj-miles__title-nowrap">
+              <em>kiến tạo</em>
+              <span className="prj-miles__title-amp"> &amp; </span>
+              <em>thay đổi</em>
+            </span>
           </h2>
           <p className="prj-miles__lead">
             Từ một nhà thầu nhỏ năm 2003, Newtecons bước đi cùng các Chủ đầu tư

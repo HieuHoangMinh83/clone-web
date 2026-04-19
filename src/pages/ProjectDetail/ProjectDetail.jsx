@@ -121,10 +121,7 @@ export default function ProjectDetail({ slug }) {
           <div className="pd-container pd-over__container">
             <div className="pd-over__media">
               <img src={project.image} alt={project.title} />
-              <span className="pd-over__media-n">
-                <em>N°</em>
-                01
-              </span>
+             
               <span className="pd-over__media-cat">{project.categoryLabel}</span>
             </div>
             <div className="pd-over__body">

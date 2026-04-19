@@ -276,8 +276,8 @@
 /* ---------- TABLET PORTRAIT (slide mode) ---------- */
 @media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
   .fp-db__inner {
-    padding: calc(var(--header-h) + 24px) 36px 40px;
-    justify-content: center;
+    padding: 24px 36px 40px;
+    justify-content: flex-start;
   }
   .fp-db__head { max-width: 680px; }
   .fp-db__title { font-size: clamp(38px, 6vw, 56px); margin-top: 8px; }

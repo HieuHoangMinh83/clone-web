@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import bgImg from '../../../assets/images/fields/figma-f3.png'
+import useInViewActive from '../useInViewActive'
 import './FieldsSafety.css'
 
 const COMMITMENTS = [
@@ -58,18 +58,12 @@ const STATS = [
   { num: '200+', unit: 'dự án zero accident', sub: 'Bàn giao trong 5 năm gần nhất' },
 ]
 
-export default function FieldsSafety({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsSafety({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-safe ${mount ? 'is-in' : ''}`}
       aria-label="Văn hoá an toàn"
     >
@@ -86,10 +80,7 @@ export default function FieldsSafety({ active }) {
       <div className="fp-safe__inner">
         <div className="fp-safe__quote">
           <span className="fp-safe__qmark" aria-hidden>&ldquo;</span>
-          <span className="fp-kicker fp-safe__kicker">
-            <span className="fp-kicker__rule" />
-            05 — Văn hoá an toàn
-          </span>
+          
           <h2 className="fp-display fp-safe__title">
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Hai điều</span></span>
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>không <em>thoả hiệp</em></span></span>

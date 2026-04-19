@@ -166,6 +166,14 @@
   .fp-crosshair--bl, .fp-crosshair--br { bottom: 20px; }
 }
 
+/* Banner + DB mỗi cái 50vh (slide mode): 2 section share 1 slot 100vh của
+   slide container. Lưu ý: slide index vẫn nhảy 100vh/step nên index 0 hiển
+   thị cả banner + DB cùng lúc, index 1 sẽ nhảy thẳng sang Construction. */
+.fullpage--slide .fp-banner,
+.fullpage--slide .fp-db {
+  height: 50vh;
+}
+
 /* ---------- Scroll mode: section co theo content, không ép 100vh ---------- */
 .fullpage--scroll .fp-sec {
   height: auto;
@@ -175,8 +183,8 @@
 .fullpage--scroll .fp-sec > [class*="__inner "] {
   height: auto;
 }
-/* Banner giữ một khoảng hero */
-.fullpage--scroll .fp-banner { min-height: 80vh; }
+/* Banner giữ một khoảng hero vừa phải */
+.fullpage--scroll .fp-banner { min-height: 60vh; }
 
 @media (prefers-reduced-motion: reduce) {
   .fp-sec *, .fp-panel * {

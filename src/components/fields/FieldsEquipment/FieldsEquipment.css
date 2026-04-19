@@ -202,8 +202,8 @@
 .fp-eq__mapviz {
   position: relative;
   flex: 1;
+  min-height: 0;
   align-self: center;
-  height: 100%;
   aspect-ratio: 707 / 800;
   display: grid;
   place-items: center;
@@ -340,7 +340,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     gap: 24px;
-    padding: calc(var(--header-h) + 16px) 36px 32px;
+    padding: 48px 36px 40px;
     align-content: start;
   }
   .fp-eq__title {

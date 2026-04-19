@@ -590,7 +590,7 @@
 }
 .post-card:hover .post-card__shine { left: 130%; }
 
-/* N° tag (top-left of image) */
+
 .post-card__num {
   position: absolute;
   top: 14px;
@@ -841,6 +841,7 @@
   .news-banner__search { min-width: 220px; }
   .news-banner__stats { grid-template-columns: repeat(2, max-content); gap: 20px 36px; }
 }
+
 @media (max-width: 639px) {
   .news-container {
     padding-top: calc(var(--header-h) + 16px);
@@ -856,6 +857,101 @@
   .news-grid__pager-list { padding: 0 8px; }
   .post-card__body { padding: 14px 0 0; }
   .post-card__date-d { font-size: 20px; }
+}
+
+/* ---------- TABLET PORTRAIT (iPad dọc, 500-1199px portrait) —
+   đặt sau @media (max-width: 639px) để thắng cascade trên phone lớn dọc */
+@media (min-width: 500px) and (max-width: 1199px) and (orientation: portrait) {
+  .news-container {
+    width: min(var(--container), calc(100% - 40px));
+    padding: calc(var(--header-h) + 18px) 0 28px;
+  }
+
+  /* ===== BANNER ===== */
+  .news-banner__container { gap: 20px; }
+  .news-banner__crumb { font-size: 10.5px; padding: 6px 14px; margin-bottom: 18px; }
+  .news-banner__kicker { font-size: 10.5px; letter-spacing: 0.36em; margin: 0 0 18px; }
+  .news-banner__heading {
+    font-size: clamp(52px, 9vw, 96px);
+    line-height: 1;
+    margin: 0 0 18px;
+  }
+  .news-banner__lead {
+    max-width: 58ch;
+    font-size: clamp(14px, 1.8vw, 16.5px);
+    line-height: 1.65;
+    margin: 0 0 24px;
+  }
+  .news-banner__tools { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 26px; }
+  .news-banner__tabs { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+  .news-banner__search { width: 100%; min-width: 0; }
+  .news-banner__stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    gap: 18px;
+    padding-top: 20px;
+  }
+  .news-banner__stat-k { font-size: clamp(22px, 3.2vw, 30px); }
+  .news-banner__stat-v { font-size: 9.5px; letter-spacing: 0.18em; }
+
+  /* ===== GRID ===== */
+  .news-grid__container { padding-top: calc(var(--header-h) + 14px); }
+  .news-grid__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+  }
+  .news-grid__heading { font-size: clamp(28px, 4.6vw, 42px); }
+  .news-grid__filters { gap: 2px; flex-wrap: wrap; }
+  .news-grid__filter { padding: 8px 10px; font-size: 10px; letter-spacing: 0.18em; }
+  .news-grid__filter span { padding-bottom: 5px; }
+  .news-grid__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 16px;
+    margin-bottom: 18px;
+  }
+  .post-card__media { aspect-ratio: 16 / 10; }
+  .post-card__body { padding: 14px 2px 0; gap: 8px; }
+  .post-card__title { font-size: 14px; line-height: 1.35; }
+  .post-card__excerpt { font-size: 12px; line-height: 1.55; -webkit-line-clamp: 2; }
+  .post-card__kicker { font-size: 9.5px; letter-spacing: 0.2em; }
+  .post-card__date { padding: 6px 12px 6px 10px; }
+  .post-card__date-d { font-size: 18px; }
+  .post-card__date-my { font-size: 9px; }
+  .post-card__rule { margin-top: 10px; }
+  .news-grid__pager { gap: 14px; padding-top: 2px; }
+  .news-grid__pager-nav { padding: 8px 2px; font-size: 10.5px; letter-spacing: 0.18em; }
+  .news-grid__pager-nav svg { width: 18px; }
+  .news-grid__pager-nav span { display: inline; }
+  .news-grid__pager-num { min-width: 30px; height: 30px; font-size: 11.5px; }
+  .news-grid__pager-num.is-active { font-size: 14px; }
+  .news-grid__bg-watermark { font-size: 260px; bottom: -60px; right: -30px; }
+}
+
+/* ============================================================
+   SCROLL MODE (portrait) — bỏ fixed-viewport, container chạy
+   theo chiều cao content để scroll thường. Section giữ overflow
+   hidden để clip các decoration absolute (watermark/bg-grid).
+   ============================================================ */
+.fullpage--scroll .news-container {
+  height: auto;
+  justify-content: flex-start;
+  padding: calc(var(--header-h) + 28px) 0 48px;
+}
+.fullpage--scroll .news-grid__list {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+.fullpage--scroll .news-banner__scroll {
+  display: none;
+}
+
+@media (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll .news-container {
+    padding: calc(var(--header-h) + 20px) 0 36px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

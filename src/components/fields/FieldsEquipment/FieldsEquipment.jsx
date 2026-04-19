@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import FieldsEquipmentMap from './FieldsEquipmentMap'
+import useInViewActive from '../useInViewActive'
 import './FieldsEquipment.css'
 
 const IconCrane = () => (
@@ -73,18 +73,12 @@ const EQUIPMENT = [
   { Icon: IconSlide,     name: 'Coffa trượt',        tag: 'Slip-form · 24/7' },
 ]
 
-export default function FieldsEquipment({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsEquipment({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-eq ${mount ? 'is-in' : ''}`}
       aria-label="Năng lực thiết bị"
     >
@@ -97,10 +91,7 @@ export default function FieldsEquipment({ active }) {
 
       <div className="fp-eq__inner">
         <div className="fp-eq__head">
-          <span className="fp-kicker fp-eq__kicker">
-            <span className="fp-kicker__rule" />
-            07 — Năng lực thiết bị
-          </span>
+          
           <h2 className="fp-display fp-eq__title">
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Trang bị</span></span>
             <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>phủ <em>Bắc — Trung — Nam</em></span></span>

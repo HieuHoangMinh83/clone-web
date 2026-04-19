@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import bgImg from '../../../assets/images/fields/civil.jpg'
+import useInViewActive from '../useInViewActive'
 import './FieldsConstruction.css'
 
 const IconTeam = () => (
@@ -41,18 +41,12 @@ const STRENGTHS = [
   { Icon: IconChart, title: 'Quản lý tinh gọn', desc: 'Mô hình quản lý dự án tinh gọn, kiểm soát chặt chi phí — chất lượng — an toàn.' },
 ]
 
-export default function FieldsConstruction({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsConstruction({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-cons ${mount ? 'is-in' : ''}`}
       aria-label="Tổng thầu thi công xây dựng"
     >

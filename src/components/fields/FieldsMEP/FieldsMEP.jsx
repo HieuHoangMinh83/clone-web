@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import useInViewActive from '../useInViewActive'
 import './FieldsMEP.css'
 
 const IconBolt = () => (
@@ -47,18 +47,12 @@ const SPECIALTIES = [
 
 const STANDARDS = ['IEC', 'NFPA', 'UL/FM', 'SMACNA']
 
-export default function FieldsMEP({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsMEP({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-mep ${mount ? 'is-in' : ''}`}
       aria-label="Tổng thầu thi công cơ điện"
     >

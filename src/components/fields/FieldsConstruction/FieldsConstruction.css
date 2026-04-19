@@ -274,8 +274,8 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     gap: 0;
-    padding: calc(var(--header-h) + 40px) 44px 48px;
-    align-content: center;
+    padding: 24px 44px 48px;
+    align-content: start;
   }
   .fp-cons__head {
     max-width: 720px;

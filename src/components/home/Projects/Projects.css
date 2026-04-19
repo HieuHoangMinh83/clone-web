@@ -295,6 +295,12 @@
 
   .pcard {
     flex: 1;
+    display: flex;
+  }
+  .pcard__hit {
+    width: 100%;
+    height: auto;
+    flex: 1;
   }
 
   .pcard.is-active {

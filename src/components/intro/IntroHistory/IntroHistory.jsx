@@ -6,7 +6,7 @@ import CarouselControls from '../CarouselControls.jsx'
 import './IntroHistory.css'
 
 const GAP = 32
-const BREAKPOINTS = [[640, 1], [1024, 2], [Infinity, 3]]
+const BREAKPOINTS = [[520, 2], [900, 3], [Infinity, 4]]
 
 export default function IntroHistory() {
   const viewportRef = useRef(null)

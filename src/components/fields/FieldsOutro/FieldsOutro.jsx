@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react'
 import bg from '../../../assets/images/fields/figma-f7.png'
+import useInViewActive from '../useInViewActive'
 import './FieldsOutro.css'
 
-export default function FieldsOutro({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-  }, [active])
+export default function FieldsOutro({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-outro ${mount ? 'is-in' : ''}`}
       aria-label="Liên hệ hợp tác"
     >

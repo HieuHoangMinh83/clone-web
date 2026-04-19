@@ -76,15 +76,15 @@ export default function FieldsPage() {
         className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
         style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
-        <FieldsBanner active={!isSlide || index === 0} />
-        <FieldsDB active={!isSlide || index === 1} />
-        <FieldsConstruction active={!isSlide || index === 2} />
-        <FieldsMEP active={!isSlide || index === 3} />
-        <FieldsSafety active={!isSlide || index === 4} />
-        <FieldsHR active={!isSlide || index === 5} />
-        <FieldsEquipment active={!isSlide || index === 6} />
-        <FieldsISO active={!isSlide || index === 7} />
-        <FieldsOutro active={!isSlide || index === 8} />
+        <FieldsBanner active={index === 0} isSlide={isSlide} />
+        <FieldsDB active={index === 1} isSlide={isSlide} />
+        <FieldsConstruction active={index === 2} isSlide={isSlide} />
+        <FieldsMEP active={index === 3} isSlide={isSlide} />
+        <FieldsSafety active={index === 4} isSlide={isSlide} />
+        <FieldsHR active={index === 5} isSlide={isSlide} />
+        <FieldsEquipment active={index === 6} isSlide={isSlide} />
+        <FieldsISO active={index === 7} isSlide={isSlide} />
+        <FieldsOutro active={index === 8} isSlide={isSlide} />
       </div>
       {isSlide && (
         <SectionIndicator

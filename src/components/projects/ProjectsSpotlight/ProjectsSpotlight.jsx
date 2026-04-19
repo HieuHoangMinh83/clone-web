@@ -37,10 +37,7 @@ export default function ProjectsSpotlight() {
       </div>
 
       <div className="prj-container prj-spot__container">
-        <span className="prj-spot__eyebrow">
-          <span className="prj-spot__eyebrow-line" aria-hidden />
-          <span>Spotlight · Di sản</span>
-        </span>
+        
 
         <div className="prj-spot__body">
          

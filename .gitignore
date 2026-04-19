@@ -43,9 +43,10 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-
+.tmp/*
+tmp/*
 # Claude / AI tooling
-.claude/
+
 .claude-cache/
 .tmp-figma/*
 # Coverage / tests

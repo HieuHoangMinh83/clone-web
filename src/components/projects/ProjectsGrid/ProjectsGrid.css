@@ -4,7 +4,7 @@
    Rhythm repeats every 9 cards.
    ================================================================ */
 .prj-mag {
-  padding: clamp(60px, 8vw, 120px) 0 clamp(60px, 8vw, 110px);
+  padding: clamp(32px, 4vw, 56px) 0 clamp(32px, 4vw, 56px);
   background:
     radial-gradient(ellipse at 10% 5%, rgba(36, 86, 146, 0.05), transparent 55%),
     radial-gradient(ellipse at 95% 92%, rgba(221, 169, 105, 0.08), transparent 50%),
@@ -342,8 +342,8 @@
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding-top: 56px;
-  margin-top: 48px;
+  padding-top: 24px;
+  margin-top: 24px;
   border-top: 1px solid rgba(26, 60, 107, 0.08);
 }
 .prj-mag__pager-nav {
@@ -391,11 +391,16 @@
 @media (max-width: 1023px) {
   .prj-mag__head { grid-template-columns: 1fr; gap: 28px; }
   .prj-mag__intro { margin: 0; }
-  .prj-mag__grid { grid-auto-rows: 220px; }
-  .prj-card--big { grid-column: span 8; grid-row: span 2; }
-  .prj-card--small { grid-column: span 4; }
-  .prj-card--half { grid-column: span 6; }
-  .prj-card--third { grid-column: span 6; }
+  .prj-mag__grid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: clamp(210px, 28vw, 260px);
+    grid-auto-flow: dense;
+    gap: 20px;
+  }
+  .prj-card--big { grid-column: 1 / -1; grid-row: span 2; }
+  .prj-card--small { grid-column: span 6; grid-row: span 1; }
+  .prj-card--half { grid-column: span 6; grid-row: span 1; }
+  .prj-card--third { grid-column: span 4; grid-row: span 1; }
 }
 @media (max-width: 639px) {
   .prj-mag__heading { font-size: clamp(32px, 9vw, 52px); }
@@ -404,4 +409,61 @@
   .prj-card--small,
   .prj-card--half,
   .prj-card--third { grid-column: 1 / -1; grid-row: auto; }
+}
+
+/* ---------- TABLET PORTRAIT (iPad dọc 768/820/1024) ----------
+   Bento 2-col: big chiếm full-width 2 hàng, small/third chia đôi.
+   Head stack, intro bỏ canh phải, heading scale vừa khung hẹp. */
+@media (min-width: 500px) and (max-width: 1199px) and (orientation: portrait) {
+  .prj-mag {
+    padding: clamp(40px, 5vw, 64px) 0 clamp(40px, 5vw, 56px);
+  }
+  .prj-mag__head {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 44px;
+  }
+  .prj-mag__heading {
+    font-size: clamp(44px, 7vw, 72px);
+    max-width: 16ch;
+  }
+  .prj-mag__intro {
+    margin: 0;
+    padding-left: 28px;
+    max-width: 52ch;
+    font-size: clamp(15px, 1.9vw, 18px);
+  }
+
+  .prj-mag__filters {
+    gap: 4px;
+    padding: 12px 0;
+    margin-bottom: 36px;
+  }
+  .prj-mag__filter {
+    padding: 12px 18px;
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+  }
+
+  .prj-mag__grid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: clamp(220px, 32vw, 280px);
+    grid-auto-flow: dense;
+    gap: 20px;
+  }
+  .prj-card--big   { grid-column: 1 / -1; grid-row: span 2; }
+  .prj-card--small { grid-column: span 6; grid-row: span 1; }
+  .prj-card--half  { grid-column: span 6; grid-row: span 1; }
+  .prj-card--third { grid-column: span 4; grid-row: span 1; }
+
+  .prj-card__no { top: 16px; left: 16px; font-size: 10px; }
+  .prj-card__no em { font-size: 15px; }
+  .prj-card__cat-chip { top: 16px; right: 16px; padding: 5px 10px; }
+  .prj-card__overlay { left: 18px; right: 18px; bottom: 16px; }
+  .prj-card__title { font-size: clamp(18px, 2.4vw, 22px); }
+  .prj-card--big .prj-card__title { font-size: clamp(26px, 4vw, 38px); }
+  .prj-card__body { padding: 16px 4px 4px; gap: 12px; }
+  .prj-card__year { font-size: clamp(22px, 3vw, 30px); }
+
+  .prj-mag__pager { padding-top: 20px; margin-top: 20px; gap: 20px; }
 }

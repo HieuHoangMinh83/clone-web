@@ -778,15 +778,17 @@
   transform: translateX(2px);
 }
 
-/* Tablet + small desktop (768–1199px) — scroll mode của HomePage:
-   lock section đúng 50vh cho đồng bộ với các section khác */
+/* Tablet + small desktop (640–1199px) — scroll mode của HomePage:
+   lock section featured đúng 50vh cho đồng bộ với các section khác.
+   Quan trọng: selector phải scope vào .news-featured, không dùng
+   .news-sec.section chung vì sẽ đè lên NewsBanner/NewsGrid. */
 @media (min-width: 640px) and (max-width: 1199px) and (orientation: portrait) {
-  .fullpage--scroll > .news-sec.section {
+  .fullpage--scroll > .news-featured.news-sec.section {
     height: 50vh !important;
     min-height: 50vh;
     max-height: 50vh;
   }
-  .news-container {
+  .news-featured .news-container {
     padding: calc(var(--header-h) + 14px) 0 28px;
   }
   .news-featured__grid {
@@ -812,38 +814,6 @@
     flex: 1;
     min-height: 0;
   }
-}
-
-/* Portrait tablet (768–1024px): hero 2 cột ngang, scale typography nhỏ,
-   giảm độ cao grid mạnh hơn để khung gọn vừa đúng 1 màn iPad dọc.
-   Landscape dùng config desktop. */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .news-featured__grid { gap: 14px; grid-template-columns: 2.2fr 1fr; max-height: 280px; }
-
-  .news-featured__hero-link {
-    grid-template-rows: none;
-    grid-template-columns: 1.1fr 1fr;
-    height: 100%;
-  }
-  .news-featured__hero-media { height: 100%; }
-  .news-featured__hero-body {
-    padding: 8px 15px;
-    justify-content: center;
-  }
-  .news-featured__hero-title { font-size: 15px; -webkit-line-clamp: 3; }
-  .news-featured__hero-excerpt { font-size: 12px; line-height: 1.55; -webkit-line-clamp: 4; }
-  .news-featured__hero-cta { font-size: 10.5px; padding-top: 8px; letter-spacing: 0.14em; }
-  .news-featured__hero-meta { font-size: 10px; }
-  .news-featured__hero-d { font-size: 22px; }
-  .news-featured__hero-my { font-size: 8px; }
-  .news-featured__hero-datestamp { padding: 6px 10px; right: 10px; bottom: 10px; }
-  .news-featured__hero-tag { font-size: 9px; padding: 4px 9px; left: 12px; top: 12px; }
-
-  .news-featured__side-eyebrow { font-size: 10px; }
-  .news-featured__row-body { padding: 10px 12px 10px; gap: 3px; }
-  .news-featured__row-title { font-size: 11.5px; }
-  .news-featured__row-date { font-size: 9.5px; letter-spacing: 0.12em; }
-  .news-featured__side-list { gap: 10px; }
 }
 
 @media (max-width: 767px) {
@@ -891,6 +861,73 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
+  .news-featured__side-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .news-featured__side { height: auto; }
+  .news-featured__side-list { height: auto; gap: 4px; }
+  .news-featured__row { flex: initial; min-height: 0; }
+  .news-featured__row-link { position: relative; height: auto; padding: 12px 0; border-bottom: 1px solid rgba(26, 60, 107, 0.1); }
+  .news-featured__row-body { position: relative; padding: 0; color: var(--navy-900); }
+  .news-featured__row-date { color: var(--ink-500); }
+  .news-featured__row-title { color: var(--navy-900); font-size: 13px; }
+  .news-featured__row-shade { display: none; }
+}
+
+/* Portrait tablet (500–1199px) — đặt sau các @media mobile để thắng cascade */
+@media (min-width: 500px) and (max-width: 1199px) and (orientation: portrait) {
+  .news-featured__head { align-items: center; margin-bottom: 14px; gap: 16px; flex-wrap: nowrap; }
+  .news-featured__heading { font-size: clamp(22px, 3.2vw, 32px); }
+  .news-featured__eyebrow { font-size: 10px; margin-bottom: 8px; }
+  .news-featured__kicker { font-size: 9.5px; margin-bottom: 8px; }
+  .news-featured__all { font-size: 12px; opacity: 1; transform: none; }
+  .news-featured__all-label { padding: 9px 18px; }
+  .news-featured__all-arrow { width: 38px; }
+
+  .news-featured__grid {
+    gap: 14px;
+    grid-template-columns: 2.1fr 1fr;
+    max-height: clamp(300px, 46vh, 420px);
+  }
+
+  .news-featured__hero-link {
+    grid-template-rows: none;
+    grid-template-columns: 1.1fr 1fr;
+    height: 100%;
+  }
+  .news-featured__hero-media { height: 100%; }
+  .news-featured__hero-body {
+    padding: 12px 16px;
+    justify-content: center;
+  }
+  .news-featured__hero-title { font-size: 15px; -webkit-line-clamp: 3; line-clamp: 3; }
+  .news-featured__hero-excerpt { font-size: 12px; line-height: 1.55; -webkit-line-clamp: 4; line-clamp: 4; }
+  .news-featured__hero-divider { margin: 14px 0; }
+  .news-featured__hero-footer { padding-top: 14px; }
+  .news-featured__hero-cta { font-size: 10.5px; padding-top: 8px; letter-spacing: 0.14em; }
+  .news-featured__hero-date { font-size: 12px; }
+  .news-featured__hero-arrow { width: 36px; height: 36px; }
+  .news-featured__hero-meta { font-size: 10px; }
+  .news-featured__hero-d { font-size: 22px; }
+  .news-featured__hero-my { font-size: 8px; }
+  .news-featured__hero-datestamp { padding: 6px 10px; right: 10px; bottom: 10px; }
+  .news-featured__hero-tag { font-size: 9px; padding: 4px 9px; left: 12px; top: 12px; }
+
+  .news-featured__side { height: 100%; }
+  .news-featured__side-head { display: none; }
+  .news-featured__side-eyebrow { font-size: 10px; }
+  .news-featured__side-list { gap: 10px; height: 100%; }
+  .news-featured__row { flex: 1; min-height: 0; }
+  .news-featured__row-link { height: 100%; padding: 0; border: 0; display: block; }
+  .news-featured__row-thumb { display: block; position: absolute; inset: 0; }
+  .news-featured__row-shade { display: block; }
+  .news-featured__row-body {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 10px 12px;
+    gap: 3px;
+    color: #fff;
+  }
+  .news-featured__row-title { color: #fff; font-size: 11.5px; }
+  .news-featured__row-date { color: var(--gold-500); font-size: 9.5px; letter-spacing: 0.12em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

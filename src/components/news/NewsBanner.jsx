@@ -25,7 +25,7 @@ export default function NewsBanner() {
   }, [])
 
   return (
-    <section className={`news-sec news-banner ${mount ? 'is-in' : ''}`}>
+    <section className={`news-sec news-banner section ${mount ? 'is-in' : ''}`}>
       <div
         className="news-sec__bg news-banner__bg"
         style={{ backgroundImage: `url(${bg})` }}

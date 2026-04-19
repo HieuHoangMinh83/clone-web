@@ -201,3 +201,44 @@
   .prj-spot__meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .prj-spot__cta { justify-self: start; }
 }
+
+/* ---------- TABLET PORTRAIT (iPad dọc 768/820/1024) ---------- */
+@media (min-width: 500px) and (max-width: 1199px) and (orientation: portrait) {
+  .prj-sec.prj-spot {
+    min-height: 0;
+    padding: clamp(72px, 10vw, 112px) 0 clamp(44px, 5.5vw, 64px);
+  }
+  .prj-spot__veil {
+    background:
+      linear-gradient(180deg, rgba(8, 20, 45, 0.3) 0%, rgba(8, 20, 45, 0.35) 35%, rgba(8, 20, 45, 0.92) 100%),
+      linear-gradient(90deg, rgba(8, 20, 45, 0.55) 0%, transparent 70%);
+  }
+  .prj-spot__container { gap: 32px; }
+  .prj-spot__stack { max-width: 100%; }
+  .prj-spot__title {
+    font-size: clamp(44px, 6.4vw, 68px);
+    line-height: 0.98;
+    margin: 0 0 14px;
+  }
+  .prj-spot__lead {
+    font-size: clamp(15px, 1.85vw, 17px);
+    line-height: 1.6;
+    max-width: 54ch;
+  }
+  .prj-spot__foot {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-top: 24px;
+  }
+  .prj-spot__meta {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .prj-spot__meta dt { margin-bottom: 6px; }
+  .prj-spot__meta dd { font-size: 14px; }
+  .prj-spot__cta {
+    justify-self: start;
+    padding: 16px 26px;
+    font-size: 11px;
+  }
+}

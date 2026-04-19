@@ -295,6 +295,29 @@
   }
 }
 
+/* Mobile (≤500px) — compact stats, veil mạnh hơn để không lẫn ảnh */
+@media (max-width: 500px) {
+  .ach__content { padding: 0 20px; gap: 28px; }
+  .ach__quote-text { font-size: 19px; line-height: 1.35; }
+  .ach__quote-mark { width: 28px; height: 22px; }
+  .ach__bg-veil {
+    background:
+      linear-gradient(90deg,
+        rgba(255,255,255,0.96) 0%,
+        rgba(255,255,255,0.88) 60%,
+        rgba(255,255,255,0.55) 100%);
+  }
+  .ach__stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+    max-width: 100%;
+  }
+  .stat__num { font-size: 28px; gap: 4px; }
+  .stat__unit { font-size: 10.5px; top: -2px; }
+  .stat__label { font-size: 9.5px; letter-spacing: 0.1em; padding-top: 4px; }
+  .ach__frame { inset: 14px; }
+}
+
 /* Tablet (640–1199px — Home ở scroll mode, breakpoint 1200px)
    Achievements lock min-height 50vh, content nén lại để KHÔNG vượt 50vh.
    Padding dọc trước đây dùng % (tính theo width) → trên iPad width 1024

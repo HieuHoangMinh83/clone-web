@@ -3,7 +3,29 @@ import { DEPARTMENTS, LOCATIONS, JOBS } from './recruitData.js'
 import Pagination from '../shared/Pagination/Pagination.jsx'
 import SearchFilter from '../shared/SearchFilter/SearchFilter.jsx'
 
-const PAGE_SIZE = 6
+// Tablet dọc (≤1199px, aspect ratio dọc): grid 2×2 = 4 tin/trang cho cân đối.
+// Desktop & landscape: 3×2 = 6 tin/trang.
+// Dùng max-aspect-ratio thay vì (orientation: portrait) vì Chrome DevTools
+// responsive mode có thể không sync orientation toggle với kích thước viewport.
+const TABLET_PORTRAIT_QUERY =
+  '(max-width: 1199px) and (min-width: 500px) and (max-aspect-ratio: 1/1)'
+
+function usePageSize() {
+  const getSize = () => {
+    if (typeof window === 'undefined') return 6
+    return window.matchMedia(TABLET_PORTRAIT_QUERY).matches ? 4 : 6
+  }
+  const [size, setSize] = useState(getSize)
+
+  useEffect(() => {
+    const mq = window.matchMedia(TABLET_PORTRAIT_QUERY)
+    const handler = () => setSize(getSize())
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  return size
+}
 
 export default function RecruitJobs() {
   const [mount, setMount] = useState(false)
@@ -11,6 +33,7 @@ export default function RecruitJobs() {
   const [loc, setLoc] = useState('all')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
+  const pageSize = usePageSize()
 
   useEffect(() => {
     const r = requestAnimationFrame(() => setMount(true))
@@ -29,13 +52,13 @@ export default function RecruitJobs() {
 
   useEffect(() => {
     setPage(0)
-  }, [dept, loc, query])
+  }, [dept, loc, query, pageSize])
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
   const currentPage = Math.min(page, totalPages - 1)
   const visibleJobs = filtered.slice(
-    currentPage * PAGE_SIZE,
-    (currentPage + 1) * PAGE_SIZE,
+    currentPage * pageSize,
+    (currentPage + 1) * pageSize,
   )
 
 

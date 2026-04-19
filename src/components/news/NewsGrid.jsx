@@ -37,7 +37,7 @@ export default function NewsGrid() {
   }
 
   return (
-    <section className={`news-sec news-grid-sec ${mount ? 'is-in' : ''}`}>
+    <section className={`news-sec news-grid-sec section ${mount ? 'is-in' : ''}`}>
       <div className="news-grid__bg" aria-hidden>
         <span className="news-grid__bg-grid" />
         <span className="news-grid__bg-watermark">Newsroom</span>

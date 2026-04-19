@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import useInViewActive from '../useInViewActive'
 import './FieldsHR.css'
 
 const IconPeople = () => (
@@ -44,18 +44,12 @@ const VALUES = [
   { k: 'T', label: 'Tối ưu' },
 ]
 
-export default function FieldsHR({ active }) {
-  const [mount, setMount] = useState(false)
-  useEffect(() => {
-    if (active) {
-      const t = requestAnimationFrame(() => setMount(true))
-      return () => cancelAnimationFrame(t)
-    }
-    setMount(false)
-  }, [active])
+export default function FieldsHR({ active, isSlide }) {
+  const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
+      ref={ref}
       className={`fp-sec fp-hr ${mount ? 'is-in' : ''}`}
       aria-label="Nguồn nhân lực"
     >
