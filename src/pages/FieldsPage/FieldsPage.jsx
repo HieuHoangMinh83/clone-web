@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
+import useFullpageScroll from '../../components/shared/useFullpageScroll.js'
 import FieldsBanner from '../../components/fields/FieldsBanner/FieldsBanner.jsx'
 import FieldsDB from '../../components/fields/FieldsDB/FieldsDB.jsx'
 import FieldsConstruction from '../../components/fields/FieldsConstruction/FieldsConstruction.jsx'
