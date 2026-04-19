@@ -36,14 +36,14 @@ import HomeAchievements from '../HomePage/Achievements/Achievements.jsx'
 import HomeNews from '../HomePage/News/News.jsx'
 
 // Intro page
-import IntroBanner from '../../components/intro/IntroBanner/IntroBanner.jsx'
-import IntroVisionMission from '../../components/intro/IntroVisionMission/IntroVisionMission.jsx'
-import IntroChairman from '../../components/intro/IntroChairman/IntroChairman.jsx'
-import IntroBoard from '../../components/intro/IntroBoard/IntroBoard.jsx'
-import IntroManagers from '../../components/intro/IntroManagers/IntroManagers.jsx'
-import IntroValues from '../../components/intro/IntroValues/IntroValues.jsx'
-import IntroHistory from '../../components/intro/IntroHistory/IntroHistory.jsx'
-import IntroPartners from '../../components/intro/IntroPartners/IntroPartners.jsx'
+import IntroBanner from '../IntroPage/IntroBanner/IntroBanner.jsx'
+import IntroVisionMission from '../IntroPage/IntroVisionMission/IntroVisionMission.jsx'
+import IntroChairman from '../IntroPage/IntroChairman/IntroChairman.jsx'
+import IntroBoard from '../IntroPage/IntroBoard/IntroBoard.jsx'
+import IntroManagers from '../IntroPage/IntroManagers/IntroManagers.jsx'
+import IntroValues from '../IntroPage/IntroValues/IntroValues.jsx'
+import IntroHistory from '../IntroPage/IntroHistory/IntroHistory.jsx'
+import IntroPartners from '../IntroPage/IntroPartners/IntroPartners.jsx'
 
 // Fields page
 import FieldsBanner from '../../components/fields/FieldsBanner/FieldsBanner.jsx'
@@ -406,7 +406,7 @@ export const COMPONENTS = [
     subtitle: 'Banner đầu trang Giới thiệu',
     desc: 'Banner mở đầu trang Giới thiệu — ảnh nền + tiêu đề + subtitle.',
     tag: 'IntroBanner',
-    path: 'src/components/intro/IntroBanner/',
+    path: 'src/pages/IntroPage/IntroBanner/',
     render: () => <IntroBanner />,
   },
   {
@@ -416,7 +416,7 @@ export const COMPONENTS = [
     subtitle: 'Tầm nhìn · Sứ mệnh',
     desc: 'Khối tầm nhìn & sứ mệnh — 2 cột icon vàng + tiêu đề + mô tả.',
     tag: 'IntroVisionMission',
-    path: 'src/components/intro/IntroVisionMission/',
+    path: 'src/pages/IntroPage/IntroVisionMission/',
     render: () => <IntroVisionMission />,
   },
   {
@@ -426,7 +426,7 @@ export const COMPONENTS = [
     subtitle: 'Thông điệp chủ tịch · Portrait',
     desc: 'Khối thông điệp chủ tịch HĐQT — chân dung + quote + chữ ký.',
     tag: 'IntroChairman',
-    path: 'src/components/intro/IntroChairman/',
+    path: 'src/pages/IntroPage/IntroChairman/',
     render: () => <IntroChairman />,
   },
   {
@@ -436,7 +436,7 @@ export const COMPONENTS = [
     subtitle: 'Hội đồng quản trị',
     desc: 'Lưới thành viên HĐQT với ảnh + tên + chức danh, click mở modal.',
     tag: 'IntroBoard',
-    path: 'src/components/intro/IntroBoard/',
+    path: 'src/pages/IntroPage/IntroBoard/',
     render: () => <IntroBoard />,
   },
   {
@@ -446,7 +446,7 @@ export const COMPONENTS = [
     subtitle: 'Ban điều hành',
     desc: 'Danh sách quản lý cấp cao — grid cards có portal modal.',
     tag: 'IntroManagers',
-    path: 'src/components/intro/IntroManagers/',
+    path: 'src/pages/IntroPage/IntroManagers/',
     render: () => <IntroManagers />,
   },
   {
@@ -456,7 +456,7 @@ export const COMPONENTS = [
     subtitle: 'Giá trị cốt lõi',
     desc: 'Khối giá trị cốt lõi — danh sách giá trị có icon + mô tả.',
     tag: 'IntroValues',
-    path: 'src/components/intro/IntroValues/',
+    path: 'src/pages/IntroPage/IntroValues/',
     render: () => <IntroValues />,
   },
   {
@@ -466,7 +466,7 @@ export const COMPONENTS = [
     subtitle: 'Lịch sử · Dòng thời gian',
     desc: 'Dòng thời gian các cột mốc với carousel controls.',
     tag: 'IntroHistory',
-    path: 'src/components/intro/IntroHistory/',
+    path: 'src/pages/IntroPage/IntroHistory/',
     render: () => <IntroHistory />,
   },
   {
@@ -476,7 +476,7 @@ export const COMPONENTS = [
     subtitle: 'Đối tác · Logo grid',
     desc: 'Lưới logo đối tác của Newtecons (glob imports).',
     tag: 'IntroPartners',
-    path: 'src/components/intro/IntroPartners/',
+    path: 'src/pages/IntroPage/IntroPartners/',
     render: () => <IntroPartners />,
   },
 
