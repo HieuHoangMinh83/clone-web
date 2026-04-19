@@ -46,15 +46,15 @@ import IntroHistory from '../IntroPage/IntroHistory/IntroHistory.jsx'
 import IntroPartners from '../IntroPage/IntroPartners/IntroPartners.jsx'
 
 // Fields page
-import FieldsBanner from '../../components/fields/FieldsBanner/FieldsBanner.jsx'
-import FieldsConstruction from '../../components/fields/FieldsConstruction/FieldsConstruction.jsx'
-import FieldsMEP from '../../components/fields/FieldsMEP/FieldsMEP.jsx'
-import FieldsEquipment from '../../components/fields/FieldsEquipment/FieldsEquipment.jsx'
-import FieldsHR from '../../components/fields/FieldsHR/FieldsHR.jsx'
-import FieldsDB from '../../components/fields/FieldsDB/FieldsDB.jsx'
-import FieldsSafety from '../../components/fields/FieldsSafety/FieldsSafety.jsx'
-import FieldsISO from '../../components/fields/FieldsISO/FieldsISO.jsx'
-import FieldsOutro from '../../components/fields/FieldsOutro/FieldsOutro.jsx'
+import FieldsBanner from '../FieldsPage/FieldsBanner/FieldsBanner.jsx'
+import FieldsConstruction from '../FieldsPage/FieldsConstruction/FieldsConstruction.jsx'
+import FieldsMEP from '../FieldsPage/FieldsMEP/FieldsMEP.jsx'
+import FieldsEquipment from '../FieldsPage/FieldsEquipment/FieldsEquipment.jsx'
+import FieldsHR from '../FieldsPage/FieldsHR/FieldsHR.jsx'
+import FieldsDB from '../FieldsPage/FieldsDB/FieldsDB.jsx'
+import FieldsSafety from '../FieldsPage/FieldsSafety/FieldsSafety.jsx'
+import FieldsISO from '../FieldsPage/FieldsISO/FieldsISO.jsx'
+import FieldsOutro from '../FieldsPage/FieldsOutro/FieldsOutro.jsx'
 
 // News page
 import NewsBanner from '../../components/news/NewsBanner.jsx'
@@ -488,7 +488,7 @@ export const COMPONENTS = [
     subtitle: 'Banner trang Lĩnh vực',
     desc: 'Banner mở đầu trang Lĩnh vực hoạt động. Nhận prop active để trigger animation.',
     tag: 'FieldsBanner',
-    path: 'src/components/fields/FieldsBanner/',
+    path: 'src/pages/FieldsPage/FieldsBanner/',
     render: () => <FieldsBanner active={true} />,
   },
   {
@@ -498,7 +498,7 @@ export const COMPONENTS = [
     subtitle: 'Xây dựng dân dụng & công nghiệp',
     desc: 'Section mô tả lĩnh vực xây dựng dân dụng & công nghiệp.',
     tag: 'FieldsConstruction',
-    path: 'src/components/fields/FieldsConstruction/',
+    path: 'src/pages/FieldsPage/FieldsConstruction/',
     render: () => <FieldsConstruction active={true} />,
   },
   {
@@ -508,7 +508,7 @@ export const COMPONENTS = [
     subtitle: 'Cơ điện (M&E / MEP)',
     desc: 'Section cơ điện, gió, nước, chiếu sáng — hệ thống kỹ thuật toà nhà.',
     tag: 'FieldsMEP',
-    path: 'src/components/fields/FieldsMEP/',
+    path: 'src/pages/FieldsPage/FieldsMEP/',
     render: () => <FieldsMEP active={true} />,
   },
   {
@@ -518,7 +518,7 @@ export const COMPONENTS = [
     subtitle: 'Thiết bị · Máy móc thi công',
     desc: 'Section thiết bị & máy móc hiện đại sử dụng trong thi công.',
     tag: 'FieldsEquipment',
-    path: 'src/components/fields/FieldsEquipment/',
+    path: 'src/pages/FieldsPage/FieldsEquipment/',
     render: () => <FieldsEquipment active={true} />,
   },
   {
@@ -528,7 +528,7 @@ export const COMPONENTS = [
     subtitle: 'Nhân sự · Đội ngũ',
     desc: 'Section đội ngũ nhân sự — kỹ sư, chỉ huy trưởng, công nhân.',
     tag: 'FieldsHR',
-    path: 'src/components/fields/FieldsHR/',
+    path: 'src/pages/FieldsPage/FieldsHR/',
     render: () => <FieldsHR active={true} />,
   },
   {
@@ -538,7 +538,7 @@ export const COMPONENTS = [
     subtitle: 'Tiến độ · Database dự án',
     desc: 'Section mô tả cách quản lý tiến độ, dữ liệu dự án.',
     tag: 'FieldsDB',
-    path: 'src/components/fields/FieldsDB/',
+    path: 'src/pages/FieldsPage/FieldsDB/',
     render: () => <FieldsDB active={true} />,
   },
   {
@@ -548,7 +548,7 @@ export const COMPONENTS = [
     subtitle: 'An toàn lao động · HSE',
     desc: 'Section cam kết an toàn lao động, HSE.',
     tag: 'FieldsSafety',
-    path: 'src/components/fields/FieldsSafety/',
+    path: 'src/pages/FieldsPage/FieldsSafety/',
     render: () => <FieldsSafety active={true} />,
   },
   {
@@ -558,7 +558,7 @@ export const COMPONENTS = [
     subtitle: 'Chuẩn quốc tế · ISO',
     desc: 'Section chứng chỉ ISO 9001, 14001, 45001 — chuẩn quốc tế.',
     tag: 'FieldsISO',
-    path: 'src/components/fields/FieldsISO/',
+    path: 'src/pages/FieldsPage/FieldsISO/',
     render: () => <FieldsISO active={true} />,
   },
   {
@@ -568,7 +568,7 @@ export const COMPONENTS = [
     subtitle: 'Kết thúc · CTA',
     desc: 'Section kết trang Lĩnh vực — CTA hướng đến liên hệ.',
     tag: 'FieldsOutro',
-    path: 'src/components/fields/FieldsOutro/',
+    path: 'src/pages/FieldsPage/FieldsOutro/',
     render: () => <FieldsOutro active={true} />,
   },
 
