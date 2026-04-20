@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../components/shared/useFullpageScroll.js'
+import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
 import {
   findProjectBySlug,
   getRelatedProjects,

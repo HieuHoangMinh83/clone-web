@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../components/shared/useFullpageScroll.js'
+import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
 import IntroBanner from '../../components/intro/IntroBanner/IntroBanner.jsx'
 import IntroChairman from '../../components/intro/IntroChairman/IntroChairman.jsx'
 import IntroHistory from '../../components/intro/IntroHistory/IntroHistory.jsx'

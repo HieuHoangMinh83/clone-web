@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import bg from '../../../assets/images/intro/bg/history.png'
 import INTRO_MILESTONES from '../../intro/milestones.js'
-import useCarousel from '../../shared/useCarousel.js'
-import CarouselControls from '../../shared/CarouselControls.jsx'
+import useCarousel from '../../intro/useCarousel.js'
+import CarouselControls from '../../intro/CarouselControls.jsx'
 import './ProjectsMilestones.css'
 
 const AWARD_REGEX = /(Top\s?\d+[^.,;]*)|(giải thưởng[^.,;]*)|(vinh danh[^.,;]*)|(bằng khen[^.,;]*)/gi
