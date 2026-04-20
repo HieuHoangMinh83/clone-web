@@ -104,11 +104,12 @@
   }
 }
 
-/* Mobile (<640px) scroll mode — Hero 50vh, ảnh crop theo khung */
+/* Mobile (<640px) scroll mode — Hero 42vh compact, ảnh crop theo khung,
+   dots có hit-area lớn + safe-area cho iPhone home indicator */
 @media (max-width: 639px) {
   .fullpage--scroll > .hero.section {
-    height: 50vh !important;
-    min-height: 50vh;
+    height: 42vh !important;
+    min-height: 280px;
   }
   .hero__track {
     height: 100%;
@@ -123,6 +124,13 @@
     object-fit: cover;
   }
   .hero__dots {
-    bottom: 18px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
   }
+  .hero__dots button {
+    width: 9px;
+    height: 9px;
+    border-width: 1.5px;
+  }
+  .hero__dots button.is-active { width: 24px; }
 }

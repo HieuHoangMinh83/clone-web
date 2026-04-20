@@ -283,50 +283,90 @@
 @media (max-width: 639px) {
   .projects {
     height: auto;
-    min-height: 100vh;
+    min-height: 0;
     flex-direction: column;
+    padding: 48px 0 32px;
   }
+
+  /* Mobile header riêng cho projects — hiện lại title/CTA
+     (desktop ẩn ở .projects__head {display:none} trên tablet portrait) */
+  .projects__head {
+    display: block;
+    position: static;
+    padding: 0 20px 20px;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .projects__head-inner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .projects__title {
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-shadow: none;
+  }
+  .projects__title strong { color: #fff; }
+  .projects__cta { font-size: 10.5px; color: var(--gold-500); white-space: nowrap; }
 
   .projects__rail {
     flex-direction: column;
     flex: 1;
-    min-height: 480px;
+    min-height: 0;
+    gap: 10px;
+    padding: 0 20px;
   }
 
-  .pcard {
-    flex: 1;
-    display: flex;
+  /* Cards thành list 4 thẻ cân đối, không còn logic active-expand
+     (trên touch không có hover → dễ gây 1 thẻ to/3 thẻ bé khó đọc) */
+  .pcard,
+  .pcard.is-active {
+    flex: 0 0 auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
   }
+  .pcard + .pcard { border-left: 0; }
+
   .pcard__hit {
     width: 100%;
-    height: auto;
-    flex: 1;
+    height: 100%;
+    flex: initial;
+    border-radius: inherit;
   }
 
-  .pcard.is-active {
-    flex: 3;
+  /* Always-on body: title + CTA luôn hiển thị trên mobile (tap target) */
+  .pcard__body,
+  .pcard.is-active .pcard__body {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    padding: 16px 18px 18px;
+    gap: 4px;
   }
+  .pcard__title { font-size: 18px; line-height: 1.2; margin-top: 2px; }
+  .pcard__cat { font-size: 9.5px; letter-spacing: 0.18em; }
+  .pcard__more { margin-top: 8px; font-size: 10.5px; }
 
+  /* Ẩn hoàn toàn vertical label — trên mobile thẻ có body luôn hiện */
   .pcard__vlabel,
   .pcard:not(.is-active) .pcard__vlabel,
   .pcard.is-active .pcard__vlabel {
-    writing-mode: horizontal-tb;
-    top: auto;
-    left: auto;
-    bottom: 16px;
-    right: 20px;
-    transform: none;
-    font-size: 14px;
-    text-align: right;
-    line-height: 1.25;
+    display: none;
   }
 
-  .pcard.is-active .pcard__vlabel {
-    opacity: 0;
-  }
-
-  .pcard__title {
-    font-size: 20px;
+  /* Shade mạnh hơn để title/CTA dễ đọc trên ảnh */
+  .pcard__shade,
+  .pcard.is-active .pcard__shade {
+    opacity: 1;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.75) 100%);
   }
 }
 

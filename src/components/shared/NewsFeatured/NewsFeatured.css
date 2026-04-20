@@ -820,6 +820,27 @@
   .news-featured__grid { grid-template-columns: 1fr; gap: 18px; }
   .news-featured__head { align-items: flex-start; }
 
+  /* Container đã là flex column. Nhấc children của head lên container
+     qua display:contents để có thể reorder: heading(1) → grid(2) → all-btn(3) */
+  .news-featured__head {
+    display: contents;
+  }
+  .news-featured__head-left { order: 1; }
+  .news-featured__grid { order: 2; }
+  .news-featured__all {
+    order: 3;
+    align-self: stretch;
+    justify-content: center;
+    margin-top: 16px;
+    width: 100%;
+  }
+  .news-featured__all-label {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+  .news-featured__heading-mask--single { flex-wrap: wrap; }
+
   /* Hero title trên mobile: clamp 3 dòng + ellipsis, đặt phía trên (dưới ảnh),
      đảm bảo luôn thấy phần đầu dù title dài */
   .news-featured__hero-body { padding: 8px 15px; justify-content: center; }
