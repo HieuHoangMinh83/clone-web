@@ -308,25 +308,48 @@
 @media (max-width: 639px) {
   .intro-values__arc-svg { display: none; }
 
+  /* Mobile: section flow tự nhiên, title trên, nodes dưới */
+  .fullpage--scroll > .intro-values.section {
+    height: auto !important;
+    min-height: 0;
+  }
+  .intro-values .intro-container {
+    position: relative;
+    height: auto;
+    padding: calc(var(--header-h, 64px) + 24px) 16px 16px;
+  }
+  .intro-values__arc-wrap {
+    position: relative;
+    inset: auto;
+    padding: 20px 16px 40px;
+  }
+  .intro-values__nodes {
+    position: relative;
+    inset: auto;
+  }
+
   .intro-values__center {
     position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
     width: 100%;
-    margin-bottom: 24px;
+    margin: 0 auto 24px;
   }
   @keyframes val-fade-in {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Mobile: layout 3 nodes row 1 + 2 nodes row 2 (cân đối, không lonely) */
   .intro-values__nodes {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 18px;
+    max-width: 290px;
+    margin: 0 auto;
   }
   .intro-values__node {
     position: static !important;
@@ -341,6 +364,16 @@
   }
   .intro-values__node.is-active .intro-values__node-circle {
     transform: scale(1.1);
+  }
+  /* Mobile: bỏ label-shift (tính cho arc desktop) để label không lệch chồng nhau */
+  .intro-values__node-label {
+    transform: none !important;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .intro-values__node.is-active .intro-values__node-label {
+    font-size: 12px;
   }
 }
 

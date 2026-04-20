@@ -285,6 +285,19 @@
   }
 }
 
+/* Mobile <500: board height auto để card 3 không bị cắt bởi overflow:hidden */
+@media (max-width: 499px) {
+  .fullpage--scroll .intro-board {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .fullpage--scroll .intro-board .intro-board__container {
+    padding: calc(var(--header-h) + 16px) 16px 32px;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+}
+
 /* iPad landscape 1366×1024 — section 100vh slide còn cao, thu container gọn */
 @media (min-width: 1024px) and (max-width: 1400px) and (max-height: 1100px) and (orientation: landscape) {
   .intro-board__container {
@@ -393,6 +406,25 @@
   .intro-board__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 360px;
+  }
+  /* Override flex width (rule ở portrait 3-col) — 2 card/row để tên không chồng */
+  .intro-board__grid .intro-board__card {
+    width: calc((100% - 20px) / 2);
+    max-width: 160px;
+  }
+  /* Card lẻ cuối (3 cards) — đè flex để center thay vì dính trái */
+  .intro-board__grid > .intro-board__card:last-child:nth-child(odd) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Mobile: cho tên wrap, giới hạn theo bề rộng card */
+  .intro-board__grid .intro-board__name {
+    white-space: normal;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .intro-board__grid .intro-board__role {
+    font-size: 10.5px;
   }
   .intro-board__avatar--lg { width: 170px; }
 }

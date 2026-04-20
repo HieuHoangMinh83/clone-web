@@ -872,6 +872,16 @@
   .news-featured__row-link { grid-template-columns: auto 1fr auto; gap: 10px; }
   .news-featured__row-thumb { display: none; }
 
+  /* Điện thoại <640: hero card stack dọc — ảnh trên, text dưới (vì cột right 1fr ~150px quá chật) */
+  .news-featured__hero-link {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .news-featured__hero-media {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
   /* Điện thoại hẹp — còn ít không gian, cắt title 2 dòng để luôn thấy ngày + CTA */
   .news-featured__hero-title {
     font-size: 15px;

@@ -372,9 +372,17 @@
   .intro-mgr__dot.is-active { width: 22px; }
 }
 @media (max-width: 767px) {
+  /* Mobile: cho section grow theo content, không cap 58vh gây cắt cards */
+  .fullpage--scroll .intro-mgr,
+  .intro-mgr {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
   .intro-mgr__container {
-    padding-top: calc(var(--header-h) + 12px);
-    overflow-y: auto;
+    padding: calc(var(--header-h) + 20px) 16px 32px;
+    overflow: visible;
+    gap: 16px;
   }
   .intro-mgr__stage {
     grid-template-columns: 1fr;
@@ -383,12 +391,18 @@
   .intro-mgr__arrow { display: none; }
   .intro-mgr__row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 16px 12px;
   }
   .intro-mgr__card {
     max-width: none;
     margin: 0 !important;
     transform: none !important;
+  }
+  /* Card lẻ cuối row: span 2 col + căn giữa để không dính lề trái */
+  .intro-mgr__row > .intro-mgr__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 6px);
   }
   .intro-mgr__card:nth-child(5) { display: flex; }
 }

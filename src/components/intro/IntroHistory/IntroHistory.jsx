@@ -4,7 +4,7 @@ import CarouselControls from '../CarouselControls.jsx'
 import './IntroHistory.css'
 
 const GAP = 32
-const BREAKPOINTS = [[520, 2], [900, 3], [Infinity, 4]]
+const BREAKPOINTS = [[500, 1], [900, 3], [Infinity, 4]]
 
 export default function IntroHistory({
   bg,
@@ -48,7 +48,10 @@ export default function IntroHistory({
   const itemW = perView > 0 && viewportW > 0
     ? (viewportW - (perView - 1) * GAP) / perView
     : 0
-  const offset = clampedPage * perView * (itemW + GAP)
+  const step = itemW + GAP
+  const rawOffset = clampedPage * perView * step
+  const maxOffset = Math.max(0, (milestones.length - perView) * step)
+  const offset = Math.min(rawOffset, maxOffset)
 
   return (
     <section ref={sectionRef} className={`intro-sec intro-history ${inView ? 'is-in' : ''}`}>

@@ -285,7 +285,7 @@
     height: auto;
     min-height: 0;
     flex-direction: column;
-    padding: 48px 0 32px;
+    padding: calc(var(--header-h, 64px) + 24px) 0 32px;
   }
 
   /* Mobile header riêng cho projects — hiện lại title/CTA

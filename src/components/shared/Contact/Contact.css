@@ -601,7 +601,7 @@
     height: auto;
   }
   .contact__pane {
-    padding: 32px 20px 28px;
+    padding: calc(var(--header-h, 64px) + 20px) 20px 28px;
     max-width: 100%;
     margin: 0;
     justify-content: flex-start;

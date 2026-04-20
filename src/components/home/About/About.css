@@ -687,13 +687,13 @@
     min-height: 0;
   }
   .tile {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
     min-height: 0;
     padding: 12px;
   }
   .tile__img {
     transform: none !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     filter: none !important;
     opacity: 1 !important;
     animation: none !important;
@@ -701,4 +701,11 @@
   .tile__title-top { font-size: 11px; }
   .tile__title-bot { font-size: 14px; letter-spacing: 0; }
   .tile__cta { font-size: 10px; }
+}
+
+/* Màn <500px: giảm padding-top của intro cho khít với hero */
+@media (max-width: 499px) {
+  .about__intro {
+    padding-top: 32px;
+  }
 }

@@ -46,7 +46,7 @@ $RECYCLE.BIN/
 .tmp/*
 tmp/*
 # Claude / AI tooling
-
+screenshots/*
 .claude-cache/
 .tmp-figma/*
 # Coverage / tests

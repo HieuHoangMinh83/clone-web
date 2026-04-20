@@ -306,6 +306,9 @@
   .intro-chairman__photo {
     width: min(100vw, 640px);
     max-height: 42vh;
+    opacity: 0.22;
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 90%);
+            mask-image: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 90%);
   }
   .intro-chairman__watermark {
     display: none;

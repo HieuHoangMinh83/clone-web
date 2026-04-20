@@ -270,8 +270,9 @@
   .intro-history__carousel {
     padding: 0 40px;
   }
+  /* gap phải khớp JS GAP=32 trong IntroHistory.jsx (offset dùng constant này) */
   .intro-history__track {
-    gap: 16px;
+    gap: 32px;
   }
   .intro-history__item {
     min-height: clamp(240px, 40vh, 320px);

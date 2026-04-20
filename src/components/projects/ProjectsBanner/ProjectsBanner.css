@@ -462,7 +462,15 @@
   .prj-hero__foot { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 639px) {
-  .prj-hero__heading { font-size: clamp(44px, 11vw, 72px); }
+  .prj-hero__container {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0;
+  }
+  .prj-hero__heading {
+    font-size: clamp(34px, 8.6vw, 52px);
+    max-width: 100%;
+  }
   .prj-hero__feature-dots { margin-top: 14px; padding-top: 12px; }
 }
 
