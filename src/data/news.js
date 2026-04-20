@@ -1,19 +1,19 @@
-import sub1 from '../../assets/images/news/cards/sub-01.jpg'
-import sub2 from '../../assets/images/news/cards/sub-02.jpg'
-import sub3 from '../../assets/images/news/cards/sub-03.jpg'
-import featuredMain from '../../assets/images/news/cards/featured-main.jpg'
-import c01 from '../../assets/images/news/cards/card-01.jpg'
-import c02 from '../../assets/images/news/cards/card-02.jpg'
-import c03 from '../../assets/images/news/cards/card-03.jpg'
-import c04 from '../../assets/images/news/cards/card-04.jpg'
-import c05 from '../../assets/images/news/cards/card-05.jpg'
-import c06 from '../../assets/images/news/cards/card-06.jpg'
-import c07 from '../../assets/images/news/cards/card-07.jpg'
-import c08 from '../../assets/images/news/cards/card-08.jpg'
-import c09 from '../../assets/images/news/cards/card-09.jpg'
-import c10 from '../../assets/images/news/cards/card-10.jpg'
-import c11 from '../../assets/images/news/cards/card-11.jpg'
-import c12 from '../../assets/images/news/cards/card-12.jpg'
+import sub1 from '../assets/images/news/cards/sub-01.jpg'
+import sub2 from '../assets/images/news/cards/sub-02.jpg'
+import sub3 from '../assets/images/news/cards/sub-03.jpg'
+import featuredMain from '../assets/images/news/cards/featured-main.jpg'
+import c01 from '../assets/images/news/cards/card-01.jpg'
+import c02 from '../assets/images/news/cards/card-02.jpg'
+import c03 from '../assets/images/news/cards/card-03.jpg'
+import c04 from '../assets/images/news/cards/card-04.jpg'
+import c05 from '../assets/images/news/cards/card-05.jpg'
+import c06 from '../assets/images/news/cards/card-06.jpg'
+import c07 from '../assets/images/news/cards/card-07.jpg'
+import c08 from '../assets/images/news/cards/card-08.jpg'
+import c09 from '../assets/images/news/cards/card-09.jpg'
+import c10 from '../assets/images/news/cards/card-10.jpg'
+import c11 from '../assets/images/news/cards/card-11.jpg'
+import c12 from '../assets/images/news/cards/card-12.jpg'
 
 // ============================================================
 // Per-category content factories
@@ -696,4 +696,10 @@ export function getRelatedArticles(slug, limit = 3) {
       ALL_ARTICLES.filter((a) => a.slug !== slug && a.category !== current.category),
     )
     .slice(0, limit)
+}
+
+// Page-level config — labels & tones cho SectionIndicator
+export const NEWS_PAGE = {
+  sectionLabels: ['Banner', 'Nổi bật', 'Tin tức', 'Liên hệ'],
+  sectionTones: ['light', 'paper', 'paper', 'light'],
 }

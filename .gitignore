@@ -10,7 +10,7 @@ build/
 .vite/
 .cache/
 .parcel-cache/
-
+design/*
 # Logs
 logs/
 *.log

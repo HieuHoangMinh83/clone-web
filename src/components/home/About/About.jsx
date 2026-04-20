@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import './About.css'
-import imgTower from '../../../assets/images/about/tower-newtecons.png'
-import imgLogo from '../../../assets/images/about/logo-paper.png'
 
-export default function About() {
+export default function About({
+  eyebrow,
+  titleTop,
+  brand,
+  tag,
+  body,
+  cta,
+  tiles = [],
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
 
@@ -41,8 +47,6 @@ export default function About() {
     tile.style.setProperty('--ry', `0deg`)
   }
 
-  const title = 'NEWTECONS'
-
   return (
     <section
       id="about"
@@ -66,16 +70,16 @@ export default function About() {
 
           <span className="about__eyebrow">
             <span className="about__eyebrow-line" />
-            Giới thiệu chung
+            {eyebrow}
           </span>
 
           <h2 className="about__title">
             <span className="about__title-mask">
-              <span className="about__title-line">Giới thiệu</span>
+              <span className="about__title-line">{titleTop}</span>
             </span>
             <span className="about__title-mask">
               <strong className="about__title-brand">
-                {title.split('').map((ch, i) => (
+                {brand.split('').map((ch, i) => (
                   <span
                     key={i}
                     className="about__title-char"
@@ -89,19 +93,15 @@ export default function About() {
           </h2>
 
           <p className="about__tag reveal" style={{ '--d': '1.55s' }}>
-            Build on Trust — Sự tin tưởng của bạn là chuẩn mực cho giá trị
-            của chúng tôi
+            {tag}
           </p>
 
           <p className="about__body reveal" style={{ '--d': '1.7s' }}>
-            Bằng nhiệt huyết và tinh thần không ngừng đổi mới, công ty đã
-            vươn mình khẳng định vị thế trên thị trường xây dựng Việt Nam.
-            Với đội ngũ kỹ sư giàu kinh nghiệm cùng cam kết về chất lượng,
-            chúng tôi tiên phong chinh phục những tầm cao mới.
+            {body}
           </p>
 
-          <a href="#" className="about__cta reveal" style={{ '--d': '1.85s' }}>
-            <span className="about__cta-label">Về chúng tôi</span>
+          <a href={cta?.href || '#'} className="about__cta reveal" style={{ '--d': '1.85s' }}>
+            <span className="about__cta-label">{cta?.label}</span>
             <span className="about__cta-arrow" aria-hidden>
               <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
                 <path d="M1 6h15m0 0L11 1m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -111,67 +111,39 @@ export default function About() {
         </div>
 
         <div className="about__tiles">
-          <a
-            href="#"
-            className="tile tile--1"
-            onMouseMove={onTileMove}
-            onMouseLeave={onTileLeave}
-          >
-            <div className="tile__media" aria-hidden>
-              <img src={imgLogo} alt="" className="tile__img" />
-              <span className="tile__overlay" />
-              <span className="tile__glow" />
-              <span className="tile__scan" />
-            </div>
+          {tiles.map((t, idx) => (
+            <a
+              key={t.id}
+              href={t.href || '#'}
+              className={`tile tile--${idx + 1}`}
+              onMouseMove={onTileMove}
+              onMouseLeave={onTileLeave}
+            >
+              <div className="tile__media" aria-hidden>
+                <img src={t.img} alt="" className="tile__img" />
+                <span className="tile__overlay" />
+                <span className="tile__glow" />
+                <span className="tile__scan" />
+              </div>
 
-            <span className="tile__corner tile__corner--tl" aria-hidden />
-            <span className="tile__corner tile__corner--tr" aria-hidden />
-            <span className="tile__corner tile__corner--bl" aria-hidden />
-            <span className="tile__corner tile__corner--br" aria-hidden />
+              <span className="tile__corner tile__corner--tl" aria-hidden />
+              <span className="tile__corner tile__corner--tr" aria-hidden />
+              <span className="tile__corner tile__corner--bl" aria-hidden />
+              <span className="tile__corner tile__corner--br" aria-hidden />
 
-            <span className="tile__title">
-              <span className="tile__title-top">LỊCH SỬ</span>
-              <span className="tile__title-bot">HÌNH THÀNH</span>
-            </span>
+              <span className="tile__title">
+                <span className="tile__title-top">{t.titleTop}</span>
+                <span className="tile__title-bot">{t.titleBot}</span>
+              </span>
 
-            <span className="tile__cta" aria-hidden>
-              Khám phá
-              <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
-                <path d="M1 5h19m0 0L16 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </a>
-
-          <a
-            href="#"
-            className="tile tile--2"
-            onMouseMove={onTileMove}
-            onMouseLeave={onTileLeave}
-          >
-            <div className="tile__media" aria-hidden>
-              <img src={imgTower} alt="" className="tile__img" />
-              <span className="tile__overlay" />
-              <span className="tile__glow" />
-              <span className="tile__scan" />
-            </div>
-
-            <span className="tile__corner tile__corner--tl" aria-hidden />
-            <span className="tile__corner tile__corner--tr" aria-hidden />
-            <span className="tile__corner tile__corner--bl" aria-hidden />
-            <span className="tile__corner tile__corner--br" aria-hidden />
-
-            <span className="tile__title">
-              <span className="tile__title-top">COMPANY</span>
-              <span className="tile__title-bot">PROFILE</span>
-            </span>
-
-            <span className="tile__cta" aria-hidden>
-              Tải hồ sơ
-              <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
-                <path d="M1 5h19m0 0L16 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </a>
+              <span className="tile__cta" aria-hidden>
+                {t.cta}
+                <svg width="22" height="10" viewBox="0 0 22 10" fill="none">
+                  <path d="M1 5h19m0 0L16 1m4 4l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </a>
+          ))}
         </div>
       </div>
     </section>

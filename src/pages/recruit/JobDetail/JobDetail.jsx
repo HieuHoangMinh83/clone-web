@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import Header from '../../../components/shared/Header/Header.jsx'
 import Contact from '../../../components/shared/Contact/Contact.jsx'
-import { JOBS, JOB_DETAILS } from '../../../components/recruit/recruitData.js'
+import { contactData } from '../../../data/contact.js'
+import { JOBS, JOB_DETAILS } from '../../../data/recruit.js'
 import JobDetailHero from '../../../components/recruit/JobDetail/JobDetailHero/JobDetailHero.jsx'
 import JobDetailBody from '../../../components/recruit/JobDetail/JobDetailBody/JobDetailBody.jsx'
 import JobDetailCta from '../../../components/recruit/JobDetail/JobDetailCta/JobDetailCta.jsx'
@@ -54,7 +55,7 @@ export default function JobDetail({ jobId }) {
       <>
         <Header variant="default" />
         <JobDetailMissing />
-        <Contact />
+        <Contact {...contactData} />
       </>
     )
   }
@@ -73,7 +74,7 @@ export default function JobDetail({ jobId }) {
         <JobDetailBody job={job} detail={detail} mailtoApply={mailtoApply} related={related} />
         <JobDetailCta job={job} mailtoApply={mailtoApply} />
       </main>
-      <Contact />
+      <Contact {...contactData} />
     </>
   )
 }

@@ -37,29 +37,47 @@ const IconWrench = () => (
   </svg>
 )
 
-const SPECIALTIES = [
-  { Icon: IconBolt,   title: 'Hệ thống điện & điện nhẹ',         hint: 'Trung – hạ thế · trạm biến áp · điện nhẹ' },
-  { Icon: IconAir,    title: 'Điều hoà không khí & thông gió',  hint: 'HVAC · phòng sạch · hút ẩm' },
-  { Icon: IconDrop,   title: 'Cấp thoát nước',                   hint: 'Cấp nước sinh hoạt · xử lý nước thải' },
-  { Icon: IconFlame,  title: 'Phòng cháy chữa cháy',             hint: 'Sprinkler · báo cháy · chữa khí' },
-  { Icon: IconWrench, title: 'Hệ thống phụ trợ',                 hint: 'Khí nén · gas · nồi hơi · RO' },
-]
+const SPECIALTY_ICONS = [IconBolt, IconAir, IconDrop, IconFlame, IconWrench]
 
-const STANDARDS = ['IEC', 'NFPA', 'UL/FM', 'SMACNA']
-
-export default function FieldsMEP({ active, isSlide }) {
+export default function FieldsMEP({
+  active,
+  isSlide,
+  ariaLabel,
+  markerNum,
+  markerTotal,
+  coreLabel,
+  titleTop,
+  titleBot,
+  titleEm,
+  lede,
+  specialties = [],
+  standardsLabel,
+  standards = [],
+  techLabel,
+  tech = [],
+}) {
   const { ref, mount } = useInViewActive(active, isSlide)
+
+  const renderTitleBot = () => {
+    if (!titleEm || !titleBot.includes(titleEm)) return titleBot
+    const parts = titleBot.split(titleEm)
+    return (
+      <>
+        {parts[0]}<em>{titleEm}</em>{parts[1]}
+      </>
+    )
+  }
 
   return (
     <section
       ref={ref}
       className={`fp-sec fp-mep ${mount ? 'is-in' : ''}`}
-      aria-label="Tổng thầu thi công cơ điện"
+      aria-label={ariaLabel}
     >
       <div className="fp-mep__bg" aria-hidden />
       <div className="fp-mep__grid" aria-hidden />
 
-      <span className="fp-marker" aria-hidden>04<span className="fp-marker__small">/09</span></span>
+      <span className="fp-marker" aria-hidden>{markerNum}<span className="fp-marker__small">{markerTotal}</span></span>
       <span className="fp-crosshair fp-crosshair--tr" aria-hidden />
       <span className="fp-crosshair fp-crosshair--br" aria-hidden />
 
@@ -70,7 +88,7 @@ export default function FieldsMEP({ active, isSlide }) {
             <circle cx="100" cy="100" r="76" />
             <circle cx="100" cy="100" r="56" />
           </svg>
-          <div className="fp-mep__core">M&amp;E</div>
+          <div className="fp-mep__core">{coreLabel}</div>
           <span className="fp-mep__node fp-mep__node--1" style={{ '--n': 0 }} />
           <span className="fp-mep__node fp-mep__node--2" style={{ '--n': 1 }} />
           <span className="fp-mep__node fp-mep__node--3" style={{ '--n': 2 }} />
@@ -79,41 +97,41 @@ export default function FieldsMEP({ active, isSlide }) {
         </div>
 
         <div className="fp-mep__head">
-          
           <h2 className="fp-display fp-mep__title">
-            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Hệ M&amp;E</span></span>
-            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>vận hành <em>thông minh</em></span></span>
+            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>{titleTop}</span></span>
+            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>{renderTitleBot()}</span></span>
           </h2>
-          <p className="fp-mep__lede">
-            Gần hai thập kỷ thiết kế, cung cấp vật tư, thi công và bảo trì các hệ thống cơ điện
-            cho công trình dân dụng & công nghiệp — vận hành ổn định, tiết kiệm năng lượng.
-          </p>
+          <p className="fp-mep__lede">{lede}</p>
 
           <ul className="fp-mep__list" role="list">
-            {SPECIALTIES.map(({ Icon, title, hint }, i) => (
-              <li key={title} className="fp-mep__item" style={{ '--i': i }}>
-                <span className="fp-mep__item-icon" aria-hidden>
-                  <Icon />
-                </span>
-                <span className="fp-mep__item-body">
-                  <span className="fp-mep__item-title">{title}</span>
-                  <span className="fp-mep__item-hint">{hint}</span>
-                </span>
-              </li>
-            ))}
+            {specialties.map((s, i) => {
+              const Icon = SPECIALTY_ICONS[i]
+              return (
+                <li key={s.title} className="fp-mep__item" style={{ '--i': i }}>
+                  <span className="fp-mep__item-icon" aria-hidden>
+                    {Icon && <Icon />}
+                  </span>
+                  <span className="fp-mep__item-body">
+                    <span className="fp-mep__item-title">{s.title}</span>
+                    <span className="fp-mep__item-hint">{s.hint}</span>
+                  </span>
+                </li>
+              )
+            })}
           </ul>
 
           <div className="fp-mep__std">
-            <span className="fp-mep__std-label">Tiêu chuẩn</span>
-            {STANDARDS.map((s) => (
+            <span className="fp-mep__std-label">{standardsLabel}</span>
+            {standards.map((s) => (
               <span key={s} className="fp-mep__std-pill">{s}</span>
             ))}
           </div>
 
           <div className="fp-mep__tech">
-            <span>Công nghệ</span>
-            <span className="fp-mep__tech-tag">BIM · Revit</span>
-            <span className="fp-mep__tech-tag">VR Walkthrough</span>
+            <span>{techLabel}</span>
+            {tech.map((t) => (
+              <span key={t} className="fp-mep__tech-tag">{t}</span>
+            ))}
           </div>
         </div>
       </div>

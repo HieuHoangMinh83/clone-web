@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Contact from '../../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../../data/contact.js'
 import NewsHero from '../../../components/shared/NewsDetail/NewsHero/NewsHero.jsx'
 import NewsOpening from '../../../components/shared/NewsDetail/NewsOpening/NewsOpening.jsx'
 import NewsQuote from '../../../components/shared/NewsDetail/NewsQuote/NewsQuote.jsx'
 import NewsStats from '../../../components/shared/NewsDetail/NewsStats/NewsStats.jsx'
 import NewsClosing from '../../../components/shared/NewsDetail/NewsClosing/NewsClosing.jsx'
 import NewsRelated from '../../../components/shared/NewsDetail/NewsRelated/NewsRelated.jsx'
-import { FEATURED, getRelatedArticles } from '../../../components/news/newsData.js'
+import { FEATURED, getRelatedArticles } from '../../../data/news.js'
 import './BlockShowcase.css'
 
 // ============================================================
@@ -158,7 +159,7 @@ export default function BlockShowcase() {
       case 'related':
         return <NewsRelated articles={related} />
       case 'contact':
-        return <Contact />
+        return <Contact {...contactData} />
       default:
         return null
     }

@@ -1,4 +1,4 @@
-import { JOB_BENEFITS, JOB_PROCESS } from '../../recruitData.js'
+import { JOB_BENEFITS, JOB_PROCESS } from '../../../../data/recruit.js'
 import './JobDetailBody.css'
 
 function Block({ no, eyebrow, title, items, variant }) {

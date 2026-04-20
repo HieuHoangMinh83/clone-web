@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { RECRUIT_BANNER_BG, BANNER_STATS, BANNER_QUOTE } from '../../recruitData.js'
+import { RECRUIT_BANNER_BG, BANNER_STATS, BANNER_QUOTE } from '../../../../data/recruit.js'
 import cardImg from '../../../../assets/images/projects/grand-marina-saigon.jpg'
 import '../recruit-shared.css'
 import './RecruitBanner.css'

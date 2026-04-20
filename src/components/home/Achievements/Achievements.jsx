@@ -1,24 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import './Achievements.css'
-import bgEngineers from '../../../assets/images/achievements/bg-engineers.png'
-
-const QUOTE_WORDS = [
-  ['Cùng', 'nhau', 'chúng', 'tôi', 'kiến', 'tạo'],
-  ['nên', 'những', 'công', 'trình', 'biểu', 'tượng'],
-]
-
-const STATS = [
-  { prefix: '+', value: 1000, label: 'NHÂN SỰ' },
-  { prefix: '', value: 21, label: 'NĂM HOẠT ĐỘNG' },
-  { prefix: '+', value: 150, label: 'DỰ ÁN' },
-  {
-    prefix: '',
-    value: 11500,
-    suffix: ' tỷ đồng',
-    format: 'thousands',
-    label: 'TỔNG DOANH THU 2023',
-  },
-]
 
 function formatNumber(n, format) {
   if (format === 'thousands') {
@@ -58,7 +39,12 @@ function CountUp({ to, inView, duration = 1600, format, prefix = '', suffix = ''
   )
 }
 
-export default function Achievements() {
+export default function Achievements({
+  bgImage,
+  bgAlt = '',
+  quote = [],
+  stats = [],
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
 
@@ -82,7 +68,7 @@ export default function Achievements() {
       id="achievements"
     >
       <div className="ach__bg" aria-hidden>
-        <img src={bgEngineers} alt="" className="ach__bg-img" />
+        {bgImage && <img src={bgImage} alt={bgAlt} className="ach__bg-img" />}
         <span className="ach__bg-veil" />
         <span className="ach__bg-grid" />
       </div>
@@ -97,25 +83,14 @@ export default function Achievements() {
       <div className="ach__content">
         <div className="ach__quote">
           <span className="ach__quote-rule" aria-hidden />
-          <svg
-            className="ach__quote-mark"
-            viewBox="0 0 40 32"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M2 18C2 9 8 2 18 2v6c-5 0-9 3-9 10h9v12H2V18zm20 0c0-9 6-16 16-16v6c-5 0-9 3-9 10h9v12H22V18z"
-              fill="currentColor"
-            />
-          </svg>
 
           <h2 className="ach__quote-text">
-            {QUOTE_WORDS.map((line, li) => (
+            {quote.map((line, li) => (
               <span className="ach__line" key={li}>
                 <span className="ach__line-inner">
                   {line.map((word, wi) => {
                     const flatIndex =
-                      QUOTE_WORDS.slice(0, li).flat().length + wi
+                      quote.slice(0, li).flat().length + wi
                     return (
                       <span
                         key={wi}
@@ -134,7 +109,7 @@ export default function Achievements() {
         </div>
 
         <ul className="ach__stats">
-          {STATS.map((s, i) => (
+          {stats.map((s, i) => (
             <li
               key={i}
               className="stat"

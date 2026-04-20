@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../data/contact.js'
 import ProjectsBanner from '../../components/projects/ProjectsBanner/ProjectsBanner.jsx'
 import ProjectsPartners from '../../components/projects/ProjectsPartners/ProjectsPartners.jsx'
 import ProjectsSpotlight from '../../components/projects/ProjectsSpotlight/ProjectsSpotlight.jsx'
@@ -40,7 +41,7 @@ export default function ProjectsPage() {
         <ProjectsGrid />
         <ProjectsMilestones />
         <ProjectsCTA />
-        <Contact />
+        <Contact {...contactData} />
       </main>
     </>
   )

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import Header from '../../components/shared/Header/Header.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../data/contact.js'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
 import {
@@ -272,7 +273,7 @@ export default function ProjectDetail({ slug }) {
         </section>
 
         {/* Section 7 — Contact */}
-        <Contact />
+        <Contact {...contactData} />
       </div>
       <SectionIndicator
         current={index}

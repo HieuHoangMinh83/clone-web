@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Header from '../../../components/shared/Header/Header.jsx'
 import Contact from '../../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../../data/contact.js'
 import SectionIndicator from '../../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import NewsHero from '../../../components/shared/NewsDetail/NewsHero/NewsHero.jsx'
 import NewsOpening from '../../../components/shared/NewsDetail/NewsOpening/NewsOpening.jsx'
@@ -8,7 +9,7 @@ import NewsQuote from '../../../components/shared/NewsDetail/NewsQuote/NewsQuote
 import NewsStats from '../../../components/shared/NewsDetail/NewsStats/NewsStats.jsx'
 import NewsClosing from '../../../components/shared/NewsDetail/NewsClosing/NewsClosing.jsx'
 import NewsRelated from '../../../components/shared/NewsDetail/NewsRelated/NewsRelated.jsx'
-import { findArticleBySlug, getRelatedArticles } from '../../../components/news/newsData.js'
+import { findArticleBySlug, getRelatedArticles } from '../../../data/news.js'
 import './NewsDetail.css'
 
 const SECTION_LABELS = ['Mở đầu', 'Giới thiệu', 'Trích dẫn', 'Con số', 'Kết luận', 'Liên quan', 'Liên hệ']
@@ -206,7 +207,7 @@ export default function NewsDetail({ slug }) {
         {/* ============================================================
             S7 — CONTACT
             ============================================================ */}
-        <Contact />
+        <Contact {...contactData} />
       </div>
 
       {!isPortrait && (

@@ -106,6 +106,7 @@
 /* ---------- Quote ---------- */
 .ach__quote {
   position: relative;
+  padding-top: 24px;
   padding-left: 36px;
   max-width: 720px;
 }

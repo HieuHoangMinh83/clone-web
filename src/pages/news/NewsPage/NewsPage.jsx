@@ -7,9 +7,10 @@ import NewsBanner from '../../../components/news/NewsBanner/NewsBanner.jsx'
 import NewsFeatured from '../../../components/shared/NewsFeatured/NewsFeatured.jsx'
 import NewsGrid from '../../../components/news/NewsGrid/NewsGrid.jsx'
 import '../../../components/news/news-shared.css'
+import { contactData } from '../../../data/contact.js'
+import { NEWS_PAGE } from '../../../data/news.js'
 
-const SECTION_LABELS = ['Banner', 'Nổi bật', 'Tin tức', 'Liên hệ']
-const SECTION_TONES = ['light', 'paper', 'paper', 'light']
+const { sectionLabels: SECTION_LABELS, sectionTones: SECTION_TONES } = NEWS_PAGE
 
 /* Slide mode chỉ bật khi viewport đang landscape (ngang).
    Portrait (dọc — iPad dựng đứng, mobile) → scroll thường. */
@@ -53,7 +54,7 @@ export default function NewsPage() {
         <NewsBanner />
         <NewsFeatured />
         <NewsGrid />
-        <Contact />
+        <Contact {...contactData} />
       </div>
       {isSlide && (
         <SectionIndicator

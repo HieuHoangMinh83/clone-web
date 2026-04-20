@@ -7,9 +7,10 @@ import RecruitWhy from '../../../components/recruit/RecruitPage/RecruitWhy/Recru
 import RecruitLife from '../../../components/recruit/RecruitPage/RecruitLife/RecruitLife.jsx'
 import RecruitJobs from '../../../components/recruit/RecruitPage/RecruitJobs/RecruitJobs.jsx'
 import '../../../components/recruit/RecruitPage/recruit-shared.css'
+import { contactData } from '../../../data/contact.js'
+import { RECRUIT_PAGE } from '../../../data/recruit.js'
 
-const SECTION_LABELS = ['Banner', 'Vì sao', 'Đời sống', 'Vị trí', 'Liên hệ']
-const SECTION_TONES = ['light', 'paper', 'light', 'paper', 'light']
+const { sectionLabels: SECTION_LABELS, sectionTones: SECTION_TONES } = RECRUIT_PAGE
 
 export default function RecruitPage() {
   const total = SECTION_LABELS.length
@@ -26,7 +27,7 @@ export default function RecruitPage() {
         <RecruitWhy />
         <RecruitLife />
         <RecruitJobs />
-        <Contact />
+        <Contact {...contactData} />
       </div>
       <SectionIndicator
         current={index}

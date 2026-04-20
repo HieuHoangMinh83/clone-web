@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import SectionIndicator from '../../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import Contact from '../../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../../data/contact.js'
 import NewsHero from '../../../components/shared/NewsDetail/NewsHero/NewsHero.jsx'
 import NewsOpening from '../../../components/shared/NewsDetail/NewsOpening/NewsOpening.jsx'
 import NewsQuote from '../../../components/shared/NewsDetail/NewsQuote/NewsQuote.jsx'
 import NewsStats from '../../../components/shared/NewsDetail/NewsStats/NewsStats.jsx'
 import NewsClosing from '../../../components/shared/NewsDetail/NewsClosing/NewsClosing.jsx'
 import NewsRelated from '../../../components/shared/NewsDetail/NewsRelated/NewsRelated.jsx'
-import { FEATURED, NEWS_LIST } from '../../../components/news/newsData.js'
+import { FEATURED, NEWS_LIST } from '../../../data/news.js'
 import '../NewsDetail/NewsDetail.css'
 import './NewsBuilder.css'
 
@@ -1361,7 +1362,7 @@ function PrevRelated({ active }) {
 }
 
 function PrevContact() {
-  return <Contact />
+  return <Contact {...contactData} />
 }
 
 // ============================================================

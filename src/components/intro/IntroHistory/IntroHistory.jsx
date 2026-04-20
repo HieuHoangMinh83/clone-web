@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import bg from '../../../assets/images/intro/bg/history.png'
-import MILESTONES from '../milestones.js'
 import useCarousel from '../useCarousel.js'
 import CarouselControls from '../CarouselControls.jsx'
 import './IntroHistory.css'
@@ -8,7 +6,14 @@ import './IntroHistory.css'
 const GAP = 32
 const BREAKPOINTS = [[520, 2], [900, 3], [Infinity, 4]]
 
-export default function IntroHistory() {
+export default function IntroHistory({
+  bg,
+  title,
+  titleTrail,
+  lead,
+  milestoneAltTemplate = 'Cột mốc {year}',
+  milestones = [],
+}) {
   const viewportRef = useRef(null)
   const sectionRef = useRef(null)
   const [viewportW, setViewportW] = useState(0)
@@ -37,7 +42,7 @@ export default function IntroHistory() {
   }, [])
 
   const { clampedPage, perView, hasPrev, hasNext, prev, next } = useCarousel(
-    MILESTONES.length, 0, 0, BREAKPOINTS, true,
+    milestones.length, 0, 0, BREAKPOINTS, true,
   )
 
   const itemW = perView > 0 && viewportW > 0
@@ -54,13 +59,9 @@ export default function IntroHistory() {
       <div className="intro-container">
         <div className="intro-history__head">
           <h2 className="intro-title">
-            <strong>Lịch sử</strong> hình thành
+            <strong>{title}</strong> {titleTrail}
           </h2>
-          <p className="intro-lead">
-            Công ty Cổ phần Đầu tư Xây dựng NEWTECONS được thành lập vào ngày 23/10/2003, là
-            một trong những đơn vị uy tín trong lĩnh vực thi công xây dựng với đa dạng các loại
-            hình công trình.
-          </p>
+          <p className="intro-lead">{lead}</p>
         </div>
         <div className="intro-history__carousel">
           <div className="intro-history__viewport" ref={viewportRef}>
@@ -68,8 +69,9 @@ export default function IntroHistory() {
               className="intro-history__track"
               style={{ transform: `translateX(-${offset}px)` }}
             >
-              {MILESTONES.map((m, i) => {
+              {milestones.map((m, i) => {
                 const imgFirst = i % 2 === 0
+                const alt = milestoneAltTemplate.replace('{year}', m.year)
                 return (
                   <article
                     className={`intro-history__item ${imgFirst ? 'is-img-top' : 'is-text-top'}`}
@@ -79,7 +81,7 @@ export default function IntroHistory() {
                     <div className="intro-history__top">
                       {imgFirst ? (
                         <div className="intro-history__img">
-                          <img src={m.img} alt={`Cột mốc ${m.year}`} loading="lazy" />
+                          <img src={m.img} alt={alt} loading="lazy" />
                         </div>
                       ) : (
                         <div className="intro-history__text">
@@ -99,7 +101,7 @@ export default function IntroHistory() {
                         </div>
                       ) : (
                         <div className="intro-history__img">
-                          <img src={m.img} alt={`Cột mốc ${m.year}`} loading="lazy" />
+                          <img src={m.img} alt={alt} loading="lazy" />
                         </div>
                       )}
                     </div>

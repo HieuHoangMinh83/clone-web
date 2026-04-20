@@ -12,6 +12,7 @@ import '../ProjectsPage/ProjectsPage.css'
 
 // Shared
 import Contact from '../../components/shared/Contact/Contact.jsx'
+import { contactData } from '../../data/contact.js'
 import Header from '../../components/shared/Header/Header.jsx'
 import LogoMark from '../../components/shared/LogoMark/LogoMark.jsx'
 import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
@@ -34,6 +35,7 @@ import HomeFields from '../../components/home/Fields/Fields.jsx'
 import HomeProjects from '../../components/home/Projects/Projects.jsx'
 import HomeAchievements from '../../components/home/Achievements/Achievements.jsx'
 import HomeNews from '../../components/home/News/News.jsx'
+import { homeData } from '../../data/home.js'
 
 // Intro page
 import IntroBanner from '../../components/intro/IntroBanner/IntroBanner.jsx'
@@ -44,6 +46,7 @@ import IntroManagers from '../../components/intro/IntroManagers/IntroManagers.js
 import IntroValues from '../../components/intro/IntroValues/IntroValues.jsx'
 import IntroHistory from '../../components/intro/IntroHistory/IntroHistory.jsx'
 import IntroPartners from '../../components/intro/IntroPartners/IntroPartners.jsx'
+import { introData } from '../../data/intro.js'
 
 // Fields page
 import FieldsBanner from '../../components/fields/FieldsBanner/FieldsBanner.jsx'
@@ -75,7 +78,7 @@ import RecruitLife from '../../components/recruit/RecruitPage/RecruitLife/Recrui
 import RecruitJobs from '../../components/recruit/RecruitPage/RecruitJobs/RecruitJobs.jsx'
 
 // Sample data cho NewsDetail blocks
-import { FEATURED, getRelatedArticles } from '../../components/news/newsData.js'
+import { FEATURED, getRelatedArticles } from '../../data/news.js'
 
 const article = FEATURED
 const related = getRelatedArticles(article.slug, 3)
@@ -152,7 +155,7 @@ export const COMPONENTS = [
     desc: 'Khối liên hệ chung đặt ở cuối mỗi trang.',
     tag: 'Contact',
     path: 'src/components/shared/Contact/',
-    render: () => <Contact />,
+    render: () => <Contact {...contactData} />,
   },
   {
     id: 'news-featured',
@@ -345,7 +348,7 @@ export const COMPONENTS = [
     desc: 'Hero banner trang chủ với slider autoplay 7s, progress indicator dọc và CTA overlay.',
     tag: 'Hero',
     path: 'src/components/home/Hero/',
-    render: () => <HomeHero />,
+    render: () => <HomeHero {...homeData.hero} />,
   },
   {
     id: 'home-about',
@@ -355,7 +358,7 @@ export const COMPONENTS = [
     desc: 'Khối giới thiệu trang chủ: ảnh tower Newtecons + logo paper + text scroll animation.',
     tag: 'About',
     path: 'src/components/home/About/',
-    render: () => <HomeAbout />,
+    render: () => <HomeAbout {...homeData.about} />,
   },
   {
     id: 'home-fields',
@@ -375,7 +378,7 @@ export const COMPONENTS = [
     desc: 'Showcase các dự án tiêu biểu (sân bay, căn hộ, khách sạn, hạ tầng).',
     tag: 'Projects',
     path: 'src/components/home/Projects/',
-    render: () => <HomeProjects />,
+    render: () => <HomeProjects {...homeData.projects} />,
   },
   {
     id: 'home-achievements',
@@ -385,7 +388,7 @@ export const COMPONENTS = [
     desc: 'Khối thành tựu trang chủ với quote + ảnh engineers.',
     tag: 'Achievements',
     path: 'src/components/home/Achievements/',
-    render: () => <HomeAchievements />,
+    render: () => <HomeAchievements {...homeData.achievements} />,
   },
   {
     id: 'home-news',
@@ -407,7 +410,7 @@ export const COMPONENTS = [
     desc: 'Banner mở đầu trang Giới thiệu — ảnh nền + tiêu đề + subtitle.',
     tag: 'IntroBanner',
     path: 'src/components/intro/IntroBanner/',
-    render: () => <IntroBanner />,
+    render: () => <IntroBanner {...introData.banner} />,
   },
   {
     id: 'intro-vision-mission',
@@ -417,7 +420,7 @@ export const COMPONENTS = [
     desc: 'Khối tầm nhìn & sứ mệnh — 2 cột icon vàng + tiêu đề + mô tả.',
     tag: 'IntroVisionMission',
     path: 'src/components/intro/IntroVisionMission/',
-    render: () => <IntroVisionMission />,
+    render: () => <IntroVisionMission {...introData.visionMission} />,
   },
   {
     id: 'intro-chairman',
@@ -427,7 +430,7 @@ export const COMPONENTS = [
     desc: 'Khối thông điệp chủ tịch HĐQT — chân dung + quote + chữ ký.',
     tag: 'IntroChairman',
     path: 'src/components/intro/IntroChairman/',
-    render: () => <IntroChairman />,
+    render: () => <IntroChairman {...introData.chairman} />,
   },
   {
     id: 'intro-board',
@@ -437,7 +440,7 @@ export const COMPONENTS = [
     desc: 'Lưới thành viên HĐQT với ảnh + tên + chức danh, click mở modal.',
     tag: 'IntroBoard',
     path: 'src/components/intro/IntroBoard/',
-    render: () => <IntroBoard />,
+    render: () => <IntroBoard {...introData.board} />,
   },
   {
     id: 'intro-managers',
@@ -447,7 +450,7 @@ export const COMPONENTS = [
     desc: 'Danh sách quản lý cấp cao — grid cards có portal modal.',
     tag: 'IntroManagers',
     path: 'src/components/intro/IntroManagers/',
-    render: () => <IntroManagers />,
+    render: () => <IntroManagers {...introData.managers} />,
   },
   {
     id: 'intro-values',
@@ -457,7 +460,7 @@ export const COMPONENTS = [
     desc: 'Khối giá trị cốt lõi — danh sách giá trị có icon + mô tả.',
     tag: 'IntroValues',
     path: 'src/components/intro/IntroValues/',
-    render: () => <IntroValues />,
+    render: () => <IntroValues {...introData.values} />,
   },
   {
     id: 'intro-history',
@@ -467,7 +470,7 @@ export const COMPONENTS = [
     desc: 'Dòng thời gian các cột mốc với carousel controls.',
     tag: 'IntroHistory',
     path: 'src/components/intro/IntroHistory/',
-    render: () => <IntroHistory />,
+    render: () => <IntroHistory {...introData.history} />,
   },
   {
     id: 'intro-partners',
@@ -477,7 +480,7 @@ export const COMPONENTS = [
     desc: 'Lưới logo đối tác của Newtecons (glob imports).',
     tag: 'IntroPartners',
     path: 'src/components/intro/IntroPartners/',
-    render: () => <IntroPartners />,
+    render: () => <IntroPartners {...introData.partners} />,
   },
 
   // =========== FIELDS ===========

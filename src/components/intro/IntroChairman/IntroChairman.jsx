@@ -1,9 +1,28 @@
-import { useEffect, useRef, useState } from 'react'
-import bg from '../../../assets/images/intro/bg/chairman.png'
-import portrait from '../../../assets/images/intro/chairman-portrait.png'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import './IntroChairman.css'
 
-export default function IntroChairman() {
+// Wrap các đoạn nằm trong "..." bằng <em> để giữ visual quote emphasis.
+function renderParagraph(text) {
+  const parts = text.split(/("[^"]+")/g)
+  return parts.map((p, i) =>
+    p.startsWith('"') && p.endsWith('"') ? (
+      <em key={i}>{p}</em>
+    ) : (
+      <Fragment key={i}>{p}</Fragment>
+    ),
+  )
+}
+
+export default function IntroChairman({
+  bg,
+  portrait,
+  portraitAlt,
+  watermark,
+  titleSoft,
+  titleStrong,
+  paragraphs = [],
+  signature,
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
 
@@ -34,40 +53,32 @@ export default function IntroChairman() {
         }}
       />
       <span className="intro-chairman__watermark" aria-hidden>
-        MESSAGE
+        {watermark}
       </span>
 
       <figure className="intro-chairman__photo">
-        <img src={portrait} alt="Chủ tịch HĐQT Nguyễn Bá Dương" loading="lazy" />
+        <img src={portrait} alt={portraitAlt} loading="lazy" />
       </figure>
 
       <div className="intro-container">
         <div className="intro-chairman__copy">
           <h2 className="intro-chairman__title">
-            <span className="intro-chairman__title-soft">THÔNG ĐIỆP</span>
-            <span className="intro-chairman__title-strong">CHỦ TỊCH HĐQT</span>
+            <span className="intro-chairman__title-soft">{titleSoft}</span>
+            <span className="intro-chairman__title-strong">{titleStrong}</span>
           </h2>
           <div className="intro-chairman__body">
-            <p>
-              Hơn hai thập kỷ hình thành và phát triển, Newtecons đã kiên cường vượt qua nhiều
-              thử thách và tạo dựng vị thế vững chắc của một Tổng thầu Xây dựng hàng đầu Việt
-              Nam. Những công trình chúng tôi thực hiện không chỉ là minh chứng cho trình độ kỹ
-              thuật, mà còn là biểu tượng cho niềm tự hào, mang đến những giá trị vượt thời gian
-              cho khách hàng, đối tác và cho cả cộng đồng, xã hội.
-            </p>
-            <p>
-              Với triết lý <em>"Uy tín – Chuyên nghiệp – Tử tế"</em>, Newtecons sẽ tiếp tục hành
-              trình xây dựng những công trình thẩm mỹ và bền vững. Kiên định với những giá trị
-              cốt lõi, chúng tôi cùng nhau kiến tạo biểu tượng của niềm tin, của giá trị và của
-              tương lai.
-            </p>
+            {paragraphs.map((p, i) => (
+              <p key={i}>{renderParagraph(p)}</p>
+            ))}
           </div>
-          <div className="intro-chairman__sig">
-            <div>
-              <div className="intro-chairman__sig-name">NGUYỄN BÁ DƯƠNG</div>
-              <div className="intro-chairman__sig-role">Chủ tịch Hội đồng Quản trị</div>
+          {signature && (
+            <div className="intro-chairman__sig">
+              <div>
+                <div className="intro-chairman__sig-name">{signature.name}</div>
+                <div className="intro-chairman__sig-role">{signature.role}</div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

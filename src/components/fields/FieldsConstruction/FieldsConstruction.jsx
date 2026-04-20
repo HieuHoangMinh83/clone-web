@@ -1,4 +1,3 @@
-import bgImg from '../../../assets/images/fields/civil.jpg'
 import useInViewActive from '../useInViewActive'
 import './FieldsConstruction.css'
 
@@ -34,24 +33,45 @@ const IconChart = () => (
   </svg>
 )
 
-const STRENGTHS = [
-  { Icon: IconTeam,  title: 'Đội ngũ chuyên gia', desc: 'Kỹ sư tinh nhuệ với kinh nghiệm thi công các công trình quy mô và độ phức tạp cao.' },
-  { Icon: IconBulb,  title: 'Tư vấn giải pháp chuyên sâu', desc: 'Đề xuất phương án tối ưu vật liệu, biện pháp thi công và tiến độ ngay từ giai đoạn thiết kế.' },
-  { Icon: IconGear,  title: 'Đáp ứng kỹ thuật khắt khe', desc: 'Đạt các yêu cầu kỹ thuật khắt khe về kết cấu, cơ điện và hoàn thiện cho công trình hạng A.' },
-  { Icon: IconChart, title: 'Quản lý tinh gọn', desc: 'Mô hình quản lý dự án tinh gọn, kiểm soát chặt chi phí — chất lượng — an toàn.' },
-]
+const STRENGTH_ICONS = [IconTeam, IconBulb, IconGear, IconChart]
 
-export default function FieldsConstruction({ active, isSlide }) {
+export default function FieldsConstruction({
+  active,
+  isSlide,
+  bg,
+  ariaLabel,
+  markerNum,
+  markerTotal,
+  badge,
+  dimStart,
+  dimEnd,
+  titleTop,
+  titleBot,
+  titleEm,
+  lede,
+  strengths = [],
+}) {
   const { ref, mount } = useInViewActive(active, isSlide)
+
+  // titleBot có thể chứa fragment cần <em>: "từ <em>móng đến mái</em>"
+  const renderTitleBot = () => {
+    if (!titleEm || !titleBot.includes(titleEm)) return titleBot
+    const parts = titleBot.split(titleEm)
+    return (
+      <>
+        {parts[0]}<em>{titleEm}</em>{parts[1]}
+      </>
+    )
+  }
 
   return (
     <section
       ref={ref}
       className={`fp-sec fp-cons ${mount ? 'is-in' : ''}`}
-      aria-label="Tổng thầu thi công xây dựng"
+      aria-label={ariaLabel}
     >
       <div className="fp-cons__bg" aria-hidden>
-        <img src={bgImg} alt="" className="fp-cons__bgimg" />
+        <img src={bg} alt="" className="fp-cons__bgimg" />
         <div className="fp-cons__bgtint" />
       </div>
 
@@ -60,44 +80,44 @@ export default function FieldsConstruction({ active, isSlide }) {
         <path d="M0 920 L520 920 L660 1040 L1920 1040" />
       </svg>
 
-      <span className="fp-marker" aria-hidden>03<span className="fp-marker__small">/09</span></span>
+      <span className="fp-marker" aria-hidden>{markerNum}<span className="fp-marker__small">{markerTotal}</span></span>
       <span className="fp-crosshair fp-crosshair--tl" aria-hidden />
       <span className="fp-crosshair fp-crosshair--bl" aria-hidden />
 
       <div className="fp-cons__inner">
         <div className="fp-cons__plate">
-          <img src={bgImg} alt="" className="fp-cons__plate-img" />
+          <img src={bg} alt="" className="fp-cons__plate-img" />
           <span className="fp-cons__plate-frame" aria-hidden />
-          <span className="fp-cons__badge">Civil Construction</span>
+          <span className="fp-cons__badge">{badge}</span>
           <div className="fp-cons__dim" aria-hidden>
-            <span>0</span>
+            <span>{dimStart}</span>
             <span className="fp-cons__dim-bar" />
-            <span>200+ dự án</span>
+            <span>{dimEnd}</span>
           </div>
         </div>
 
         <div className="fp-cons__head">
           <h2 className="fp-display fp-cons__title">
-            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>Vững chắc</span></span>
-            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>từ <em>móng đến mái</em></span></span>
+            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>{titleTop}</span></span>
+            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 1 }}>{renderTitleBot()}</span></span>
           </h2>
-          <p className="fp-cons__lede">
-            Đảm nhận toàn bộ phần móng, kết cấu hầm, thân nhà, hoàn thiện và hạ tầng cảnh quan
-            — từ tầng hầm sâu nhất đến mái vòm cao nhất.
-          </p>
+          <p className="fp-cons__lede">{lede}</p>
 
           <ol className="fp-cons__list">
-            {STRENGTHS.map(({ Icon, title, desc }, i) => (
-              <li key={title} className="fp-cons__item" style={{ '--i': i }}>
-                <span className="fp-cons__node" aria-hidden>
-                  <Icon />
-                </span>
-                <div className="fp-cons__item-body">
-                  <h3 className="fp-cons__item-title">{title}</h3>
-                  <p className="fp-cons__item-desc">{desc}</p>
-                </div>
-              </li>
-            ))}
+            {strengths.map((s, i) => {
+              const Icon = STRENGTH_ICONS[i]
+              return (
+                <li key={s.title} className="fp-cons__item" style={{ '--i': i }}>
+                  <span className="fp-cons__node" aria-hidden>
+                    {Icon && <Icon />}
+                  </span>
+                  <div className="fp-cons__item-body">
+                    <h3 className="fp-cons__item-title">{s.title}</h3>
+                    <p className="fp-cons__item-desc">{s.desc}</p>
+                  </div>
+                </li>
+              )
+            })}
           </ol>
         </div>
       </div>

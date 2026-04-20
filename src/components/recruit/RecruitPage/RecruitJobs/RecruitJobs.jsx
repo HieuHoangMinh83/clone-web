@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { DEPARTMENTS, LOCATIONS, JOBS } from '../../recruitData.js'
+import { DEPARTMENTS, LOCATIONS, JOBS } from '../../../../data/recruit.js'
 import Pagination from '../../../shared/Pagination/Pagination.jsx'
 import SearchFilter from '../../../shared/SearchFilter/SearchFilter.jsx'
 import '../recruit-shared.css'

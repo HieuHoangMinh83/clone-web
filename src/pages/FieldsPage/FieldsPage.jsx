@@ -12,37 +12,15 @@ import FieldsEquipment from '../../components/fields/FieldsEquipment/FieldsEquip
 import FieldsISO from '../../components/fields/FieldsISO/FieldsISO.jsx'
 import FieldsOutro from '../../components/fields/FieldsOutro/FieldsOutro.jsx'
 import '../../components/fields/fields-shared.css'
-
-const SECTION_LABELS = [
-  'Banner',
-  'Tổng thầu D&B',
-  'Xây dựng',
-  'Cơ điện',
-  'An toàn',
-  'Nhân lực',
-  'Thiết bị',
-  'Chứng nhận',
-  'Liên hệ',
-]
-
-const SECTION_TONES = [
-  'light',
-  'paper',
-  'light',
-  'light',
-  'light',
-  'light',
-  'light',
-  'paper',
-  'light',
-]
+import { fieldsData } from '../../data/fields.js'
 
 /* Slide mode chỉ bật khi viewport landscape.
    Portrait (iPad dọc, mobile) → scroll thường. */
 const SLIDE_QUERY = '(orientation: landscape)'
 
 export default function FieldsPage() {
-  const total = SECTION_LABELS.length
+  const { page, banner, db, construction, mep, safety, hr, equipment, iso, outro } = fieldsData
+  const total = page.sectionLabels.length
   const [isSlide, setIsSlide] = useState(() => {
     if (typeof window === 'undefined') return true
     return window.matchMedia(SLIDE_QUERY).matches
@@ -71,28 +49,28 @@ export default function FieldsPage() {
 
   return (
     <>
-      <Header />
+      <Header variant={page.navTransparent[index] ? 'transparent' : 'default'} />
       <div
         className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
         style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
-        <FieldsBanner active={index === 0} isSlide={isSlide} />
-        <FieldsDB active={index === 1} isSlide={isSlide} />
-        <FieldsConstruction active={index === 2} isSlide={isSlide} />
-        <FieldsMEP active={index === 3} isSlide={isSlide} />
-        <FieldsSafety active={index === 4} isSlide={isSlide} />
-        <FieldsHR active={index === 5} isSlide={isSlide} />
-        <FieldsEquipment active={index === 6} isSlide={isSlide} />
-        <FieldsISO active={index === 7} isSlide={isSlide} />
-        <FieldsOutro active={index === 8} isSlide={isSlide} />
+        <FieldsBanner       active={index === 0} isSlide={isSlide} {...banner} />
+        <FieldsDB           active={index === 1} isSlide={isSlide} {...db} />
+        <FieldsConstruction active={index === 2} isSlide={isSlide} {...construction} />
+        <FieldsMEP          active={index === 3} isSlide={isSlide} {...mep} />
+        <FieldsSafety       active={index === 4} isSlide={isSlide} {...safety} />
+        <FieldsHR           active={index === 5} isSlide={isSlide} {...hr} />
+        <FieldsEquipment    active={index === 6} isSlide={isSlide} {...equipment} />
+        <FieldsISO          active={index === 7} isSlide={isSlide} {...iso} />
+        <FieldsOutro        active={index === 8} isSlide={isSlide} {...outro} />
       </div>
       {isSlide && (
         <SectionIndicator
           current={index}
           total={total}
           onNav={goTo}
-          labels={SECTION_LABELS}
-          tone={SECTION_TONES[index]}
+          labels={page.sectionLabels}
+          tone={page.sectionTones[index]}
         />
       )}
     </>

@@ -1,4 +1,3 @@
-import bgImg from '../../../assets/images/projects/landmark-81.jpg'
 import useInViewActive from '../useInViewActive'
 import './FieldsDB.css'
 
@@ -35,48 +34,46 @@ const IconShield = () => (
   </svg>
 )
 
-const BENEFITS = [
-  {
-    k: '01',
-    Icon: IconClock,
-    title: 'Tiết kiệm thời gian',
-    desc: 'Hạn chế các thay đổi phát sinh, đảm bảo vận hành ăn ý theo yêu cầu CĐT và các tiêu chuẩn, quy chuẩn hiện hành.',
-  },
-  {
-    k: '02',
-    Icon: IconValue,
-    title: 'Tối ưu vốn đầu tư',
-    desc: 'Mang tới nhiều giải pháp xử lý công việc với duy nhất một đầu mối giúp tối ưu hoá chi phí và tăng hiệu quả kiểm soát dự án.',
-  },
-  {
-    k: '03',
-    Icon: IconSchedule,
-    title: 'Chủ động thiết kế & tiến độ',
-    desc: 'Giảm những công đoạn, thời gian chờ khi phải phân chia và điều phối nhiều gói thầu nhỏ gây ảnh hưởng tới tiến độ chung.',
-  },
-  {
-    k: '04',
-    Icon: IconShield,
-    title: 'Đảm bảo chất lượng',
-    desc: 'Tăng tính ràng buộc trách nhiệm chặt chẽ giữa Thiết kế và Thi công, giữa Xây dựng và Cơ điện — tối đa hoá hiệu quả dự án.',
-  },
-]
+const BENEFIT_ICONS = [IconClock, IconValue, IconSchedule, IconShield]
 
-export default function FieldsDB({ active, isSlide }) {
+// Wrap các substring có trong `strongs` bằng <strong>
+function highlight(text, strongs = []) {
+  if (!strongs.length) return text
+  const pattern = new RegExp(`(${strongs.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'g')
+  const parts = text.split(pattern)
+  return parts.map((p, i) =>
+    strongs.includes(p) ? <strong key={i}>{p}</strong> : p,
+  )
+}
+
+export default function FieldsDB({
+  active,
+  isSlide,
+  bg,
+  ariaLabel,
+  markerNum,
+  markerTotal,
+  titleTop,
+  titleBot,
+  lede,
+  ledeStrongs = [],
+  headline,
+  benefits = [],
+}) {
   const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
       ref={ref}
       className={`fp-sec fp-db ${mount ? 'is-in' : ''}`}
-      aria-label="Tổng thầu D&amp;B"
+      aria-label={ariaLabel}
     >
       <div className="fp-db__bg" aria-hidden>
-        <img src={bgImg} alt="" className="fp-db__bgimg" />
+        <img src={bg} alt="" className="fp-db__bgimg" />
         <div className="fp-db__bgtint" />
       </div>
 
-      <span className="fp-marker" aria-hidden>02<span className="fp-marker__small">/09</span></span>
+      <span className="fp-marker" aria-hidden>{markerNum}<span className="fp-marker__small">{markerTotal}</span></span>
       <span className="fp-crosshair fp-crosshair--tl" aria-hidden />
       <span className="fp-crosshair fp-crosshair--tr" aria-hidden />
       <span className="fp-crosshair fp-crosshair--bl" aria-hidden />
@@ -84,42 +81,43 @@ export default function FieldsDB({ active, isSlide }) {
 
       <div className="fp-db__inner">
         <header className="fp-db__head">
-         
-
           <h2 className="fp-display fp-db__title">
-            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>TỔNG THẦU D&amp;B</span></span>
-            <span className="fp-mask"><span className="fp-row fp-db__title--accent" style={{ '--rd': 1 }}>XÂY DỰNG <em>&amp;</em> CƠ ĐIỆN</span></span>
+            <span className="fp-mask"><span className="fp-row" style={{ '--rd': 0 }}>{titleTop}</span></span>
+            <span className="fp-mask"><span className="fp-row fp-db__title--accent" style={{ '--rd': 1 }}>{titleBot}</span></span>
           </h2>
 
-          <p className="fp-db__lede">
-            Thiết kế và Thi công (D&amp;B) là mô hình tiên tiến được nhiều nhà
-            thầu lớn trên thế giới áp dụng. Với quy mô lớn và phức tạp, D&amp;B
-            đòi hỏi sự phối hợp nhịp nhàng giữa thiết kế và thi công, xây dựng
-            và cơ điện. Newtecons đáp ứng những yêu cầu đó — thành viên Hội
-            đồng Công trình Xanh Việt Nam, giàu kinh nghiệm với các dự án đạt
-            tiêu chuẩn <strong>LEED (Mỹ)</strong>, <strong>LOTUS (Việt Nam)</strong>.
-          </p>
+          <p className="fp-db__lede">{highlight(lede, ledeStrongs)}</p>
 
-          <div className="fp-db__headline" role="text">
-            <span className="fp-db__headline-line" aria-hidden />
-            <span className="fp-db__headline-text">
-              Với mô hình D&amp;B, Newtecons giúp Chủ đầu tư{' '}
-              <em>giảm 30% thời gian</em> và <em>10–15% chi phí</em>
-            </span>
-            <span className="fp-db__headline-line" aria-hidden />
-          </div>
+          {headline && (
+            <div className="fp-db__headline" role="text">
+              <span className="fp-db__headline-line" aria-hidden />
+              <span className="fp-db__headline-text">
+                {headline.text}{' '}
+                {headline.highlights?.map((h, i) => (
+                  <span key={i}>
+                    <em>{h}</em>
+                    {i < headline.highlights.length - 1 && ` ${headline.join || 'và'} `}
+                  </span>
+                ))}
+              </span>
+              <span className="fp-db__headline-line" aria-hidden />
+            </div>
+          )}
         </header>
 
         <ul className="fp-db__cards" role="list">
-          {BENEFITS.map(({ k, Icon, title, desc }, i) => (
-            <li key={k} className="fp-db__card" style={{ '--i': i }}>
-              <span className="fp-db__card-icon" aria-hidden>
-                <Icon />
-              </span>
-              <h3 className="fp-db__card-title">{title}</h3>
-              <p className="fp-db__card-desc">{desc}</p>
-            </li>
-          ))}
+          {benefits.map((b, i) => {
+            const Icon = BENEFIT_ICONS[i]
+            return (
+              <li key={b.k} className="fp-db__card" style={{ '--i': i }}>
+                <span className="fp-db__card-icon" aria-hidden>
+                  {Icon && <Icon />}
+                </span>
+                <h3 className="fp-db__card-title">{b.title}</h3>
+                <p className="fp-db__card-desc">{b.desc}</p>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </section>

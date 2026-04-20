@@ -12,50 +12,16 @@ import IntroManagers from '../../components/intro/IntroManagers/IntroManagers.js
 import IntroPartners from '../../components/intro/IntroPartners/IntroPartners.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import '../../components/intro/intro-shared.css'
-
-const SECTION_LABELS = [
-  'Banner',
-  'Thông điệp',
-  'Lịch sử',
-  'Tầm nhìn - Sứ mệnh',
-  'Giá trị cốt lõi',
-  'Ban điều hành',
-  'Cán bộ quản lý',
-  'Đối tác',
-  'Liên hệ',
-]
-
-const SECTION_TONES = [
-  'light',
-  'light',
-  'paper',
-  'light',
-  'light',
-  'paper',
-  'paper',
-  'light',
-  'light',
-]
-
-/* true = tắt gradient nav ở slide đó */
-const NAV_TRANSPARENT = [
-  false, // 0 Banner
-  false, // 1 Thông điệp
-  false, // 2 Lịch sử
-  false, // 3 Tầm nhìn - Sứ mệnh
-  true,  // 4 Giá trị cốt lõi
-  false, // 5 Ban điều hành
-  false, // 6 Cán bộ quản lý
-  false, // 7 Đối tác
-  false, // 8 Liên hệ
-]
+import { introData } from '../../data/intro.js'
+import { contactData } from '../../data/contact.js'
 
 /* Slide mode chỉ bật khi viewport đang landscape (ngang).
    Portrait (dọc — iPad dựng đứng, mobile) → scroll thường. */
 const SLIDE_QUERY = '(orientation: landscape)'
 
 export default function IntroPage() {
-  const total = SECTION_LABELS.length
+  const { page, banner, chairman, history, visionMission, values, board, managers, partners } = introData
+  const total = page.sectionLabels.length
   const [isSlide, setIsSlide] = useState(() => {
     if (typeof window === 'undefined') return true
     return window.matchMedia(SLIDE_QUERY).matches
@@ -84,28 +50,28 @@ export default function IntroPage() {
 
   return (
     <>
-      <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
+      <Header variant={page.navTransparent[index] ? 'transparent' : 'default'} />
       <div
         className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
         style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
-        <IntroBanner />
-        <IntroChairman />
-        <IntroHistory />
-        <IntroVisionMission />
-        <IntroValues />
-        <IntroBoard />
-        <IntroManagers />
-        <IntroPartners />
-        <Contact />
+        <IntroBanner {...banner} />
+        <IntroChairman {...chairman} />
+        <IntroHistory {...history} />
+        <IntroVisionMission {...visionMission} />
+        <IntroValues {...values} />
+        <IntroBoard {...board} />
+        <IntroManagers {...managers} />
+        <IntroPartners {...partners} />
+        <Contact {...contactData} />
       </div>
       {isSlide && (
         <SectionIndicator
           current={index}
           total={total}
           onNav={goTo}
-          labels={SECTION_LABELS}
-          tone={SECTION_TONES[index]}
+          labels={page.sectionLabels}
+          tone={page.sectionTones[index]}
         />
       )}
     </>

@@ -1,8 +1,8 @@
-import bannerBg from '../../assets/images/news/bg/banner-bg.jpg'
-import life1 from '../../assets/images/projects/grand-marina-saigon.jpg'
-import life2 from '../../assets/images/projects/lumiere-riverside.jpg'
-import life3 from '../../assets/images/projects/dewey-schools.jpg'
-import life4 from '../../assets/images/projects/the-nine.jpg'
+import bannerBg from '../assets/images/news/bg/banner-bg.jpg'
+import life1 from '../assets/images/projects/grand-marina-saigon.jpg'
+import life2 from '../assets/images/projects/lumiere-riverside.jpg'
+import life3 from '../assets/images/projects/dewey-schools.jpg'
+import life4 from '../assets/images/projects/the-nine.jpg'
 
 export const RECRUIT_BANNER_BG = bannerBg
 
@@ -655,3 +655,10 @@ export const JOBS = [
     skills: ['Hạ tầng', 'MS Project', 'Safety'],
   },
 ]
+
+
+// Page-level config — labels & tones cho SectionIndicator
+export const RECRUIT_PAGE = {
+  sectionLabels: ['Banner', 'Vì sao', 'Đời sống', 'Vị trí', 'Liên hệ'],
+  sectionTones: ['light', 'paper', 'light', 'paper', 'light'],
+}

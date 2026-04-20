@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { LIFE_GALLERY, LIFE_STATS } from '../../recruitData.js'
+import { LIFE_GALLERY, LIFE_STATS } from '../../../../data/recruit.js'
 import '../recruit-shared.css'
 import './RecruitLife.css'
 

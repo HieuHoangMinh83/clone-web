@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import bg from '../../../assets/images/intro/bg/managers.png'
-import MANAGERS from '../managers.js'
 import './IntroManagers.css'
 
 const PER_PAGE_DEFAULT = 5
@@ -65,7 +63,13 @@ function PersonModal({ person, onClose }) {
   )
 }
 
-export default function IntroManagers() {
+export default function IntroManagers({
+  bg,
+  titleTop,
+  titleStrong,
+  desc,
+  items = [],
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
   const [page, setPage] = useState(0)
@@ -86,8 +90,8 @@ export default function IntroManagers() {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  const totalPages = Math.ceil(MANAGERS.length / perPage)
-  const visible = MANAGERS.slice(page * perPage, page * perPage + perPage)
+  const totalPages = Math.ceil(items.length / perPage)
+  const visible = items.slice(page * perPage, page * perPage + perPage)
   const isShortPage = visible.length < perPage
 
   useEffect(() => {
@@ -127,16 +131,11 @@ export default function IntroManagers() {
           <h2 className="intro-mgr__title">
             <span className="intro-mgr__title-dash" aria-hidden>—</span>
             <span className="intro-mgr__title-text">
-              CÁN BỘ <strong>QUẢN LÝ</strong>
+              {titleTop} <strong>{titleStrong}</strong>
             </span>
             <span className="intro-mgr__title-dash" aria-hidden>—</span>
           </h2>
-          <p className="intro-mgr__desc">
-            Chúng tôi tin rằng tinh thần đoàn kết của đội ngũ nhân lực giàu kinh nghiệm, sự cải tiến
-            liên tục trong hoạt động thi công, tính nhạy bén trong việc nắm bắt nhu cầu thị trường
-            xây dựng và khả năng đáp ứng linh hoạt các yêu cầu của khách hàng, sẽ giúp Newtecons
-            phát triển và lớn mạnh hơn nữa.
-          </p>
+          <p className="intro-mgr__desc">{desc}</p>
         </header>
 
         <div

@@ -1,20 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import banner1 from '../../../assets/images/hero/banner-main.png'
-import banner2 from '../../../assets/images/hero/cover-web.png'
 import './Hero.css'
 
-const slides = [
-  { id: 1, src: banner1, alt: 'Banner 1' },
-  { id: 2, src: banner2, alt: 'Banner 2' },
-  { id: 3, src: banner1, alt: 'Banner 3' },
-  { id: 4, src: banner2, alt: 'Banner 4' },
-  { id: 5, src: banner1, alt: 'Banner 5' },
-  { id: 6, src: banner2, alt: 'Banner 6' },
-]
-
-const AUTOPLAY_MS = 7000
-
-export default function Hero() {
+export default function Hero({
+  slides = [],
+  autoplayMs = 7000,
+  ariaLabel,
+  dotsLabel,
+}) {
   const [index, setIndex] = useState(0)
   const pausedRef = useRef(false)
 
@@ -23,16 +15,16 @@ export default function Hero() {
     const id = window.setInterval(() => {
       if (pausedRef.current) return
       setIndex((i) => (i + 1) % slides.length)
-    }, AUTOPLAY_MS)
+    }, autoplayMs)
     return () => window.clearInterval(id)
-  }, [])
+  }, [slides.length, autoplayMs])
 
   const jumpTo = (i) => setIndex(i)
 
   return (
     <section
       className="hero section"
-      aria-label="Banner giới thiệu"
+      aria-label={ariaLabel}
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
     >
@@ -54,7 +46,7 @@ export default function Hero() {
       </div>
 
       {slides.length > 1 && (
-        <ol className="hero__dots" aria-label="Chọn slide">
+        <ol className="hero__dots" aria-label={dotsLabel}>
           {slides.map((s, i) => (
             <li key={s.id}>
               <button

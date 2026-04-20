@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import bg from '../../../assets/images/intro/bg/history.png'
-import INTRO_MILESTONES from '../../intro/milestones.js'
+import { introData } from '../../../data/intro.js'
+const INTRO_MILESTONES = introData.history.milestones
 import useCarousel from '../../intro/useCarousel.js'
 import CarouselControls from '../../intro/CarouselControls.jsx'
 import './ProjectsMilestones.css'

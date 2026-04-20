@@ -1,20 +1,26 @@
-import bannerBg from '../../../assets/images/fields/figma-header-bg.png'
 import useInViewActive from '../useInViewActive'
 import './FieldsBanner.css'
 
-export default function FieldsBanner({ active, isSlide }) {
+export default function FieldsBanner({
+  active,
+  isSlide,
+  bg,
+  ariaLabel,
+  markerNum,
+  markerTotal,
+  titleTop,
+  titleBot,
+  subtitle,
+}) {
   const { ref, mount } = useInViewActive(active, isSlide)
 
   return (
     <section
       ref={ref}
       className={`fp-sec fp-banner ${mount ? 'is-in' : ''}`}
-      aria-label="Lĩnh vực hoạt động"
+      aria-label={ariaLabel}
     >
-      <div
-        className="fp-banner__bg"
-        style={{ backgroundImage: `url(${bannerBg})` }}
-      />
+      <div className="fp-banner__bg" style={{ backgroundImage: `url(${bg})` }} />
       <div className="fp-banner__scrim" />
 
       <div className="fp-banner__deco" aria-hidden>
@@ -27,7 +33,7 @@ export default function FieldsBanner({ active, isSlide }) {
         </svg>
       </div>
 
-      <span className="fp-marker" aria-hidden>01<span className="fp-marker__small">/09</span></span>
+      <span className="fp-marker" aria-hidden>{markerNum}<span className="fp-marker__small">{markerTotal}</span></span>
       <span className="fp-crosshair fp-crosshair--tl" aria-hidden />
       <span className="fp-crosshair fp-crosshair--bl" aria-hidden />
       <span className="fp-crosshair fp-crosshair--br" aria-hidden />
@@ -35,19 +41,16 @@ export default function FieldsBanner({ active, isSlide }) {
       <div className="fp-banner__inner">
         <h1 className="fp-banner__title">
           <span className="fp-banner__title-mask">
-            <span className="fp-banner__title-row">Lĩnh vực</span>
+            <span className="fp-banner__title-row">{titleTop}</span>
           </span>
           <span className="fp-banner__title-mask">
             <span className="fp-banner__title-row fp-banner__title-row--accent">
-              <em>hoạt động</em>
+              <em>{titleBot}</em>
             </span>
           </span>
         </h1>
         <span className="fp-banner__mark" />
-        <p className="fp-banner__sub">
-          Tám trụ cột năng lực — từ tổng thầu D&amp;B, xây dựng dân dụng & công nghiệp,
-          cơ điện thông minh đến văn hoá an toàn và hệ thống quản trị quốc tế.
-        </p>
+        <p className="fp-banner__sub">{subtitle}</p>
       </div>
     </section>
   )

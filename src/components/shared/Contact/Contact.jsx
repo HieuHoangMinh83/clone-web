@@ -1,32 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import './Contact.css'
-import imgVisual from '../../../assets/images/contact/visual-main.png'
-
-const LANGS = ['EN', 'VN', 'CN']
-
-const OFFICES = [
-  {
-    label: 'Trụ sở',
-    body:
-      'Newtecons Tower, 96 Đường Phan Đăng Lưu, Phường Đài Nhuận, Thành phố Hồ Chí Minh',
-  },
-  {
-    label: 'Văn phòng đại diện tại Hà Nội',
-    body:
-      'Căn số LC2A, Khu nhà ở thấp tầng AT17, Khu đô thị Embassy Garden, Đường Hoàng Minh Thảo, Phường Xuân Đỉnh, Thành phố Hà Nội',
-  },
-]
-
-const PrimaryContacts = [
-  { label: 'Hotline', value: '(+84) 28 3514 6699', href: 'tel:+842835146699' },
-  { label: 'Email', value: 'contact@newtecons.vn', href: 'mailto:contact@newtecons.vn' },
-  { label: 'Email Phòng Đầu tư', value: 'tender@newtecons.vn', href: 'mailto:tender@newtecons.vn' },
-]
-
-const ProcurementContacts = [
-  { label: 'Hotline', value: '0909 683 666', href: 'tel:0909683666' },
-  { label: 'Email', value: 'procurement_cm@newtecons.vn', href: 'mailto:procurement_cm@newtecons.vn' },
-]
 
 function PinIcon() {
   return (
@@ -67,10 +40,29 @@ function YoutubeIcon() {
   )
 }
 
-export default function Contact() {
+const SOCIAL_ICONS = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  youtube: YoutubeIcon,
+}
+
+export default function Contact({
+  ariaLabel = 'Thông tin liên hệ',
+  visualImage,
+  visualAlt = '',
+  titleTop = 'THÔNG TIN',
+  titleStrong = 'LIÊN HỆ',
+  groupTitle = 'LIÊN HỆ VỚI CHÚNG TÔI',
+  subTitle = 'Thông tin bộ phận',
+  subTitleTail = '',
+  copyright = '',
+  offices = [],
+  primaryContacts = [],
+  procurementContacts = [],
+  socials = [],
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
-  const [lang, setLang] = useState('VN')
 
   useEffect(() => {
     const el = sectionRef.current
@@ -90,6 +82,7 @@ export default function Contact() {
       ref={sectionRef}
       className={`contact section ${inView ? 'is-in' : ''}`}
       id="contact"
+      aria-label={ariaLabel}
     >
       <div className="contact__bg" aria-hidden>
         <span className="contact__bg-grad" />
@@ -105,17 +98,17 @@ export default function Contact() {
 
           <h2 className="contact__title">
             <span className="contact__title-mask">
-              <span className="contact__title-line">THÔNG TIN</span>
+              <span className="contact__title-line">{titleTop}</span>
             </span>
             <span className="contact__title-mask">
               <strong className="contact__title-line contact__title-line--bold">
-                LIÊN HỆ
+                {titleStrong}
               </strong>
             </span>
           </h2>
 
           <div className="contact__offices">
-            {OFFICES.map((o, i) => (
+            {offices.map((o, i) => (
               <div
                 key={o.label}
                 className="contact__office reveal"
@@ -141,11 +134,11 @@ export default function Contact() {
               className="contact__group-title reveal"
               style={{ '--d': '0.9s' }}
             >
-              LIÊN HỆ VỚI CHÚNG TÔI
+              {groupTitle}
             </h3>
 
             <ul className="contact__rows">
-              {PrimaryContacts.map((c, i) => (
+              {primaryContacts.map((c, i) => (
                 <li
                   key={c.label}
                   className="contact__row reveal"
@@ -165,11 +158,11 @@ export default function Contact() {
               className="contact__sub-title reveal"
               style={{ '--d': '1.25s' }}
             >
-              Thông tin bộ phận <span>CDM (Procurement)</span>
+              {subTitle} {subTitleTail && <span>{subTitleTail}</span>}
             </h4>
 
             <ul className="contact__rows contact__rows--compact">
-              {ProcurementContacts.map((c, i) => (
+              {procurementContacts.map((c, i) => (
                 <li
                   key={c.label}
                   className="contact__row reveal"
@@ -185,33 +178,38 @@ export default function Contact() {
           </div>
 
           <div className="contact__footer">
-            <ul className="contact__social reveal" style={{ '--d': '1.6s' }}>
-              <li>
-                <a href="#" aria-label="Facebook"><FacebookIcon /></a>
-              </li>
-              <li>
-                <a href="#" aria-label="Instagram"><InstagramIcon /></a>
-              </li>
-              <li>
-                <a href="#" aria-label="YouTube"><YoutubeIcon /></a>
-              </li>
-            </ul>
+            {socials.length > 0 && (
+              <ul className="contact__social reveal" style={{ '--d': '1.6s' }}>
+                {socials.map((s) => {
+                  const Icon = SOCIAL_ICONS[s.type]
+                  return (
+                    <li key={s.type}>
+                      <a href={s.href} aria-label={s.label}>
+                        {Icon ? <Icon /> : null}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
 
-            <p className="contact__copy reveal" style={{ '--d': '1.75s' }}>
-              © 2021 Newtecons. All rights reserved.
-            </p>
+            {copyright && (
+              <p className="contact__copy reveal" style={{ '--d': '1.75s' }}>
+                {copyright}
+              </p>
+            )}
           </div>
         </div>
 
         {/* RIGHT — visual pane */}
         <div className="contact__visual">
           <div className="contact__visual-frame" aria-hidden>
-            <img src={imgVisual} alt="" className="contact__visual-img" />
+            {visualImage && (
+              <img src={visualImage} alt={visualAlt} className="contact__visual-img" />
+            )}
             <span className="contact__visual-overlay" />
             <span className="contact__visual-scan" />
           </div>
-
-
         </div>
       </div>
     </section>

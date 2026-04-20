@@ -3,45 +3,12 @@ import Header from '../../components/shared/Header/Header.jsx'
 import Hero from '../../components/home/Hero/Hero.jsx'
 import About from '../../components/home/About/About.jsx'
 import Achievements from '../../components/home/Achievements/Achievements.jsx'
-import Fields from '../../components/home/Fields/Fields.jsx'
 import Projects from '../../components/home/Projects/Projects.jsx'
 import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-
-const SECTION_LABELS = [
-  'Banner',
-  'Giới thiệu',
-  'Thành tựu',
-  'Dự án',
-  'Tin tức',
-  'Liên hệ',
-]
-
-/* Tone chỉ số indicator theo nền section:
-   light = chữ trắng trên nền tối (active blue)
-   dark  = chữ nâu-vàng trên nền sáng (active navy)
-   gold  = chữ trắng trên nền tối, active vàng */
-const SECTION_TONES = [
-  'light', // Hero — navy carousel
-  'light', // About — chữ trắng trên tile ảnh tối bên phải
-  'paper', // Achievements — trắng, accent đỏ
-  'light', // Fields — nền navy-dark, chữ trắng
-  'light', // Projects — nền navy-dark, chữ trắng
-  'paper', // News — white paper, xanh + xám nhạt
-  'light', // Contact — navy
-]
-
-/* Header có 2 loại: 'default' = có gradient mầu xanh, 'transparent' = không mầu.
-   Set true cho slide muốn tắt gradient. */
-const NAV_TRANSPARENT = [
-  false, // 0 Banner
-  false, // 1 Giới thiệu
-  false, // 2 Thành tựu
-  false, // 3 Dự án
-  false, // 4 Tin tức
-  false, // 5 Liên hệ
-]
+import { homeData } from '../../data/home.js'
+import { contactData } from '../../data/contact.js'
 
 const TRANSITION_MS = 900
 /* Slide mode bật ở landscape (ngang) và desktop ≥1200px.
@@ -49,9 +16,9 @@ const TRANSITION_MS = 900
 const SLIDE_BREAKPOINT = '(orientation: landscape), (min-width: 1200px)'
 
 export default function HomePage() {
-  const total = SECTION_LABELS.length
+  const { page, hero, about, achievements, projects } = homeData
+  const total = page.sectionLabels.length
   const [index, setIndex] = useState(0)
-  // Slide mode chỉ bật khi viewport >= tablet. Mobile dùng scroll thường.
   const [isSlide, setIsSlide] = useState(() => {
     if (typeof window === 'undefined') return true
     return window.matchMedia(SLIDE_BREAKPOINT).matches
@@ -59,13 +26,11 @@ export default function HomePage() {
   const lockRef = useRef(false)
   const indexRef = useRef(0)
 
-  // Theo dõi resize → switch slide/scroll mode
   useEffect(() => {
     const mq = window.matchMedia(SLIDE_BREAKPOINT)
     const handler = (e) => {
       setIsSlide(e.matches)
       if (!e.matches) {
-        // Reset index khi xuống mobile để tránh state stale
         indexRef.current = 0
         setIndex(0)
       }
@@ -74,7 +39,6 @@ export default function HomePage() {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  // Toggle body class — bật scroll thường khi không phải slide mode
   useEffect(() => {
     if (isSlide) return
     document.body.classList.add('is-scroll-page')
@@ -99,7 +63,6 @@ export default function HomePage() {
     [total],
   )
 
-  // Wheel / key / touch handlers — chỉ attach khi slide mode
   useEffect(() => {
     if (!isSlide) return
 
@@ -153,26 +116,25 @@ export default function HomePage() {
 
   return (
     <>
-      <Header variant={NAV_TRANSPARENT[index] ? 'transparent' : 'default'} />
+      <Header variant={page.navTransparent[index] ? 'transparent' : 'default'} />
       <div
         className={`fullpage ${isSlide ? 'fullpage--slide' : 'fullpage--scroll'}`}
         style={isSlide ? { transform: `translateY(-${index * 100}vh)` } : undefined}
       >
-        <Hero />
-        <About />
-        <Achievements />
-        {/* <Fields /> */}
-        <Projects />
+        <Hero {...hero} />
+        <About {...about} />
+        <Achievements {...achievements} />
+        <Projects {...projects} />
         <NewsFeatured />
-        <Contact />
+        <Contact {...contactData} />
       </div>
       {isSlide && (
         <SectionIndicator
           current={index}
           total={total}
           onNav={goTo}
-          labels={SECTION_LABELS}
-          tone={SECTION_TONES[index]}
+          labels={page.sectionLabels}
+          tone={page.sectionTones[index]}
         />
       )}
     </>

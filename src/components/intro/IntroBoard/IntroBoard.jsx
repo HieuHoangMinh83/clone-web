@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import bg from '../../../assets/images/intro/bg/board.png'
-import ceo from '../../../assets/images/intro/managers/board-ceo.png'
-import DIRECTORS from '../directors.js'
 import './IntroBoard.css'
 
-/* Portrait (<1200, dọc) — carousel 3 card/trang. Landscape/desktop full grid. */
 const PER_PAGE_PORTRAIT = 3
 const PORTRAIT_QUERY = '(orientation: portrait) and (max-width: 1199px)'
 
@@ -21,13 +17,6 @@ function Chevron({ dir = 'right' }) {
       />
     </svg>
   )
-}
-
-const CEO = {
-  name: 'VÕ THANH LIÊM',
-  role: 'Tổng Giám đốc',
-  img: ceo,
-  bio: 'Ông Võ Thanh Liêm là người đứng đầu Ban Điều hành Newtecons, định hướng chiến lược phát triển và dẫn dắt công ty trở thành Tổng thầu xây dựng hàng đầu Việt Nam. Với triết lý "Uy tín – Chuyên nghiệp – Tử tế", ông cùng đội ngũ không ngừng kiến tạo những công trình mang tầm vóc Việt.',
 }
 
 function Arrow() {
@@ -86,7 +75,13 @@ function PersonModal({ person, onClose }) {
   )
 }
 
-export default function IntroBoard() {
+export default function IntroBoard({
+  bg,
+  titleTop,
+  titleStrong,
+  ceo,
+  directors = [],
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
   const [selected, setSelected] = useState(null)
@@ -117,9 +112,9 @@ export default function IntroBoard() {
     return () => io.disconnect()
   }, [])
 
-  const perPage = isPortrait ? PER_PAGE_PORTRAIT : DIRECTORS.length
-  const totalPages = Math.ceil(DIRECTORS.length / perPage)
-  const visible = DIRECTORS.slice(page * perPage, page * perPage + perPage)
+  const perPage = isPortrait ? PER_PAGE_PORTRAIT : directors.length
+  const totalPages = Math.ceil(directors.length / perPage)
+  const visible = directors.slice(page * perPage, page * perPage + perPage)
   const hasPagination = isPortrait && totalPages > 1
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages)
   const next = () => setPage((p) => (p + 1) % totalPages)
@@ -136,33 +131,35 @@ export default function IntroBoard() {
       <div className="intro-board__pattern" aria-hidden="true" />
 
       <div className="intro-board__container">
-        <div className="intro-board__featured">
-          <div className="intro-board__title-block">
-            <h2 className="intro-board__title">
-              BAN
-              <br />
-              <strong>ĐIỀU HÀNH</strong>
-            </h2>
-            <div className="intro-board__title-accent" />
-          </div>
+        {ceo && (
+          <div className="intro-board__featured">
+            <div className="intro-board__title-block">
+              <h2 className="intro-board__title">
+                {titleTop}
+                <br />
+                <strong>{titleStrong}</strong>
+              </h2>
+              <div className="intro-board__title-accent" />
+            </div>
 
-          <div className="intro-board__avatar intro-board__avatar--lg">
-            <img src={ceo} alt="Võ Thanh Liêm" loading="lazy" />
-            <button
-              type="button"
-              className="intro-board__go"
-              aria-label="Xem chi tiết Võ Thanh Liêm"
-              onClick={() => setSelected(CEO)}
-            >
-              <Arrow />
-            </button>
-          </div>
+            <div className="intro-board__avatar intro-board__avatar--lg">
+              <img src={ceo.img} alt={ceo.name} loading="lazy" />
+              <button
+                type="button"
+                className="intro-board__go"
+                aria-label={`Xem chi tiết ${ceo.name}`}
+                onClick={() => setSelected(ceo)}
+              >
+                <Arrow />
+              </button>
+            </div>
 
-          <div className="intro-board__meta intro-board__meta--lg">
-            <div className="intro-board__name">VÕ THANH LIÊM</div>
-            <div className="intro-board__role">Tổng Giám đốc</div>
+            <div className="intro-board__meta intro-board__meta--lg">
+              <div className="intro-board__name">{ceo.name}</div>
+              <div className="intro-board__role">{ceo.role}</div>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="intro-board__stage">
           {hasPagination && (
