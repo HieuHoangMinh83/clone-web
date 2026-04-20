@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { WHY_PILLARS } from '../recruitData.js'
+import { WHY_PILLARS } from './recruitData.js'
 
 function PillarIcon({ name }) {
   const common = {

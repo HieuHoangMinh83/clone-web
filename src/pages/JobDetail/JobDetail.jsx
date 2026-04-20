@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import Header from '../../../components/shared/Header/Header.jsx'
-import Contact from '../../../components/shared/Contact/Contact.jsx'
+import Header from '../../components/shared/Header/Header.jsx'
+import Contact from '../../components/shared/Contact/Contact.jsx'
 import {
   JOBS,
   JOB_DETAILS,
   JOB_BENEFITS,
   JOB_PROCESS,
-} from '../recruitData.js'
+} from '../../components/recruit/recruitData.js'
 import './JobDetail.css'
 
 export default function JobDetail({ jobId }) {
