@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
-import Header from '../../../components/shared/Header/Header.jsx'
-import Contact from '../../../components/shared/Contact/Contact.jsx'
-import SectionIndicator from '../../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../../components/shared/useFullpageScroll.js'
+import Header from '../../components/shared/Header/Header.jsx'
+import Contact from '../../components/shared/Contact/Contact.jsx'
+import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
+import useFullpageScroll from '../../components/shared/useFullpageScroll.js'
 import {
   findProjectBySlug,
   getRelatedProjects,
-} from '../projectsData.js'
-import '../projects-shared.css'
+} from '../../components/projects/projectsData.js'
+import '../../components/projects/projects-shared.css'
 import './ProjectDetail.css'
 
 const SECTION_LABELS = [

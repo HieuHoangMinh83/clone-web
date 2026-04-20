@@ -61,12 +61,12 @@ import NewsBanner from '../../components/news/NewsBanner.jsx'
 import NewsGrid from '../../components/news/NewsGrid.jsx'
 
 // Projects page
-import ProjectsBanner from '../ProjectsPage/ProjectsBanner/ProjectsBanner.jsx'
-import ProjectsSpotlight from '../ProjectsPage/ProjectsSpotlight/ProjectsSpotlight.jsx'
-import ProjectsGrid from '../ProjectsPage/ProjectsGrid/ProjectsGrid.jsx'
-import ProjectsMilestones from '../ProjectsPage/ProjectsMilestones/ProjectsMilestones.jsx'
-import ProjectsPartners from '../ProjectsPage/ProjectsPartners/ProjectsPartners.jsx'
-import ProjectsCTA from '../ProjectsPage/ProjectsCTA/ProjectsCTA.jsx'
+import ProjectsBanner from '../../components/projects/ProjectsBanner/ProjectsBanner.jsx'
+import ProjectsSpotlight from '../../components/projects/ProjectsSpotlight/ProjectsSpotlight.jsx'
+import ProjectsGrid from '../../components/projects/ProjectsGrid/ProjectsGrid.jsx'
+import ProjectsMilestones from '../../components/projects/ProjectsMilestones/ProjectsMilestones.jsx'
+import ProjectsPartners from '../../components/projects/ProjectsPartners/ProjectsPartners.jsx'
+import ProjectsCTA from '../../components/projects/ProjectsCTA/ProjectsCTA.jsx'
 
 // Recruit page
 import RecruitBanner from '../../components/recruit/RecruitBanner.jsx'
@@ -602,7 +602,7 @@ export const COMPONENTS = [
     subtitle: 'Banner trang Dự án · Rotate',
     desc: 'Banner xoay 5 dự án featured với ảnh nền + thông tin mỗi 6.5s.',
     tag: 'ProjectsBanner',
-    path: 'src/pages/ProjectsPage/ProjectsBanner/',
+    path: 'src/components/projects/ProjectsBanner/',
     render: () => <ProjectsBanner />,
   },
   {
@@ -612,7 +612,7 @@ export const COMPONENTS = [
     subtitle: 'Dự án nổi bật · Landmark 81',
     desc: 'Khối spotlight 1 dự án tiêu biểu (thường là Landmark 81) — ảnh lớn + thông số.',
     tag: 'ProjectsSpotlight',
-    path: 'src/pages/ProjectsPage/ProjectsSpotlight/',
+    path: 'src/components/projects/ProjectsSpotlight/',
     render: () => <ProjectsSpotlight />,
   },
   {
@@ -622,7 +622,7 @@ export const COMPONENTS = [
     subtitle: 'Lưới dự án · 9/trang',
     desc: 'Lưới tất cả dự án với phân trang 9 mỗi trang, filter theo danh mục.',
     tag: 'ProjectsGrid',
-    path: 'src/pages/ProjectsPage/ProjectsGrid/',
+    path: 'src/components/projects/ProjectsGrid/',
     render: () => <ProjectsGrid />,
   },
   {
@@ -632,7 +632,7 @@ export const COMPONENTS = [
     subtitle: 'Cột mốc phát triển',
     desc: 'Dòng thời gian cột mốc (2004 đến nay) — sự kiện nổi bật của công ty.',
     tag: 'ProjectsMilestones',
-    path: 'src/pages/ProjectsPage/ProjectsMilestones/',
+    path: 'src/components/projects/ProjectsMilestones/',
     render: () => <ProjectsMilestones />,
   },
   {
@@ -642,7 +642,7 @@ export const COMPONENTS = [
     subtitle: 'Đối tác chiến lược',
     desc: 'Danh sách đối tác chiến lược: Vingroup, Masterise, Sun Group…',
     tag: 'ProjectsPartners',
-    path: 'src/pages/ProjectsPage/ProjectsPartners/',
+    path: 'src/components/projects/ProjectsPartners/',
     render: () => <ProjectsPartners />,
   },
   {
@@ -652,7 +652,7 @@ export const COMPONENTS = [
     subtitle: 'CTA · Bàn giao dự án',
     desc: 'Call-to-action cuối trang dự án — mời liên hệ để bàn giao dự án mới.',
     tag: 'ProjectsCTA',
-    path: 'src/pages/ProjectsPage/ProjectsCTA/',
+    path: 'src/components/projects/ProjectsCTA/',
     render: () => <ProjectsCTA />,
   },
 

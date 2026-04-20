@@ -10,7 +10,7 @@ import RecruitPage from './pages/RecruitPage/RecruitPage.jsx'
 import JobDetail from './pages/JobDetail/JobDetail.jsx'
 import ContactPage from './pages/ContactPage/ContactPage.jsx'
 import ProjectsPage from './pages/ProjectsPage/ProjectsPage.jsx'
-import ProjectDetail from './pages/ProjectsPage/ProjectDetail/ProjectDetail.jsx'
+import ProjectDetail from './pages/ProjectDetail/ProjectDetail.jsx'
 import ComponentLibrary from './pages/ComponentLibrary/ComponentLibrary.jsx'
 import LogoDemo from './pages/LogoDemo.jsx'
 
