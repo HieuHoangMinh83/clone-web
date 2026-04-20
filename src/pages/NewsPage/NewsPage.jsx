@@ -3,9 +3,9 @@ import Header from '../../components/shared/Header/Header.jsx'
 import Contact from '../../components/shared/Contact/Contact.jsx'
 import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
 import useFullpageScroll from '../../components/shared/useFullpageScroll.js'
-import NewsBanner from './NewsBanner/NewsBanner.jsx'
+import NewsBanner from '../../components/news/NewsBanner.jsx'
 import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
-import NewsGrid from './NewsGrid/NewsGrid.jsx'
+import NewsGrid from '../../components/news/NewsGrid.jsx'
 import './NewsPage.css'
 
 const SECTION_LABELS = ['Banner', 'Nổi bật', 'Tin tức', 'Liên hệ']

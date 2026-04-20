@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CATEGORIES, NEWS_LIST } from '../newsData.js'
+import { CATEGORIES, NEWS_LIST } from './newsData.js'
 
 // Tablet dọc dùng grid 2 cột → 4 tin lấp đầy 2×2. Desktop/landscape giữ 3 tin.
 const TABLET_PORTRAIT_QUERY =

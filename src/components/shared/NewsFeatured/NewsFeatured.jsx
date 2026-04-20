@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { FEATURED, FEATURED_SUB } from '../../../pages/NewsPage/newsData.js'
+import { FEATURED, FEATURED_SUB } from '../../news/newsData.js'
 import './NewsFeatured.css'
 
 function parseDate(s) {

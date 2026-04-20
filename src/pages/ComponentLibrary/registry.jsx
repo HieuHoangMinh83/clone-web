@@ -57,8 +57,8 @@ import FieldsISO from '../FieldsPage/FieldsISO/FieldsISO.jsx'
 import FieldsOutro from '../FieldsPage/FieldsOutro/FieldsOutro.jsx'
 
 // News page
-import NewsBanner from '../NewsPage/NewsBanner/NewsBanner.jsx'
-import NewsGrid from '../NewsPage/NewsGrid/NewsGrid.jsx'
+import NewsBanner from '../../components/news/NewsBanner.jsx'
+import NewsGrid from '../../components/news/NewsGrid.jsx'
 
 // Projects page
 import ProjectsBanner from '../ProjectsPage/ProjectsBanner/ProjectsBanner.jsx'
@@ -75,7 +75,7 @@ import RecruitLife from '../RecruitPage/RecruitLife/RecruitLife.jsx'
 import RecruitJobs from '../RecruitPage/RecruitJobs/RecruitJobs.jsx'
 
 // Sample data cho NewsDetail blocks
-import { FEATURED, getRelatedArticles } from '../NewsPage/newsData.js'
+import { FEATURED, getRelatedArticles } from '../../components/news/newsData.js'
 
 const article = FEATURED
 const related = getRelatedArticles(article.slug, 3)
@@ -580,7 +580,7 @@ export const COMPONENTS = [
     subtitle: 'Banner trang Tin tức + tabs',
     desc: 'Banner trang Tin tức với các tabs lọc theo danh mục (Tất cả / Tin công ty / Dự án / …).',
     tag: 'NewsBanner',
-    path: 'src/pages/NewsPage/NewsBanner/',
+    path: 'src/components/news/NewsBanner.jsx',
     render: () => <NewsBanner />,
   },
   {
@@ -590,7 +590,7 @@ export const COMPONENTS = [
     subtitle: 'Lưới bài viết · Phân trang',
     desc: 'Lưới bài viết tin tức với phân trang 3/trang — ảnh + danh mục + tiêu đề + excerpt.',
     tag: 'NewsGrid',
-    path: 'src/pages/NewsPage/NewsGrid/',
+    path: 'src/components/news/NewsGrid.jsx',
     render: () => <NewsGrid />,
   },
 
