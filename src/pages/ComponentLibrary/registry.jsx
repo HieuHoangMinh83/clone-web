@@ -6,8 +6,8 @@
 // Shared page stylesheets — nhiều component phụ thuộc vào
 // class shell ở page CSS (.news-sec, .rec-sec, .prj-sec...)
 // nên cần import để có full styling khi render độc lập.
-import '../NewsPage/NewsPage.css'
-import '../RecruitPage/RecruitPage.css'
+import '../../components/news/news-shared.css'
+import '../../components/recruit/RecruitPage/recruit-shared.css'
 import '../ProjectsPage/ProjectsPage.css'
 
 // Shared
@@ -57,8 +57,8 @@ import FieldsISO from '../../components/fields/FieldsISO/FieldsISO.jsx'
 import FieldsOutro from '../../components/fields/FieldsOutro/FieldsOutro.jsx'
 
 // News page
-import NewsBanner from '../../components/news/NewsBanner.jsx'
-import NewsGrid from '../../components/news/NewsGrid.jsx'
+import NewsBanner from '../../components/news/NewsBanner/NewsBanner.jsx'
+import NewsGrid from '../../components/news/NewsGrid/NewsGrid.jsx'
 
 // Projects page
 import ProjectsBanner from '../../components/projects/ProjectsBanner/ProjectsBanner.jsx'
@@ -69,10 +69,10 @@ import ProjectsPartners from '../../components/projects/ProjectsPartners/Project
 import ProjectsCTA from '../../components/projects/ProjectsCTA/ProjectsCTA.jsx'
 
 // Recruit page
-import RecruitBanner from '../../components/recruit/RecruitBanner.jsx'
-import RecruitWhy from '../../components/recruit/RecruitWhy.jsx'
-import RecruitLife from '../../components/recruit/RecruitLife.jsx'
-import RecruitJobs from '../../components/recruit/RecruitJobs.jsx'
+import RecruitBanner from '../../components/recruit/RecruitPage/RecruitBanner/RecruitBanner.jsx'
+import RecruitWhy from '../../components/recruit/RecruitPage/RecruitWhy/RecruitWhy.jsx'
+import RecruitLife from '../../components/recruit/RecruitPage/RecruitLife/RecruitLife.jsx'
+import RecruitJobs from '../../components/recruit/RecruitPage/RecruitJobs/RecruitJobs.jsx'
 
 // Sample data cho NewsDetail blocks
 import { FEATURED, getRelatedArticles } from '../../components/news/newsData.js'
@@ -580,7 +580,7 @@ export const COMPONENTS = [
     subtitle: 'Banner trang Tin tức + tabs',
     desc: 'Banner trang Tin tức với các tabs lọc theo danh mục (Tất cả / Tin công ty / Dự án / …).',
     tag: 'NewsBanner',
-    path: 'src/components/news/NewsBanner.jsx',
+    path: 'src/components/news/NewsBanner/',
     render: () => <NewsBanner />,
   },
   {
@@ -590,7 +590,7 @@ export const COMPONENTS = [
     subtitle: 'Lưới bài viết · Phân trang',
     desc: 'Lưới bài viết tin tức với phân trang 3/trang — ảnh + danh mục + tiêu đề + excerpt.',
     tag: 'NewsGrid',
-    path: 'src/components/news/NewsGrid.jsx',
+    path: 'src/components/news/NewsGrid/',
     render: () => <NewsGrid />,
   },
 
@@ -664,7 +664,7 @@ export const COMPONENTS = [
     subtitle: 'Banner Tuyển dụng',
     desc: 'Banner mở đầu trang Tuyển dụng — ảnh công trường + slogan tuyển dụng.',
     tag: 'RecruitBanner',
-    path: 'src/components/recruit/RecruitBanner.jsx',
+    path: 'src/components/recruit/RecruitPage/RecruitBanner/',
     render: () => <RecruitBanner />,
   },
   {
@@ -674,7 +674,7 @@ export const COMPONENTS = [
     subtitle: 'Vì sao chọn Newtecons · Pillars',
     desc: 'Khối 4 trụ cột lý do chọn làm việc tại Newtecons (với icon tự vẽ).',
     tag: 'RecruitWhy',
-    path: 'src/components/recruit/RecruitWhy.jsx',
+    path: 'src/components/recruit/RecruitPage/RecruitWhy/',
     render: () => <RecruitWhy />,
   },
   {
@@ -684,7 +684,7 @@ export const COMPONENTS = [
     subtitle: 'Cuộc sống tại Newtecons',
     desc: 'Khối cuộc sống / văn hoá làm việc tại Newtecons — tab + ảnh.',
     tag: 'RecruitLife',
-    path: 'src/components/recruit/RecruitLife.jsx',
+    path: 'src/components/recruit/RecruitPage/RecruitLife/',
     render: () => <RecruitLife />,
   },
   {
@@ -694,7 +694,7 @@ export const COMPONENTS = [
     subtitle: 'Danh sách công việc · 6/trang',
     desc: 'Danh sách vị trí tuyển dụng với filter + phân trang 6 mỗi trang.',
     tag: 'RecruitJobs',
-    path: 'src/components/recruit/RecruitJobs.jsx',
+    path: 'src/components/recruit/RecruitPage/RecruitJobs/',
     render: () => <RecruitJobs />,
   },
 ]

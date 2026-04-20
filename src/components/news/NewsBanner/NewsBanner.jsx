@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import bg from '../../assets/images/news/bg/banner-bg.jpg'
+import bg from '../../../assets/images/news/bg/banner-bg.jpg'
+import './NewsBanner.css'
 
 const TABS = [
   { key: 'all', label: 'Tất cả' },

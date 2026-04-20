@@ -1,0 +1,90 @@
+/* ================================================================
+   JobDetailCta — bottom CTA band
+   Phụ thuộc: .jd-btn từ jobdetail-shared.css
+   ================================================================ */
+
+.jd-cta {
+  position: relative;
+  padding: clamp(56px, 7vw, 96px) 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(221, 169, 105, 0.18), transparent 55%),
+    linear-gradient(135deg, #06122a 0%, #0c1e40 55%, #06122a 100%);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+.jd-cta__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 80% 60%, #000 10%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+.jd-cta__inner {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, auto);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  position: relative;
+}
+.jd-cta__kicker {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  color: var(--gold-500);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.jd-cta__title {
+  font-size: clamp(26px, 3vw, 44px);
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 14px;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.jd-cta__lead {
+  font-size: clamp(13px, 1vw, 15.5px);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  max-width: 560px;
+}
+.jd-cta__actions {
+  display: inline-flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ============================================================
+   Responsive — Cta
+   ============================================================ */
+@media (max-width: 767px) {
+  .jd-cta__inner { grid-template-columns: 1fr; }
+  .jd-cta__actions { justify-content: flex-start; }
+  .jd-cta__actions .jd-btn { flex: 1; justify-content: center; }
+}
+
+/* Tablet portrait */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .jd-cta__inner { width: min(var(--container), calc(100% - 56px)); }
+  .jd-cta { padding: 64px 0 68px; }
+  .jd-cta__inner { grid-template-columns: 1fr; gap: 26px; }
+  .jd-cta__title { font-size: 32px; }
+  .jd-cta__actions {
+    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .jd-cta__actions .jd-btn { justify-content: center; padding: 13px 16px; }
+}

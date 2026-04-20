@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import Header from '../../components/shared/Header/Header.jsx'
-import Contact from '../../components/shared/Contact/Contact.jsx'
-import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
-import NewsBanner from '../../components/news/NewsBanner.jsx'
-import NewsFeatured from '../../components/shared/NewsFeatured/NewsFeatured.jsx'
-import NewsGrid from '../../components/news/NewsGrid.jsx'
-import './NewsPage.css'
+import Header from '../../../components/shared/Header/Header.jsx'
+import Contact from '../../../components/shared/Contact/Contact.jsx'
+import SectionIndicator from '../../../components/shared/SectionIndicator/SectionIndicator.jsx'
+import useFullpageScroll from '../../../components/intro/useFullpageScroll.js'
+import NewsBanner from '../../../components/news/NewsBanner/NewsBanner.jsx'
+import NewsFeatured from '../../../components/shared/NewsFeatured/NewsFeatured.jsx'
+import NewsGrid from '../../../components/news/NewsGrid/NewsGrid.jsx'
+import '../../../components/news/news-shared.css'
 
 const SECTION_LABELS = ['Banner', 'Nổi bật', 'Tin tức', 'Liên hệ']
 const SECTION_TONES = ['light', 'paper', 'paper', 'light']

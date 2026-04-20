@@ -1,12 +1,12 @@
-import Header from '../../components/shared/Header/Header.jsx'
-import Contact from '../../components/shared/Contact/Contact.jsx'
-import SectionIndicator from '../../components/shared/SectionIndicator/SectionIndicator.jsx'
-import useFullpageScroll from '../../components/intro/useFullpageScroll.js'
-import RecruitBanner from '../../components/recruit/RecruitBanner.jsx'
-import RecruitWhy from '../../components/recruit/RecruitWhy.jsx'
-import RecruitLife from '../../components/recruit/RecruitLife.jsx'
-import RecruitJobs from '../../components/recruit/RecruitJobs.jsx'
-import './RecruitPage.css'
+import Header from '../../../components/shared/Header/Header.jsx'
+import Contact from '../../../components/shared/Contact/Contact.jsx'
+import SectionIndicator from '../../../components/shared/SectionIndicator/SectionIndicator.jsx'
+import useFullpageScroll from '../../../components/intro/useFullpageScroll.js'
+import RecruitBanner from '../../../components/recruit/RecruitPage/RecruitBanner/RecruitBanner.jsx'
+import RecruitWhy from '../../../components/recruit/RecruitPage/RecruitWhy/RecruitWhy.jsx'
+import RecruitLife from '../../../components/recruit/RecruitPage/RecruitLife/RecruitLife.jsx'
+import RecruitJobs from '../../../components/recruit/RecruitPage/RecruitJobs/RecruitJobs.jsx'
+import '../../../components/recruit/RecruitPage/recruit-shared.css'
 
 const SECTION_LABELS = ['Banner', 'Vì sao', 'Đời sống', 'Vị trí', 'Liên hệ']
 const SECTION_TONES = ['light', 'paper', 'light', 'paper', 'light']

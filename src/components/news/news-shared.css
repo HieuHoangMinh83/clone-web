@@ -1,0 +1,83 @@
+/* ================================================================
+   Tin tức page — base + shared animation vocab
+   Rules component-specific đã tách ra:
+     - NewsBanner     → components/news/NewsBanner/NewsBanner.css
+     - NewsGrid       → components/news/NewsGrid/NewsGrid.css
+     - NewsFeatured   → components/shared/NewsFeatured/NewsFeatured.css
+   ================================================================ */
+
+.news-sec {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--ink-700);
+  isolation: isolate;
+  font-family: var(--font-sans);
+}
+.news-sec__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+}
+.news-container {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--header-h) + 24px) 0 36px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Shared keyframes — dùng chung bởi Banner + Grid components */
+@keyframes nws-fade-up { to { opacity: 1; transform: none; } }
+@keyframes nws-row-rise { to { transform: translateY(0); opacity: 1; } }
+@keyframes nws-line-grow { to { width: 40px; } }
+@keyframes nws-mark-grow { to { width: 88px; } }
+@keyframes nws-fade-in { to { opacity: 1; } }
+@keyframes nws-slide-in { to { opacity: 1; transform: none; } }
+@keyframes nws-art-settle { to { transform: scale(1); } }
+
+/* ============================================================
+   Responsive — container layout
+   ============================================================ */
+@media (max-width: 639px) {
+  .news-container {
+    padding-top: calc(var(--header-h) + 16px);
+    padding-bottom: 24px;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 1199px) and (orientation: portrait) {
+  .news-container {
+    width: min(var(--container), calc(100% - 40px));
+    padding: calc(var(--header-h) + 18px) 0 28px;
+  }
+}
+
+/* ============================================================
+   SCROLL MODE (portrait) — container chạy theo content height
+   ============================================================ */
+.fullpage--scroll .news-container {
+  height: auto;
+  justify-content: flex-start;
+  padding: calc(var(--header-h) + 28px) 0 48px;
+}
+
+@media (max-width: 1199px) and (orientation: portrait) {
+  .fullpage--scroll .news-container {
+    padding: calc(var(--header-h) + 20px) 0 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-sec *, .news-sec *::before, .news-sec *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+}
