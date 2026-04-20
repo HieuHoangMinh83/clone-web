@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import bg from '../../../assets/images/intro/bg/history.png'
 import MILESTONES from '../milestones.js'
-import useCarousel from '../../../components/shared/useCarousel.js'
-import CarouselControls from '../../../components/shared/CarouselControls.jsx'
+import useCarousel from '../../shared/useCarousel.js'
+import CarouselControls from '../../shared/CarouselControls.jsx'
 import './IntroHistory.css'
 
 const GAP = 32
