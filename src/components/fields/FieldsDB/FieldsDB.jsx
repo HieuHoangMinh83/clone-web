@@ -1,5 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import useInViewActive from '../useInViewActive'
 import './FieldsDB.css'
+
+const MOBILE_QUERY = '(max-width: 499px)'
 
 const IconClock = () => (
   <svg viewBox="0 0 48 48" fill="none" aria-hidden>
@@ -62,6 +65,59 @@ export default function FieldsDB({
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
 
+  const [isNarrow, setIsNarrow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches,
+  )
+  const [page, setPage] = useState(0)
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [enterDir, setEnterDir] = useState(1)
+  const touchRef = useRef({ x: 0, y: 0, locked: 'none' })
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY)
+    const handler = (e) => {
+      setIsNarrow(e.matches)
+      setPage(0)
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  const total = benefits.length
+  const onTouchStart = (e) => {
+    if (!isNarrow || total <= 1) return
+    const t = e.touches[0]
+    touchRef.current = { x: t.clientX, y: t.clientY, locked: 'none' }
+    setIsDragging(true)
+  }
+  const onTouchMove = (e) => {
+    if (!isDragging) return
+    const t = e.touches[0]
+    const dx = t.clientX - touchRef.current.x
+    const dy = t.clientY - touchRef.current.y
+    if (touchRef.current.locked === 'none') {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+      touchRef.current.locked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+    }
+    if (touchRef.current.locked !== 'x') return
+    setDragX(dx)
+  }
+  const onTouchEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    const dx = dragX
+    setDragX(0)
+    if (touchRef.current.locked !== 'x' || total <= 1) return
+    if (Math.abs(dx) < 50) return
+    const delta = dx < 0 ? 1 : -1
+    setEnterDir(delta)
+    setPage((p) => (p + delta + total) % total)
+  }
+
+  const visible = isNarrow ? [benefits[page]].filter(Boolean) : benefits
+  const baseIndex = isNarrow ? page : 0
+
   return (
     <section
       ref={ref}
@@ -105,11 +161,26 @@ export default function FieldsDB({
           )}
         </header>
 
-        <ul className="fp-db__cards" role="list">
-          {benefits.map((b, i) => {
-            const Icon = BENEFIT_ICONS[i]
+        <ul
+          className={`fp-db__cards${isNarrow ? ' fp-db__cards--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+          role="list"
+          style={isNarrow ? {
+            '--drag-x': `${dragX}px`,
+            '--enter-x': enterDir > 0 ? '60px' : '-60px',
+          } : undefined}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {visible.map((b, i) => {
+            const idx = baseIndex + i
+            const Icon = BENEFIT_ICONS[idx]
             return (
-              <li key={b.k} className="fp-db__card" style={{ '--i': i }}>
+              <li
+                key={b.k + (isNarrow ? `-${page}` : '')}
+                className="fp-db__card"
+                style={{ '--i': idx }}
+              >
                 <span className="fp-db__card-icon" aria-hidden>
                   {Icon && <Icon />}
                 </span>
@@ -119,6 +190,25 @@ export default function FieldsDB({
             )
           })}
         </ul>
+
+        {isNarrow && total > 1 && (
+          <ol className="fp-db__dots" aria-label="Điều hướng lợi ích">
+            {benefits.map((b, i) => (
+              <li key={b.k}>
+                <button
+                  type="button"
+                  className={i === page ? 'is-active' : ''}
+                  onClick={() => {
+                    setEnterDir(i > page ? 1 : -1)
+                    setPage(i)
+                  }}
+                  aria-label={b.title}
+                  aria-current={i === page ? 'true' : undefined}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </section>
   )

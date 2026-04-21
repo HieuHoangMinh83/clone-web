@@ -215,3 +215,50 @@
     transform: scaleX(1);
   }
 }
+
+/* Mobile <500: section height auto — 2 col dọc hiện đủ icon/eyebrow/heading/text */
+@media (max-width: 499px) {
+  .fullpage--scroll .intro-vm,
+  .fullpage--scroll > .intro-vm.section {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .fullpage--scroll .intro-vm .intro-container {
+    padding: 40px 16px 40px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .intro-vm__grid {
+    gap: 28px;
+  }
+  .intro-vm__col {
+    padding: 0 8px;
+    max-width: 100%;
+  }
+  .intro-vm__icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+  }
+  .intro-vm__eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    margin-bottom: 6px;
+  }
+  .intro-vm__heading {
+    font-size: 26px;
+    letter-spacing: 0.04em;
+  }
+  .intro-vm__line {
+    width: 40px;
+    margin: 14px auto 14px;
+  }
+  .intro-vm__text {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .intro-vm__divider {
+    width: 80px;
+    margin: 4px auto;
+  }
+}

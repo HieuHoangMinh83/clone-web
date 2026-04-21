@@ -50,3 +50,9 @@
   --container: 1200px;
   --header-h: 100px;
 }
+
+@media (max-width: 639px) {
+  :root {
+    --header-h: 64px;
+  }
+}

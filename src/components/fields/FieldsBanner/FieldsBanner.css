@@ -245,6 +245,43 @@
   50% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
 }
 
+/* ---------- MOBILE <500 ---------- */
+@media (max-width: 499px) {
+  .fp-banner__inner {
+    padding: 32px 12px 60px;
+    max-width: 100%;
+  }
+  .fp-banner__kicker {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    margin-bottom: 18px;
+  }
+  .fp-banner__kicker-line { display: none; }
+  .fp-banner__title {
+    font-size: clamp(36px, 11vw, 48px);
+    line-height: 1.04;
+  }
+  .fp-banner__mark { margin: 18px auto 16px; }
+  .fp-banner__sub {
+    font-size: 13.5px;
+    line-height: 1.65;
+    max-width: 100%;
+    margin-bottom: 22px;
+  }
+  .fp-banner__crumb {
+    font-size: 10px;
+    padding: 7px 14px;
+    letter-spacing: 0.16em;
+  }
+  .fp-banner__crumb .sep { margin: 0 8px; }
+  .fp-banner__scroll {
+    bottom: 20px;
+    font-size: 9.5px;
+    letter-spacing: 0.24em;
+  }
+  .fp-banner__scroll-line { height: 28px; }
+}
+
 /* ---------- TABLET PORTRAIT (slide mode) ---------- */
 @media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
   .fp-banner__inner {

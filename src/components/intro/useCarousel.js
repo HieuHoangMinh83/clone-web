@@ -32,6 +32,7 @@ export default function useCarousel(itemCount, cardWidth, gap, breakpoints, star
 
   const prev = () => setPage(Math.max(0, clampedPage - 1))
   const next = () => setPage(Math.min(maxPage, clampedPage + 1))
+  const goTo = (i) => setPage(Math.max(0, Math.min(maxPage, i)))
 
   return {
     offset,
@@ -40,6 +41,7 @@ export default function useCarousel(itemCount, cardWidth, gap, breakpoints, star
     perView,
     prev,
     next,
+    goTo,
     hasPrev: clampedPage > 0,
     hasNext: clampedPage < maxPage,
   }

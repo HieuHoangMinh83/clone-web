@@ -85,7 +85,7 @@
 /* ---------- Responsive: shared ---------- */
 @media (max-width: 639px) {
   .intro-container {
-    padding-top: calc(var(--header-h) + 16px);
+    padding-top: 40px;
     padding-bottom: 32px;
   }
 }
@@ -129,4 +129,21 @@
   padding-bottom: 20px;
   padding-left: clamp(32px, 6vw, 72px);
   padding-right: clamp(32px, 6vw, 72px);
+}
+
+@media (max-width: 500px) and (orientation: portrait) {
+  .fullpage--scroll .intro-history .intro-container,
+  .fullpage--scroll .intro-vm .intro-container {
+    padding-top: 40px;
+  }
+}
+
+/* Mobile <500: override padding ngang (default clamp min 56px quá rộng) */
+@media (max-width: 499px) {
+  .intro-partners .intro-container,
+  .intro-board__container,
+  .intro-mgr__container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }

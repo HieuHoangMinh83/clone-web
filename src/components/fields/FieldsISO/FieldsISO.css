@@ -398,3 +398,72 @@
   .fp-iso__inner { padding-left: 20px; padding-right: 20px; }
   .fp-iso__pdca-list { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 499px) {
+  .fp-iso__inner {
+    padding: 40px 12px 28px;
+    gap: 16px;
+  }
+  .fp-iso__title { font-size: clamp(24px, 7.5vw, 32px); }
+  .fp-iso__lede {
+    font-size: 12.5px;
+    line-height: 1.6;
+    max-width: 100%;
+  }
+  .fp-iso__cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 100%;
+  }
+  .fp-iso__card {
+    padding: 18px 18px 16px;
+    flex-direction: row;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .fp-iso__card-corner { border-top-width: 20px; border-left-width: 20px; }
+  .fp-iso__card-medal {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  .fp-iso__card-medal-iso { font-size: 11px; }
+  .fp-iso__card-medal-num { font-size: 12px; }
+  .fp-iso__card > *:not(.fp-iso__card-medal):not(.fp-iso__card-corner) {
+    flex: 1;
+    min-width: 0;
+  }
+  .fp-iso__card-year { font-size: 9px; letter-spacing: 0.16em; }
+  .fp-iso__card-name { font-size: 14.5px; margin-bottom: 6px; }
+  .fp-iso__card-rule { margin-bottom: 8px; }
+  .fp-iso__card-desc { font-size: 11.5px; line-height: 1.5; margin-bottom: 8px; }
+  .fp-iso__card-tag { font-size: 8.5px; letter-spacing: 0.16em; }
+  .fp-iso__pdca {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .fp-iso__pdca-label { font-size: 9px; letter-spacing: 0.22em; }
+  .fp-iso__pdca-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .fp-iso__pdca-item { padding: 0 6px 0 0; gap: 6px; }
+  .fp-iso__pdca-item + .fp-iso__pdca-item {
+    padding-left: 6px;
+  }
+  .fp-iso__pdca-item:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .fp-iso__pdca-k { font-size: 9.5px; letter-spacing: 0.12em; }
+  .fp-iso__pdca-l { font-size: 12px; }
+  .fp-iso__pdca-d { font-size: 8px; letter-spacing: 0.1em; }
+  .fp-iso__foot {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    gap: 6px;
+    padding-top: 10px;
+  }
+}

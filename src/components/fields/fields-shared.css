@@ -151,6 +151,19 @@
   .fp-crosshair--tr, .fp-crosshair--br { right: 16px; }
 }
 
+@media (max-width: 499px) {
+  .fp-marker {
+    top: calc(var(--header-h) + 8px);
+    right: 12px;
+    font-size: clamp(72px, 20vw, 110px);
+  }
+  .fp-crosshair { width: 12px; height: 12px; }
+  .fp-crosshair--tl, .fp-crosshair--tr { top: calc(var(--header-h) + 12px); }
+  .fp-crosshair--tl, .fp-crosshair--bl { left: 10px; }
+  .fp-crosshair--tr, .fp-crosshair--br { right: 10px; }
+  .fp-crosshair--bl, .fp-crosshair--br { bottom: 14px; }
+}
+
 /* ---------- TABLET PORTRAIT — slide mode shared adjustments ---------- */
 @media (orientation: portrait) and (min-width: 500px) and (max-width: 1180px) {
   .fp-marker {
@@ -177,6 +190,10 @@
 }
 /* Banner giữ một khoảng hero vừa phải */
 .fullpage--scroll .fp-banner { min-height: 60vh; }
+
+@media (max-width: 499px) {
+  .fullpage--scroll .fp-banner { min-height: 44vh; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .fp-sec *, .fp-panel * {

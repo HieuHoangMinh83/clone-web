@@ -311,3 +311,32 @@
 @media (max-width: 720px) {
   .fp-cons__inner { padding-left: 20px; padding-right: 20px; }
 }
+
+@media (max-width: 499px) {
+  .fp-cons__inner {
+    padding: 40px 12px 28px;
+    gap: 22px;
+  }
+  .fp-cons__title {
+    font-size: clamp(26px, 8vw, 34px);
+    margin-bottom: 14px;
+  }
+  .fp-cons__lede {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+  .fp-cons__list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .fp-cons__item {
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--fp-line-light);
+  }
+  .fp-cons__node { width: 28px; height: 28px; }
+  .fp-cons__item-title { font-size: 15px; line-height: 1.25; }
+  .fp-cons__item-desc { font-size: 12.5px; line-height: 1.55; }
+}

@@ -312,3 +312,85 @@
   .fp-db__headline { flex-direction: column; gap: 10px; margin-top: 24px; }
   .fp-db__headline-line { width: 60px; flex: none; }
 }
+
+@media (max-width: 499px) {
+  .fp-db__inner { padding: 40px 12px 28px; }
+  .fp-db__head { max-width: 100%; }
+  .fp-db__title { font-size: 26px; margin-top: 6px; }
+  .fp-db__lede { font-size: 12.5px; line-height: 1.65; margin-top: 16px; }
+  .fp-db__headline { margin-top: 20px; }
+  .fp-db__headline-text { font-size: 11px; letter-spacing: 0.08em; white-space: normal; }
+
+  /* Carousel: 1 card/trang, swipe ngang, card follow finger + slide-in theo hướng */
+  .fp-db__cards--mobile {
+    display: block;
+    margin: 22px 0 0;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    touch-action: pan-y;
+    position: relative;
+    min-height: 180px;
+  }
+  .fp-db__cards--mobile > .fp-db__card {
+    opacity: 1;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fp-db-card-slide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-delay: 0s;
+    padding: 16px 18px 12px;
+  }
+  .fp-db__cards--mobile.is-dragging > .fp-db__card {
+    transition: none;
+  }
+  @keyframes fp-db-card-slide {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .fp-db__card::before,
+  .fp-db__card::after { display: none !important; }
+  .fp-db__card-icon { width: 44px; height: 44px; margin-bottom: 12px; }
+  .fp-db__card-title { font-size: 16px; min-height: 0; margin-bottom: 10px; }
+  .fp-db__card-desc { font-size: 12.5px; line-height: 1.6; }
+
+  /* Dots */
+  .fp-db__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 14px 0 0;
+    margin: 0;
+  }
+  .fp-db__dots li {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .fp-db__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .fp-db__dots button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .fp-db__dots button:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.15);
+  }
+  .fp-db__dots button.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--gold-500);
+  }
+}

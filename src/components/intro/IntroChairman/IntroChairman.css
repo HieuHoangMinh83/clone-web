@@ -292,25 +292,107 @@
 }
 
 @media (max-width: 639px) {
+  /* Cho section grow theo content, không cap 58vh (sig bị clip vì overflow:hidden) */
+  .intro-chairman {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
   .intro-chairman .intro-container {
-    padding-top: calc(var(--header-h) + 4px);
-    padding-bottom: 38vh;
+    padding-top: calc(var(--header-h) + 32px);
+    padding-bottom: 200px;
+    padding-left: 16px;
+    padding-right: 16px;
     align-items: flex-start;
   }
   .intro-chairman__copy {
     width: 100%;
+    position: relative;
+    text-align: justify;
+  }
+  .intro-chairman__title {
+    padding-left: 0;
+    font-size: 30px;
+    line-height: 1.1;
+    margin-bottom: 22px;
+  }
+  /* Gold rule tách title với body */
+  .intro-chairman__title::after {
+    content: '';
+    display: block;
+    width: 38px;
+    height: 2px;
+    background: var(--gold-500);
+    margin: 20px 0 0;
+  }
+  /* Quote mark trang trí đầu body */
+  .intro-chairman__body {
+    padding-left: 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+  }
+  .intro-chairman__body::before {
+    content: '\201C';
+    position: absolute;
+    top: -20px;
+    left: -4px;
+    font-family: Georgia, serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--gold-500);
+    opacity: 0.75;
+    pointer-events: none;
   }
   .intro-chairman__body p {
     font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 10px;
   }
+  /* Signature hiện rõ — left align theo toàn body */
+  .intro-chairman__sig {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: left;
+    justify-content: flex-start;
+  }
+  .intro-chairman__sig-name {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .intro-chairman__sig-role {
+    font-size: 11px;
+    font-style: italic;
+  }
+  /* Photo quay về bg ghost overlay, fade mờ dưới text để không đè nội dung */
   .intro-chairman__photo {
     width: min(100vw, 640px);
     max-height: 42vh;
-    opacity: 0.22;
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 90%);
-            mask-image: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 90%);
+    opacity: 0.35;
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%);
   }
   .intro-chairman__watermark {
     display: none;
+  }
+}
+
+/* Mobile <500: padding rút gọn theo yêu cầu — text sát trái, ảnh chủ tịch lộ rõ */
+@media (max-width: 499px) {
+  .intro-chairman .intro-container {
+    padding-top: 40px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 200px;
+  }
+  .intro-chairman__copy {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  /* Ảnh chủ tịch: opacity đầy, bỏ mask để không blend với gradient xanh bg */
+  .intro-chairman__photo {
+    opacity: 1;
+    -webkit-mask-image: none;
+            mask-image: none;
   }
 }

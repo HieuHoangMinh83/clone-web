@@ -3,7 +3,9 @@ import { createPortal } from 'react-dom'
 import './IntroBoard.css'
 
 const PER_PAGE_PORTRAIT = 3
+const PER_PAGE_MOBILE = 1
 const PORTRAIT_QUERY = '(orientation: portrait) and (max-width: 1199px)'
+const MOBILE_QUERY = '(max-width: 499px)'
 
 function Chevron({ dir = 'right' }) {
   return (
@@ -85,20 +87,28 @@ export default function IntroBoard({
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
   const [selected, setSelected] = useState(null)
-  const [isPortrait, setIsPortrait] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return window.matchMedia(PORTRAIT_QUERY).matches
-  })
+  const pickMode = () => {
+    if (typeof window === 'undefined') return 'desktop'
+    if (window.matchMedia(MOBILE_QUERY).matches) return 'mobile'
+    if (window.matchMedia(PORTRAIT_QUERY).matches) return 'portrait'
+    return 'desktop'
+  }
+  const [mode, setMode] = useState(pickMode)
   const [page, setPage] = useState(0)
 
   useEffect(() => {
-    const mq = window.matchMedia(PORTRAIT_QUERY)
-    const handler = (e) => {
-      setIsPortrait(e.matches)
+    const mobileMq = window.matchMedia(MOBILE_QUERY)
+    const portraitMq = window.matchMedia(PORTRAIT_QUERY)
+    const update = () => {
+      setMode(pickMode())
       setPage(0)
     }
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    mobileMq.addEventListener('change', update)
+    portraitMq.addEventListener('change', update)
+    return () => {
+      mobileMq.removeEventListener('change', update)
+      portraitMq.removeEventListener('change', update)
+    }
   }, [])
 
   useEffect(() => {
@@ -112,12 +122,53 @@ export default function IntroBoard({
     return () => io.disconnect()
   }, [])
 
-  const perPage = isPortrait ? PER_PAGE_PORTRAIT : directors.length
+  const isNarrow = mode === 'mobile'
+  const perPage = isNarrow ? PER_PAGE_MOBILE : mode === 'portrait' ? PER_PAGE_PORTRAIT : directors.length
   const totalPages = Math.ceil(directors.length / perPage)
   const visible = directors.slice(page * perPage, page * perPage + perPage)
-  const hasPagination = isPortrait && totalPages > 1
-  const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages)
-  const next = () => setPage((p) => (p + 1) % totalPages)
+  const hasPagination = mode !== 'desktop' && totalPages > 1
+
+  const touchRef = useRef({ x: 0, y: 0, locked: 'none' })
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [enterDir, setEnterDir] = useState(1)
+  const onTouchStart = (e) => {
+    if (!isNarrow || totalPages <= 1) return
+    const t = e.touches[0]
+    touchRef.current = { x: t.clientX, y: t.clientY, locked: 'none' }
+    setIsDragging(true)
+  }
+  const onTouchMove = (e) => {
+    if (!isDragging) return
+    const t = e.touches[0]
+    const dx = t.clientX - touchRef.current.x
+    const dy = t.clientY - touchRef.current.y
+    if (touchRef.current.locked === 'none') {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+      touchRef.current.locked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+    }
+    if (touchRef.current.locked !== 'x') return
+    setDragX(dx)
+  }
+  const onTouchEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    const dx = dragX
+    setDragX(0)
+    if (touchRef.current.locked !== 'x' || totalPages <= 1) return
+    if (Math.abs(dx) < 50) return
+    const delta = dx < 0 ? 1 : -1
+    setEnterDir(delta)
+    setPage((p) => (p + delta + totalPages) % totalPages)
+  }
+  const prev = () => {
+    setEnterDir(-1)
+    setPage((p) => (p - 1 + totalPages) % totalPages)
+  }
+  const next = () => {
+    setEnterDir(1)
+    setPage((p) => (p + 1) % totalPages)
+  }
 
   return (
     <section
@@ -173,7 +224,17 @@ export default function IntroBoard({
             </button>
           )}
 
-          <div className="intro-board__grid" key={page}>
+          <div
+            className={`intro-board__grid${isDragging ? ' is-dragging' : ''}`}
+            key={page}
+            style={{
+              '--drag-x': `${dragX}px`,
+              '--enter-x': enterDir > 0 ? '60px' : '-60px',
+            }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             {visible.map((d, i) => (
               <div
                 className="intro-board__card"
@@ -210,6 +271,25 @@ export default function IntroBoard({
             </button>
           )}
         </div>
+
+        {isNarrow && totalPages > 1 && (
+          <div className="intro-board__dots" role="tablist" aria-label="Phân trang">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === page}
+                aria-label={`Trang ${i + 1}`}
+                className={`intro-board__dot ${i === page ? 'is-active' : ''}`}
+                onClick={() => {
+                  setEnterDir(i > page ? 1 : -1)
+                  setPage(i)
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {selected && (
         <PersonModal person={selected} onClose={() => setSelected(null)} />

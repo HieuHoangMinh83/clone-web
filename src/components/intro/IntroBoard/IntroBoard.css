@@ -291,8 +291,9 @@
     height: auto !important;
     min-height: 0 !important;
   }
-  .fullpage--scroll .intro-board .intro-board__container {
-    padding: calc(var(--header-h) + 16px) 16px 32px;
+  .fullpage--scroll .intro-board .intro-board__container,
+  .intro-board .intro-board__container {
+    padding: 40px 16px 32px;
     justify-content: flex-start;
     gap: 20px;
   }
@@ -427,6 +428,70 @@
     font-size: 10.5px;
   }
   .intro-board__avatar--lg { width: 170px; }
+}
+
+/* Mobile <500: CEO giữ trên, directors 1 người/trang + swipe ngang + dots */
+@media (max-width: 499px) {
+  .intro-board__grid {
+    display: flex !important;
+    justify-content: center;
+    flex-wrap: nowrap !important;
+    max-width: 260px !important;
+    margin: 0 auto;
+    touch-action: pan-y;
+  }
+  .intro-board__grid > .intro-board__card {
+    opacity: 1;
+    width: 100% !important;
+    max-width: 220px !important;
+    margin: 0 auto !important;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: board-card-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-delay: 0s;
+  }
+  .intro-board__grid.is-dragging > .intro-board__card {
+    transition: none;
+  }
+  @keyframes board-card-slide-in {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Dots: 1 hàng ngang dưới card */
+  .intro-board__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 0 8px;
+  }
+  .intro-board__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(0, 74, 153, 0.3);
+    position: relative;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .intro-board__dot::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .intro-board__dot:hover {
+    background: rgba(0, 74, 153, 0.55);
+    transform: scale(1.15);
+  }
+  .intro-board__dot.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: #004a99;
+  }
 }
 
 /* ---------- MODAL ---------- */

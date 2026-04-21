@@ -624,3 +624,145 @@
   }
   .intro-partners__marquee-track { animation-duration: 22s; }
 }
+
+/* ---------- MOBILE <500 — editorial compact refresh ---------- */
+@media (max-width: 499px) {
+  .fullpage--scroll .intro-partners,
+  .intro-partners {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .intro-partners__container {
+    padding: 40px 10px 28px;
+    gap: 24px;
+  }
+
+  /* HEAD: gold overline above title, serif tight */
+  .intro-partners__head {
+    position: relative;
+    padding-top: 18px;
+  }
+  .intro-partners__head::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 2px;
+    background: var(--gold-500);
+    opacity: 0.85;
+  }
+  .intro-partners__title {
+    font-size: 32px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+  .intro-partners__title em::after {
+    bottom: 0.08em;
+    height: 0.14em;
+  }
+  .intro-partners__lead {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+  }
+
+  /* STATS: 2×2 grid with gold cross-dividers, bigger numerals */
+  .intro-partners__stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    row-gap: 22px;
+    column-gap: 0;
+    padding: 24px 0;
+  }
+  .intro-partners__stat {
+    padding: 2px 16px;
+    text-align: left;
+  }
+  .intro-partners__stat:first-child { padding-left: 16px; }
+  .intro-partners__stat::after { display: none !important; }
+  .intro-partners__stat:nth-child(odd) {
+    border-right: 1px solid rgba(221, 169, 105, 0.22);
+  }
+  .intro-partners__stat-value {
+    font-size: 34px;
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+  }
+  .intro-partners__stat-label {
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    color: rgba(221, 169, 105, 0.78);
+  }
+
+  /* PULLQUOTE: editorial card, gold-wash bg, cleaner mark + attr */
+  .intro-partners__pullquote {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 22px 18px 20px 22px;
+    margin: 0;
+    border-left: 2px solid var(--gold-500);
+    background: linear-gradient(
+      100deg,
+      rgba(221, 169, 105, 0.08) 0%,
+      rgba(221, 169, 105, 0) 70%
+    );
+  }
+  .intro-partners__pullquote-mark {
+    font-size: 64px;
+    top: -10px;
+    left: 14px;
+    opacity: 0.18;
+  }
+  .intro-partners__pullquote-body {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .intro-partners__pullquote-attr {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 12px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    min-width: 0;
+  }
+  .intro-partners__pullquote-name {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .intro-partners__pullquote-role {
+    font-size: 10.5px;
+    margin-top: 2px;
+  }
+
+  /* MARQUEE: khung bằng container text (không bleed full-viewport),
+     top gap nhỏ, scroll chậm lại để không "lia lịa" */
+  .intro-partners__marquee-wrap {
+    width: 100%;
+    margin-left: 0;
+    margin-top: -8px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .intro-partners__marquee-track {
+    gap: 10px;
+    animation-duration: 34s;
+  }
+  .intro-partners__logo {
+    width: 104px;
+    height: 68px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .intro-partners__logo img {
+    opacity: 0.9;
+  }
+}

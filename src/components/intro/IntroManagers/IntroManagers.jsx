@@ -4,7 +4,9 @@ import './IntroManagers.css'
 
 const PER_PAGE_DEFAULT = 5
 const PER_PAGE_PORTRAIT = 3
+const PER_PAGE_MOBILE = 1
 const PORTRAIT_QUERY = '(orientation: portrait) and (max-width: 1199px)'
+const MOBILE_QUERY = '(max-width: 499px)'
 const AUTO_MS = 5000
 
 function Chevron({ dir = 'right' }) {
@@ -75,24 +77,67 @@ export default function IntroManagers({
   const [page, setPage] = useState(0)
   const [paused, setPaused] = useState(false)
   const [selected, setSelected] = useState(null)
-  const [perPage, setPerPage] = useState(() => {
+  const pickPerPage = () => {
     if (typeof window === 'undefined') return PER_PAGE_DEFAULT
-    return window.matchMedia(PORTRAIT_QUERY).matches ? PER_PAGE_PORTRAIT : PER_PAGE_DEFAULT
-  })
+    if (window.matchMedia(MOBILE_QUERY).matches) return PER_PAGE_MOBILE
+    if (window.matchMedia(PORTRAIT_QUERY).matches) return PER_PAGE_PORTRAIT
+    return PER_PAGE_DEFAULT
+  }
+  const [perPage, setPerPage] = useState(pickPerPage)
 
   useEffect(() => {
-    const mq = window.matchMedia(PORTRAIT_QUERY)
-    const handler = (e) => {
-      setPerPage(e.matches ? PER_PAGE_PORTRAIT : PER_PAGE_DEFAULT)
+    const mobileMq = window.matchMedia(MOBILE_QUERY)
+    const portraitMq = window.matchMedia(PORTRAIT_QUERY)
+    const update = () => {
+      setPerPage(pickPerPage())
       setPage(0)
     }
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    mobileMq.addEventListener('change', update)
+    portraitMq.addEventListener('change', update)
+    return () => {
+      mobileMq.removeEventListener('change', update)
+      portraitMq.removeEventListener('change', update)
+    }
   }, [])
 
   const totalPages = Math.ceil(items.length / perPage)
   const visible = items.slice(page * perPage, page * perPage + perPage)
   const isShortPage = visible.length < perPage
+  const isNarrow = perPage === PER_PAGE_MOBILE
+
+  const touchRef = useRef({ x: 0, y: 0, locked: 'none' })
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [enterDir, setEnterDir] = useState(1)
+  const onTouchStart = (e) => {
+    if (!isNarrow || totalPages <= 1) return
+    const t = e.touches[0]
+    touchRef.current = { x: t.clientX, y: t.clientY, locked: 'none' }
+    setIsDragging(true)
+  }
+  const onTouchMove = (e) => {
+    if (!isDragging) return
+    const t = e.touches[0]
+    const dx = t.clientX - touchRef.current.x
+    const dy = t.clientY - touchRef.current.y
+    if (touchRef.current.locked === 'none') {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+      touchRef.current.locked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+    }
+    if (touchRef.current.locked !== 'x') return
+    setDragX(dx)
+  }
+  const onTouchEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    const dx = dragX
+    setDragX(0)
+    if (touchRef.current.locked !== 'x' || totalPages <= 1) return
+    if (Math.abs(dx) < 50) return
+    const delta = dx < 0 ? 1 : -1
+    setEnterDir(delta)
+    setPage((p) => (p + delta + totalPages) % totalPages)
+  }
 
   useEffect(() => {
     const el = sectionRef.current
@@ -106,15 +151,22 @@ export default function IntroManagers({
   }, [])
 
   useEffect(() => {
-    if (!inView || paused || selected || totalPages <= 1) return
+    if (!inView || paused || selected || totalPages <= 1 || isDragging) return
     const id = window.setInterval(() => {
+      setEnterDir(1)
       setPage((p) => (p + 1) % totalPages)
     }, AUTO_MS)
     return () => window.clearInterval(id)
-  }, [inView, paused, selected, totalPages])
+  }, [inView, paused, selected, totalPages, isDragging])
 
-  const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages)
-  const next = () => setPage((p) => (p + 1) % totalPages)
+  const prev = () => {
+    setEnterDir(-1)
+    setPage((p) => (p - 1 + totalPages) % totalPages)
+  }
+  const next = () => {
+    setEnterDir(1)
+    setPage((p) => (p + 1) % totalPages)
+  }
 
   return (
     <section
@@ -155,8 +207,15 @@ export default function IntroManagers({
           </button>
 
           <div
-            className={`intro-mgr__row${isShortPage ? ' intro-mgr__row--short' : ''}`}
-            style={isShortPage ? { '--n': visible.length } : undefined}
+            className={`intro-mgr__row${isShortPage ? ' intro-mgr__row--short' : ''}${isDragging ? ' is-dragging' : ''}`}
+            style={{
+              ...(isShortPage ? { '--n': visible.length } : {}),
+              '--drag-x': `${dragX}px`,
+              '--enter-x': enterDir > 0 ? '60px' : '-60px',
+            }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             {visible.map((m, i) => (
               <article

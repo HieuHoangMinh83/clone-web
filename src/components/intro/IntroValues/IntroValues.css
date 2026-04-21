@@ -83,6 +83,16 @@
   margin: 0;
 }
 
+/* Center icon: chỉ hiện ở mobile <500 (card layout) */
+.intro-values__center-icon {
+  display: none;
+}
+
+/* Dots pagination: chỉ hiện ở mobile <500 */
+.intro-values__dots {
+  display: none;
+}
+
 /* ---------- Nodes container ---------- */
 .intro-values__nodes {
   position: absolute;
@@ -153,6 +163,10 @@
 }
 
 /* ---------- Label ---------- */
+/* Node desc — mặc định ẩn, chỉ hiện ở mobile <500 (design card dọc) */
+.intro-values__node-desc {
+  display: none;
+}
 .intro-values__node-label {
   font-size: 15px;
   font-weight: 800;
@@ -340,40 +354,144 @@
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+}
 
-  /* Mobile: layout 3 nodes row 1 + 2 nodes row 2 (cân đối, không lonely) */
-  .intro-values__nodes {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 18px;
-    max-width: 290px;
-    margin: 0 auto;
+/* Mobile <500: CARD layout — hiện 1 value/lần (icon + name + desc) kiểu history,
+   dots dưới để điều hướng, auto-advance mỗi 4s, slide-in khi đổi value */
+@media (max-width: 499px) {
+  .fullpage--scroll > .intro-values.section,
+  .fullpage--scroll .intro-values {
+    height: auto !important;
+    min-height: 0 !important;
   }
-  .intro-values__node {
-    position: static !important;
-    transform: none !important;
+  .intro-values .intro-container {
+    padding: 40px 16px 8px;
   }
-  .intro-values.is-in .intro-values__node {
-    transform: none !important;
-  }
-  .intro-values__node-circle {
-    width: 72px !important;
-    height: 72px !important;
-  }
-  .intro-values__node.is-active .intro-values__node-circle {
-    transform: scale(1.1);
-  }
-  /* Mobile: bỏ label-shift (tính cho arc desktop) để label không lệch chồng nhau */
-  .intro-values__node-label {
-    transform: none !important;
-    font-size: 11px;
-    letter-spacing: 0.1em;
+  .intro-values__title {
+    font-size: 28px;
     text-align: center;
+    line-height: 1.1;
+    margin-bottom: 8px;
   }
-  .intro-values__node.is-active .intro-values__node-label {
-    font-size: 12px;
+
+  /* Ẩn hoàn toàn arc + 5 node */
+  .intro-values__arc-svg,
+  .intro-values__nodes {
+    display: none !important;
+  }
+
+  /* Arc-wrap giờ chỉ là host cho center card */
+  .intro-values__arc-wrap {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    padding: 16px 16px 8px;
+    pointer-events: auto;
+    touch-action: pan-y;
+  }
+
+  /* Center → card: icon + name + desc, follow finger khi drag,
+     spring-back hoặc animate in từ hướng vuốt khi release */
+  .intro-values__center {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 28px 22px 26px;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    pointer-events: auto;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: val-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .intro-values__center.is-dragging {
+    transition: none;
+  }
+  @keyframes val-card-in {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes val-fade-in {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .intro-values__center-icon {
+    display: block;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    background-color: var(--gold-500, #d4af37);
+    -webkit-mask-image: var(--icon-url);
+    mask-image: var(--icon-url);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  .intro-values__center-name {
+    font-size: 22px;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+  }
+  .intro-values__center-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Dots: 1 hàng ngang dưới card */
+  .intro-values__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 4px 0 28px;
+    padding: 0 8px;
+    list-style: none;
+  }
+  .intro-values__dots li {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .intro-values__dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    flex: 0 0 auto;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .intro-values__dots button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .intro-values__dots button:hover {
+    background: rgba(255, 255, 255, 0.65);
+    transform: scale(1.15);
+  }
+  .intro-values__dots button.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--gold-500, #d4af37);
   }
 }
 

@@ -66,6 +66,9 @@ export default function IntroValues({
   const [inView, setInView] = useState(false)
   const [active, setActive] = useState(defaultIdx >= 0 ? defaultIdx : 2)
   const [cfg, setCfg] = useState(pickConfig)
+  const [isNarrow, setIsNarrow] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 500,
+  )
 
   useEffect(() => {
     const el = sectionRef.current
@@ -81,10 +84,59 @@ export default function IntroValues({
   }, [])
 
   useEffect(() => {
-    const onResize = () => setCfg(pickConfig())
+    const onResize = () => {
+      setCfg(pickConfig())
+      setIsNarrow(window.innerWidth < 500)
+    }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  const touchRef = useRef({ x: 0, y: 0, locked: 'none' })
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [enterDir, setEnterDir] = useState(1)
+
+  useEffect(() => {
+    if (!isNarrow || !inView || items.length <= 1 || isDragging) return
+    const id = setTimeout(() => {
+      setEnterDir(1)
+      setActive((i) => (i + 1) % items.length)
+    }, 4000)
+    return () => clearTimeout(id)
+  }, [isNarrow, inView, items.length, active, isDragging])
+  const onTouchStart = (e) => {
+    if (!isNarrow || items.length <= 1) return
+    const t = e.touches[0]
+    touchRef.current = { x: t.clientX, y: t.clientY, locked: 'none' }
+    setIsDragging(true)
+  }
+  const onTouchMove = (e) => {
+    if (!isDragging) return
+    const t = e.touches[0]
+    const dx = t.clientX - touchRef.current.x
+    const dy = t.clientY - touchRef.current.y
+    if (touchRef.current.locked === 'none') {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+      touchRef.current.locked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+    }
+    if (touchRef.current.locked !== 'x') return
+    setDragX(dx)
+  }
+  const onTouchEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    const dx = dragX
+    setDragX(0)
+    if (touchRef.current.locked !== 'x' || items.length <= 1) return
+    if (Math.abs(dx) < 50) return
+    const delta = dx < 0 ? 1 : -1
+    setEnterDir(delta)
+    setActive((i) => {
+      const n = items.length
+      return (i + delta + n) % n
+    })
+  }
 
   const arc = buildArc(cfg)
   const ARC_PATH = arc.path
@@ -122,7 +174,12 @@ export default function IntroValues({
         </h2>
       </div>
 
-      <div className="intro-values__arc-wrap">
+      <div
+        className="intro-values__arc-wrap"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <svg className="intro-values__arc-svg" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none" aria-hidden>
           <path
             d={ARC_PATH}
@@ -134,13 +191,39 @@ export default function IntroValues({
         </svg>
 
         <div
-          className="intro-values__center"
+          className={`intro-values__center ${isDragging ? 'is-dragging' : ''}`}
           key={current.key}
-          style={{ left: `${CENTER_TEXT_POS.x}%`, top: `calc(${CENTER_TEXT_POS.y}% + 40px)` }}
+          style={{
+            left: `${CENTER_TEXT_POS.x}%`,
+            top: `calc(${CENTER_TEXT_POS.y}% + 40px)`,
+            '--drag-x': `${dragX}px`,
+            '--enter-x': enterDir > 0 ? '60px' : '-60px',
+          }}
         >
+          <span
+            className="intro-values__center-icon"
+            style={{ '--icon-url': `url(${current.icon})` }}
+            aria-hidden
+          />
           <h3 className="intro-values__center-name">{current.name}</h3>
           <p className="intro-values__center-desc">{current.desc}</p>
         </div>
+
+        {items.length > 1 && (
+          <ol className="intro-values__dots" aria-label="Điều hướng giá trị cốt lõi">
+            {items.map((v, i) => (
+              <li key={v.key}>
+                <button
+                  type="button"
+                  className={i === active ? 'is-active' : ''}
+                  onClick={() => setActive(i)}
+                  aria-label={v.name}
+                  aria-current={i === active ? 'true' : undefined}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
 
         <div className="intro-values__nodes">
           {items.map((v, i) => {
@@ -163,6 +246,7 @@ export default function IntroValues({
                   />
                 </span>
                 <span className="intro-values__node-label">{v.name}</span>
+                <span className="intro-values__node-desc">{v.desc}</span>
               </button>
             )
           })}

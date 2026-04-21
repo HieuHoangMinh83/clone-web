@@ -407,6 +407,53 @@
   .intro-mgr__card:nth-child(5) { display: flex; }
 }
 
+/* Mobile <500: 1 người/trang + swipe ngang, card follow finger,
+   enter từ hướng vuốt, dots dưới để điều hướng */
+@media (max-width: 499px) {
+  .intro-mgr__container {
+    width: calc(100% - 16px);
+    padding: 40px 8px 24px;
+  }
+  .intro-mgr__desc {
+    text-align: justify;
+    text-align-last: center;
+    hyphens: auto;
+  }
+  .intro-mgr__row {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+    max-width: 260px;
+    margin: 0 auto;
+    touch-action: pan-y;
+  }
+  .intro-mgr__row > .intro-mgr__card {
+    opacity: 1;
+    width: 100% !important;
+    max-width: 240px;
+    margin: 0 auto !important;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .intro-mgr__row.is-dragging > .intro-mgr__card {
+    transition: none;
+  }
+  /* Animate in từ hướng vuốt khi page đổi. Không dùng fill-mode để sau
+     animation, base transform (drag-x) áp dụng lại được — cho phép drag. */
+  .intro-mgr.is-in .intro-mgr__card,
+  .intro-mgr__card {
+    animation: mgr-card-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-delay: 0s;
+  }
+  @keyframes mgr-card-slide-in {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  /* Disable hover translate trên mobile (không có hover) */
+  .intro-mgr__card:hover .intro-mgr__photo { transform: none; }
+  .intro-mgr__card:hover .intro-mgr__photo img { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .intro-mgr__title,
   .intro-mgr__title-dash,
