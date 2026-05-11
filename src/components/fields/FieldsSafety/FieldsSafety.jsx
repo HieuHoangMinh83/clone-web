@@ -1,4 +1,5 @@
 import useInViewActive from '../useInViewActive'
+import useSwipeCarousel from '../useSwipeCarousel'
 import './FieldsSafety.css'
 
 const COMMITMENT_ICONS = [
@@ -49,6 +50,8 @@ export default function FieldsSafety({
   seal,
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
+  const { isNarrow, page, goTo, isDragging, bind, style } = useSwipeCarousel(commitments.length)
+  const visibleCommits = isNarrow ? [commitments[page]].filter(Boolean) : commitments
 
   const renderTitleBot = () => {
     if (!titleEm || !titleBot.includes(titleEm)) return titleBot
@@ -108,11 +111,21 @@ export default function FieldsSafety({
         </div>
 
         <div className="fp-safe__right">
-          <ul className="fp-safe__list" role="list">
-            {commitments.map((c, i) => {
-              const Icon = COMMITMENT_ICONS[i]
+          <ul
+            className={`fp-safe__list${isNarrow ? ' fp-safe__list--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+            role="list"
+            style={isNarrow ? style : undefined}
+            {...(isNarrow ? bind : {})}
+          >
+            {visibleCommits.map((c) => {
+              const realIdx = isNarrow ? page : commitments.indexOf(c)
+              const Icon = COMMITMENT_ICONS[realIdx]
               return (
-                <li key={c.title} className="fp-safe__item" style={{ '--i': i }}>
+                <li
+                  key={c.title + (isNarrow ? `-${page}` : '')}
+                  className="fp-safe__item"
+                  style={{ '--i': realIdx }}
+                >
                   <span className="fp-safe__item-num" aria-hidden>{c.k}</span>
                   <span className="fp-safe__item-icon" aria-hidden>{Icon && <Icon />}</span>
                   <h3 className="fp-safe__item-title">{c.title}</h3>
@@ -122,6 +135,22 @@ export default function FieldsSafety({
               )
             })}
           </ul>
+
+          {isNarrow && commitments.length > 1 && (
+            <ol className="fp-safe__dots" aria-label="Điều hướng cam kết">
+              {commitments.map((c, i) => (
+                <li key={c.title}>
+                  <button
+                    type="button"
+                    className={i === page ? 'is-active' : ''}
+                    onClick={() => goTo(i)}
+                    aria-label={c.title}
+                    aria-current={i === page ? 'true' : undefined}
+                  />
+                </li>
+              ))}
+            </ol>
+          )}
 
           {seal && (
             <div className="fp-safe__seal" aria-label={seal.ariaLabel}>

@@ -101,11 +101,13 @@
 
 .fp-iso__card {
   --i: 0;
-  --tone: var(--fp-navy);
+  --tone: #245692;
+  --tone-soft: rgba(36, 86, 146, 0.12);
   position: relative;
-  padding: 28px 26px 24px;
+  padding: 30px 26px 24px;
   background: #fff;
   border: 1px solid rgba(6, 18, 42, 0.10);
+  border-top: 3px solid var(--tone);
   text-align: left;
   overflow: hidden;
   opacity: 0;
@@ -120,83 +122,36 @@
 }
 .fp-iso__card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 26px 56px rgba(6, 18, 42, 0.14);
-  border-color: var(--tone);
+  box-shadow: 0 24px 48px rgba(6, 18, 42, 0.14);
+  border-color: rgba(6, 18, 42, 0.18);
+  border-top-color: var(--tone);
 }
 
-.fp-iso__card--navy  { --tone: rgba(36, 86, 146, 0.55); }
-.fp-iso__card--green { --tone: rgba(34, 139, 79, 0.55); }
-.fp-iso__card--red   { --tone: rgba(203, 35, 43, 0.55); }
+.fp-iso__card--navy  { --tone: #245692; --tone-soft: rgba(36, 86, 146, 0.10); }
+.fp-iso__card--green { --tone: #16a34a; --tone-soft: rgba(22, 163, 74, 0.10); }
+.fp-iso__card--red   { --tone: #cb232b; --tone-soft: rgba(203, 35, 43, 0.10); }
 
-.fp-iso__card-corner {
-  position: absolute;
-  top: 0; right: 0;
-  width: 0; height: 0;
-  border-top: 28px solid var(--gold-500);
-  border-left: 28px solid transparent;
-}
+/* Corner badge: ẩn — top-bar tone đã đủ signal phân biệt card */
+.fp-iso__card-corner { display: none; }
 
-/* Medal */
-.fp-iso__card-medal {
-  position: relative;
-  width: 92px;
-  height: 92px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 14px;
-}
-.fp-iso__card-medal-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(221, 169, 105, 0.45);
-}
-.fp-iso__card-medal-ring--inner {
-  inset: 8%;
-  border: 1.5px dashed rgba(221, 169, 105, 0.7);
-  animation: fp-iso-spin 18s linear infinite;
-}
-@keyframes fp-iso-spin { to { transform: rotate(360deg); } }
-.fp-iso__card-medal::before {
-  content: '';
-  position: absolute;
-  inset: 16%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(221,169,105,0.18), transparent 70%);
-  border: 1px solid rgba(221, 169, 105, 0.35);
-}
-.fp-iso__card-medal-body {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  line-height: 1;
-}
-.fp-iso__card-medal-iso {
+/* Số chứng chỉ: display lớn, tone-colored, eyebrow feel — không cần khung seal */
+.fp-iso__card-num {
   font-family: var(--fp-display);
-  font-style: italic;
-  font-size: 16px;
+  font-size: 32px;
   font-weight: 700;
-  color: var(--fp-navy);
+  color: var(--tone);
   letter-spacing: -0.02em;
-}
-.fp-iso__card-medal-num {
-  font-family: var(--fp-mono);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--gold-500);
-  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 10px;
 }
 
 .fp-iso__card-year {
   font-family: var(--fp-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.22em;
-  color: rgba(6, 18, 42, 0.55);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(6, 18, 42, 0.5);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .fp-iso__card-name {
@@ -213,9 +168,10 @@
   display: block;
   width: 32px;
   height: 2px;
-  background: var(--gold-500);
+  background: var(--tone);
   margin-bottom: 12px;
   transition: width .4s cubic-bezier(.7,0,.2,1);
+  opacity: 0.85;
 }
 .fp-iso__card:hover .fp-iso__card-rule { width: 56px; }
 
@@ -234,9 +190,15 @@
   gap: 8px;
   font-family: var(--fp-mono);
   font-size: 9.5px;
-  letter-spacing: 0.24em;
-  color: rgba(6, 18, 42, 0.6);
+  letter-spacing: 0.22em;
+  color: #16a34a;
   text-transform: uppercase;
+  padding: 5px 10px 5px 8px;
+  border: 1px solid rgba(22, 163, 74, 0.35);
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.06);
+  font-weight: 600;
+  align-self: flex-start;
 }
 .fp-iso__card-tag::before {
   content: '';
@@ -253,28 +215,43 @@
 
 /* ---------- PDCA cycle row ---------- */
 .fp-iso__pdca {
-  background: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.45));
   border: 1px solid rgba(6, 18, 42, 0.10);
-  padding: 18px 24px;
+  border-radius: 4px;
+  padding: 20px 28px;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 28px;
+  gap: 32px;
   align-items: center;
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
   opacity: 0;
   transform: translateY(12px);
+  position: relative;
+}
+.fp-iso__pdca::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 3px;
+  background: var(--gold-500);
+  opacity: 0.85;
 }
 .fp-iso.is-in .fp-iso__pdca {
   animation: fade-up .85s cubic-bezier(.2,.7,.2,1) 2.1s both;
 }
 .fp-iso__pdca-label {
   font-family: var(--fp-mono);
-  font-size: 9.5px;
+  font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: rgba(6, 18, 42, 0.55);
+  font-weight: 600;
+  max-width: 90px;
+  line-height: 1.45;
 }
 .fp-iso__pdca-list {
   list-style: none;
@@ -289,26 +266,50 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 18px 0 0;
+  padding: 0 22px 0 0;
   position: relative;
 }
 .fp-iso__pdca-item + .fp-iso__pdca-item {
-  padding-left: 18px;
+  padding-left: 22px;
   border-left: 1px solid rgba(6, 18, 42, 0.10);
+}
+/* Chevron flow between items */
+.fp-iso__pdca-item:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  font-family: var(--fp-mono);
+  font-size: 14px;
+  color: var(--gold-500);
+  background: var(--fp-paper);
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.85;
 }
 .fp-iso__pdca-k {
   font-family: var(--fp-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--gold-500);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(221, 169, 105, 0.45);
+  background: rgba(221, 169, 105, 0.08);
+  flex-shrink: 0;
 }
-.fp-iso__pdca-text { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
+.fp-iso__pdca-text { display: flex; flex-direction: column; gap: 2px; line-height: 1; min-width: 0; }
 .fp-iso__pdca-l {
   font-family: var(--fp-display);
   font-size: 15px;
   font-weight: 600;
   color: var(--fp-navy);
+  letter-spacing: -0.005em;
 }
 .fp-iso__pdca-d {
   font-family: var(--fp-mono);
@@ -368,10 +369,8 @@
     gap: 12px;
     max-width: 100%;
   }
-  .fp-iso__card { padding: 18px 16px 16px; }
-  .fp-iso__card-medal { width: 68px; height: 68px; margin-bottom: 10px; }
-  .fp-iso__card-medal-iso { font-size: 13px; }
-  .fp-iso__card-medal-num { font-size: 14px; }
+  .fp-iso__card { padding: 20px 16px 16px; }
+  .fp-iso__card-num { font-size: 26px; margin-bottom: 8px; }
   .fp-iso__card-year { font-size: 9.5px; letter-spacing: 0.16em; }
   .fp-iso__card-name { font-size: 16px; margin-bottom: 8px; }
   .fp-iso__card-rule { margin-bottom: 8px; }
@@ -401,7 +400,7 @@
 
 @media (max-width: 499px) {
   .fp-iso__inner {
-    padding: 40px 12px 28px;
+    padding: calc(var(--header-h) + 16px) 12px 28px;
     gap: 16px;
   }
   .fp-iso__title { font-size: clamp(24px, 7.5vw, 32px); }
@@ -415,49 +414,106 @@
     gap: 12px;
     max-width: 100%;
   }
+  /* Carousel: 1 cert/trang */
+  .fp-iso__cards--mobile {
+    display: block !important;
+    max-width: 340px;
+    margin: 0 auto;
+    touch-action: pan-y;
+    min-height: 160px;
+  }
+  .fp-iso__cards--mobile > .fp-iso__card {
+    opacity: 1;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fp-iso-slide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fp-iso__cards--mobile.is-dragging > .fp-iso__card {
+    transition: none;
+  }
+  @keyframes fp-iso-slide {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Dots */
+  .fp-iso__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+  }
+  .fp-iso__dots li {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .fp-iso__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(6, 18, 42, 0.25);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .fp-iso__dots button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .fp-iso__dots button:hover {
+    background: rgba(6, 18, 42, 0.55);
+    transform: scale(1.15);
+  }
+  .fp-iso__dots button.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--fp-navy);
+  }
   .fp-iso__card {
-    padding: 18px 18px 16px;
-    flex-direction: row;
-    gap: 14px;
+    padding: 22px 20px 20px;
+    flex-direction: column;
     align-items: flex-start;
+    gap: 0;
+    border-top-width: 2px;
+    text-align: left;
   }
-  .fp-iso__card-corner { border-top-width: 20px; border-left-width: 20px; }
-  .fp-iso__card-medal {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 0;
-    flex-shrink: 0;
-  }
-  .fp-iso__card-medal-iso { font-size: 11px; }
-  .fp-iso__card-medal-num { font-size: 12px; }
-  .fp-iso__card > *:not(.fp-iso__card-medal):not(.fp-iso__card-corner) {
-    flex: 1;
-    min-width: 0;
-  }
-  .fp-iso__card-year { font-size: 9px; letter-spacing: 0.16em; }
-  .fp-iso__card-name { font-size: 14.5px; margin-bottom: 6px; }
-  .fp-iso__card-rule { margin-bottom: 8px; }
-  .fp-iso__card-desc { font-size: 11.5px; line-height: 1.5; margin-bottom: 8px; }
-  .fp-iso__card-tag { font-size: 8.5px; letter-spacing: 0.16em; }
+  .fp-iso__card-num { display: none; }
+  .fp-iso__card-year { font-size: 9px; letter-spacing: 0.18em; margin-bottom: 6px; }
+  .fp-iso__card-name { font-size: 16px; margin-bottom: 8px; line-height: 1.25; }
+  .fp-iso__card-rule { margin-bottom: 10px; }
+  .fp-iso__card-desc { font-size: 12.5px; line-height: 1.55; margin-bottom: 12px; }
+  .fp-iso__card-tag { font-size: 9px; letter-spacing: 0.18em; padding: 4px 10px 4px 8px; }
   .fp-iso__pdca {
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 12px 14px;
+    gap: 12px;
+    padding: 14px 16px 14px 20px;
+    text-align: center;
   }
-  .fp-iso__pdca-label { font-size: 9px; letter-spacing: 0.22em; }
+  .fp-iso__pdca::before { top: 14px; bottom: 14px; }
+  .fp-iso__pdca-label { font-size: 9px; letter-spacing: 0.22em; max-width: none; }
   .fp-iso__pdca-list {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px 8px;
+  }
+  .fp-iso__pdca-item {
+    padding: 0 !important;
     gap: 8px;
+    justify-content: flex-start;
+    border-left: 0 !important;
   }
-  .fp-iso__pdca-item { padding: 0 6px 0 0; gap: 6px; }
-  .fp-iso__pdca-item + .fp-iso__pdca-item {
-    padding-left: 6px;
+  .fp-iso__pdca-item::after { display: none !important; }
+  .fp-iso__pdca-k {
+    width: 24px;
+    height: 24px;
+    font-size: 9.5px;
   }
-  .fp-iso__pdca-item:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
-  }
-  .fp-iso__pdca-k { font-size: 9.5px; letter-spacing: 0.12em; }
   .fp-iso__pdca-l { font-size: 12px; }
   .fp-iso__pdca-d { font-size: 8px; letter-spacing: 0.1em; }
   .fp-iso__foot {

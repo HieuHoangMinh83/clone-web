@@ -1,4 +1,5 @@
 import useInViewActive from '../useInViewActive'
+import useSwipeCarousel from '../useSwipeCarousel'
 import './FieldsMEP.css'
 
 const IconBolt = () => (
@@ -57,6 +58,8 @@ export default function FieldsMEP({
   tech = [],
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
+  const { isNarrow, page, goTo, isDragging, bind, style } = useSwipeCarousel(specialties.length)
+  const visibleSpecs = isNarrow ? [specialties[page]].filter(Boolean) : specialties
 
   const renderTitleBot = () => {
     if (!titleEm || !titleBot.includes(titleEm)) return titleBot
@@ -103,11 +106,21 @@ export default function FieldsMEP({
           </h2>
           <p className="fp-mep__lede">{lede}</p>
 
-          <ul className="fp-mep__list" role="list">
-            {specialties.map((s, i) => {
-              const Icon = SPECIALTY_ICONS[i]
+          <ul
+            className={`fp-mep__list${isNarrow ? ' fp-mep__list--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+            role="list"
+            style={isNarrow ? style : undefined}
+            {...(isNarrow ? bind : {})}
+          >
+            {visibleSpecs.map((s) => {
+              const realIdx = isNarrow ? page : specialties.indexOf(s)
+              const Icon = SPECIALTY_ICONS[realIdx]
               return (
-                <li key={s.title} className="fp-mep__item" style={{ '--i': i }}>
+                <li
+                  key={s.title + (isNarrow ? `-${page}` : '')}
+                  className="fp-mep__item"
+                  style={{ '--i': realIdx }}
+                >
                   <span className="fp-mep__item-icon" aria-hidden>
                     {Icon && <Icon />}
                   </span>
@@ -119,6 +132,22 @@ export default function FieldsMEP({
               )
             })}
           </ul>
+
+          {isNarrow && specialties.length > 1 && (
+            <ol className="fp-mep__dots" aria-label="Điều hướng chuyên ngành">
+              {specialties.map((s, i) => (
+                <li key={s.title}>
+                  <button
+                    type="button"
+                    className={i === page ? 'is-active' : ''}
+                    onClick={() => goTo(i)}
+                    aria-label={s.title}
+                    aria-current={i === page ? 'true' : undefined}
+                  />
+                </li>
+              ))}
+            </ol>
+          )}
 
           <div className="fp-mep__std">
             <span className="fp-mep__std-label">{standardsLabel}</span>

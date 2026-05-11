@@ -1,4 +1,5 @@
 import useInViewActive from '../useInViewActive'
+import useSwipeCarousel from '../useSwipeCarousel'
 import './FieldsConstruction.css'
 
 const IconTeam = () => (
@@ -52,6 +53,8 @@ export default function FieldsConstruction({
   strengths = [],
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
+  const { isNarrow, page, goTo, isDragging, bind, style } = useSwipeCarousel(strengths.length)
+  const visibleStrengths = isNarrow ? [strengths[page]].filter(Boolean) : strengths
 
   // titleBot có thể chứa fragment cần <em>: "từ <em>móng đến mái</em>"
   const renderTitleBot = () => {
@@ -103,11 +106,20 @@ export default function FieldsConstruction({
           </h2>
           <p className="fp-cons__lede">{lede}</p>
 
-          <ol className="fp-cons__list">
-            {strengths.map((s, i) => {
-              const Icon = STRENGTH_ICONS[i]
+          <ol
+            className={`fp-cons__list${isNarrow ? ' fp-cons__list--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+            style={isNarrow ? style : undefined}
+            {...(isNarrow ? bind : {})}
+          >
+            {visibleStrengths.map((s) => {
+              const realIdx = isNarrow ? page : strengths.indexOf(s)
+              const Icon = STRENGTH_ICONS[realIdx]
               return (
-                <li key={s.title} className="fp-cons__item" style={{ '--i': i }}>
+                <li
+                  key={s.title + (isNarrow ? `-${page}` : '')}
+                  className="fp-cons__item"
+                  style={{ '--i': realIdx }}
+                >
                   <span className="fp-cons__node" aria-hidden>
                     {Icon && <Icon />}
                   </span>
@@ -119,6 +131,22 @@ export default function FieldsConstruction({
               )
             })}
           </ol>
+
+          {isNarrow && strengths.length > 1 && (
+            <ol className="fp-cons__dots" aria-label="Điều hướng thế mạnh">
+              {strengths.map((s, i) => (
+                <li key={s.title}>
+                  <button
+                    type="button"
+                    className={i === page ? 'is-active' : ''}
+                    onClick={() => goTo(i)}
+                    aria-label={s.title}
+                    aria-current={i === page ? 'true' : undefined}
+                  />
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       </div>
     </section>

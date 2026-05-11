@@ -1,4 +1,5 @@
 import useInViewActive from '../useInViewActive'
+import useSwipeCarousel from '../useSwipeCarousel'
 import './FieldsHR.css'
 
 const STAT_ICONS = [
@@ -49,6 +50,8 @@ export default function FieldsHR({
   stats = [],
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
+  const { isNarrow, page, goTo, isDragging, bind, style } = useSwipeCarousel(stats.length)
+  const visibleStats = isNarrow ? [stats[page]].filter(Boolean) : stats
 
   const renderTitleBot = () => {
     if (!titleEm || !titleBot.includes(titleEm)) return titleBot
@@ -127,11 +130,20 @@ export default function FieldsHR({
           </div>
         </div>
 
-        <div className="fp-hr__stats">
-          {stats.map((s, i) => {
-            const Icon = STAT_ICONS[i]
+        <div
+          className={`fp-hr__stats${isNarrow ? ' fp-hr__stats--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+          style={isNarrow ? style : undefined}
+          {...(isNarrow ? bind : {})}
+        >
+          {visibleStats.map((s) => {
+            const realIdx = isNarrow ? page : stats.indexOf(s)
+            const Icon = STAT_ICONS[realIdx]
             return (
-              <div key={s.v} className="fp-hr__stat" style={{ '--i': i }}>
+              <div
+                key={s.v + (isNarrow ? `-${page}` : '')}
+                className="fp-hr__stat"
+                style={{ '--i': realIdx }}
+              >
                 <span className="fp-hr__stat-icon" aria-hidden>{Icon && <Icon />}</span>
                 <div className="fp-hr__stat-body">
                   <span className="fp-hr__stat-k">{s.k}</span>
@@ -142,6 +154,22 @@ export default function FieldsHR({
             )
           })}
         </div>
+
+        {isNarrow && stats.length > 1 && (
+          <ol className="fp-hr__dots" aria-label="Điều hướng thống kê">
+            {stats.map((s, i) => (
+              <li key={s.v}>
+                <button
+                  type="button"
+                  className={i === page ? 'is-active' : ''}
+                  onClick={() => goTo(i)}
+                  aria-label={s.v}
+                  aria-current={i === page ? 'true' : undefined}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </section>
   )

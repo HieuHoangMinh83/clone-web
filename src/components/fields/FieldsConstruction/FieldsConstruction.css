@@ -330,6 +330,81 @@
     grid-template-columns: 1fr;
     gap: 14px;
   }
+  /* Carousel: 1 strength/trang */
+  .fp-cons__list--mobile {
+    display: block !important;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    touch-action: pan-y;
+    min-height: 100px;
+  }
+  .fp-cons__list--mobile > .fp-cons__item {
+    display: grid !important;
+    grid-template-columns: 40px 1fr !important;
+    gap: 14px;
+    align-items: start;
+    padding: 20px 16px !important;
+    border: 1px solid rgba(221, 169, 105, 0.22);
+    background: rgba(221, 169, 105, 0.04);
+    opacity: 1;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fp-cons-slide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fp-cons__list--mobile.is-dragging > .fp-cons__item {
+    transition: none;
+  }
+  @keyframes fp-cons-slide {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .fp-cons__list--mobile .fp-cons__node { width: 40px; height: 40px; }
+  .fp-cons__list--mobile .fp-cons__item-title { font-size: 15.5px; margin-bottom: 4px; }
+  .fp-cons__list--mobile .fp-cons__item-desc { font-size: 12.5px; line-height: 1.55; }
+
+  /* Dots */
+  .fp-cons__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+  }
+  .fp-cons__dots li {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .fp-cons__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .fp-cons__dots button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .fp-cons__dots button:hover {
+    background: rgba(255, 255, 255, 0.55);
+    transform: scale(1.15);
+  }
+  .fp-cons__dots button.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--gold-500);
+  }
+
   .fp-cons__item {
     grid-template-columns: 28px 1fr;
     gap: 12px;

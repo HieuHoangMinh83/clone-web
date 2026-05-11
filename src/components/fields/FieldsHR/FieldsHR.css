@@ -441,6 +441,79 @@
     gap: 14px;
     padding-top: 12px;
   }
+  /* Carousel: 1 stat/trang */
+  .fp-hr__stats--mobile {
+    display: block !important;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--fp-line-light);
+    touch-action: pan-y;
+    min-height: 80px;
+  }
+  .fp-hr__stats--mobile > .fp-hr__stat {
+    opacity: 1;
+    padding: 10px 14px;
+    background: rgba(221, 169, 105, 0.04);
+    border: 1px solid rgba(221, 169, 105, 0.2);
+    border-radius: 4px;
+    transform: translateX(var(--drag-x, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fp-hr-slide 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fp-hr__stats--mobile.is-dragging > .fp-hr__stat {
+    transition: none;
+  }
+  .fp-hr__stats--mobile > .fp-hr__stat + .fp-hr__stat,
+  .fp-hr__stats--mobile > .fp-hr__stat:nth-child(2n) {
+    padding-left: 14px;
+    border-left: 1px solid rgba(221, 169, 105, 0.2);
+  }
+  @keyframes fp-hr-slide {
+    from { opacity: 0; transform: translateX(var(--enter-x, 60px)); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Dots */
+  .fp-hr__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+  }
+  .fp-hr__dots li {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .fp-hr__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, width 0.25s ease, transform 0.2s ease;
+  }
+  .fp-hr__dots button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+  .fp-hr__dots button:hover {
+    background: rgba(255, 255, 255, 0.55);
+    transform: scale(1.15);
+  }
+  .fp-hr__dots button.is-active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--gold-500);
+  }
   .fp-hr__stat {
     gap: 10px;
     padding: 0;

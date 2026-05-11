@@ -1,4 +1,5 @@
 import useInViewActive from '../useInViewActive'
+import useSwipeCarousel from '../useSwipeCarousel'
 import './FieldsISO.css'
 
 export default function FieldsISO({
@@ -22,6 +23,8 @@ export default function FieldsISO({
   footRightStrong = '',
 }) {
   const { ref, mount } = useInViewActive(active, isSlide)
+  const { isNarrow, page, goTo, isDragging, bind, style } = useSwipeCarousel(certs.length)
+  const visibleCerts = isNarrow ? [certs[page]].filter(Boolean) : certs
 
   // Render titleBot with <em>titleEm</em> inline (split and wrap)
   const renderTitleBot = () => {
@@ -58,32 +61,48 @@ export default function FieldsISO({
           {lede && <p className="fp-iso__lede">{lede}</p>}
         </header>
 
-        <div className="fp-iso__cards">
-          {certs.map((c, i) => (
-            <article
-              key={c.num}
-              className={`fp-iso__card fp-iso__card--${c.tone}`}
-              style={{ '--i': i }}
-            >
-              <span className="fp-iso__card-corner" aria-hidden />
+        <div
+          className={`fp-iso__cards${isNarrow ? ' fp-iso__cards--mobile' : ''}${isDragging ? ' is-dragging' : ''}`}
+          style={isNarrow ? style : undefined}
+          {...(isNarrow ? bind : {})}
+        >
+          {visibleCerts.map((c) => {
+            const realIdx = isNarrow ? page : certs.indexOf(c)
+            return (
+              <article
+                key={c.num + (isNarrow ? `-${page}` : '')}
+                className={`fp-iso__card fp-iso__card--${c.tone}`}
+                style={{ '--i': realIdx }}
+              >
+                <span className="fp-iso__card-corner" aria-hidden />
 
-              <div className="fp-iso__card-medal" aria-hidden>
-                <span className="fp-iso__card-medal-ring" />
-                <span className="fp-iso__card-medal-ring fp-iso__card-medal-ring--inner" />
-                <div className="fp-iso__card-medal-body">
-                  <span className="fp-iso__card-medal-iso">ISO</span>
-                  <span className="fp-iso__card-medal-num">{c.num}</span>
-                </div>
-              </div>
+                <div className="fp-iso__card-num" aria-hidden>{c.num}</div>
 
-              <div className="fp-iso__card-year">: {c.year}</div>
-              <h3 className="fp-iso__card-name">{c.name}</h3>
-              <span className="fp-iso__card-rule" />
-              <p className="fp-iso__card-desc">{c.desc}</p>
-              <span className="fp-iso__card-tag">{c.tag} certified</span>
-            </article>
-          ))}
+                <div className="fp-iso__card-year">Ban hành · {c.year}</div>
+                <h3 className="fp-iso__card-name">{c.name}</h3>
+                <span className="fp-iso__card-rule" />
+                <p className="fp-iso__card-desc">{c.desc}</p>
+                <span className="fp-iso__card-tag">{c.tag} certified</span>
+              </article>
+            )
+          })}
         </div>
+
+        {isNarrow && certs.length > 1 && (
+          <ol className="fp-iso__dots" aria-label="Điều hướng chứng chỉ">
+            {certs.map((c, i) => (
+              <li key={c.num}>
+                <button
+                  type="button"
+                  className={i === page ? 'is-active' : ''}
+                  onClick={() => goTo(i)}
+                  aria-label={c.name}
+                  aria-current={i === page ? 'true' : undefined}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
 
         {pillars.length > 0 && (
           <div className="fp-iso__pdca" aria-label={pdcaAriaLabel}>

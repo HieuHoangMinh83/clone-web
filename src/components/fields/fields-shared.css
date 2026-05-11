@@ -162,6 +162,65 @@
   .fp-crosshair--tl, .fp-crosshair--bl { left: 10px; }
   .fp-crosshair--tr, .fp-crosshair--br { right: 10px; }
   .fp-crosshair--bl, .fp-crosshair--br { bottom: 14px; }
+
+  /* Mobile: chữ canh giữa thay vì lệch trái cho tất cả section heads */
+  .fp-cons__head,
+  .fp-mep__head,
+  .fp-safe__quote,
+  .fp-hr__head,
+  .fp-eq__head,
+  .fp-outro__copy {
+    text-align: center;
+    align-items: center;
+  }
+  .fp-cons__lede,
+  .fp-mep__lede,
+  .fp-safe__lede,
+  .fp-eq__lede,
+  .fp-outro__lede,
+  .fp-db__lede,
+  .fp-iso__lede,
+  .fp-banner__sub {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    text-align-last: center;
+    hyphens: auto;
+  }
+
+  /* Kicker: inline-flex tự center trong flex column align-items:center */
+  .fp-cons__kicker,
+  .fp-mep__kicker,
+  .fp-safe__kicker,
+  .fp-hr__kicker,
+  .fp-eq__kicker {
+    justify-content: center;
+  }
+
+  /* Pull quote (Safety + HR): bỏ border-left cho center layout đẹp */
+  .fp-safe__pull,
+  .fp-hr__pull {
+    text-align: center;
+    padding-left: 0;
+    border-left: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .fp-hr__pull-mark {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .fp-hr__values {
+    justify-content: center;
+  }
+  .fp-hr__pull-attr { text-align: center; }
+
+  /* Safety qmark: center theo trục ngang */
+  .fp-safe__qmark {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+  .fp-safe__stats { margin-left: auto; margin-right: auto; }
 }
 
 /* ---------- TABLET PORTRAIT — slide mode shared adjustments ---------- */

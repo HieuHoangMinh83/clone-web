@@ -390,21 +390,42 @@
     padding: 40px 12px 28px;
   }
   .fp-eq__title { font-size: clamp(24px, 7.5vw, 32px); margin-bottom: 12px; }
+  /* Title 2 mask: flow như text thường trên mobile — wrap theo từ, không break cưỡng giữa titleTop/titleBot */
+  .fp-eq__title .fp-mask {
+    display: inline;
+    overflow: visible;
+    padding: 0;
+  }
+  .fp-eq__title .fp-mask + .fp-mask::before { content: ' '; }
+  .fp-eq__title .fp-row {
+    display: inline;
+    transform: none;
+    opacity: 1;
+    animation: none !important;
+    white-space: normal;
+  }
+  /* "Bắc — Trung — Nam" giữ nguyên cụm, không tách */
+  .fp-eq__title em { white-space: nowrap; }
   .fp-eq__lede {
     font-size: 12.5px;
     line-height: 1.6;
     margin-bottom: 18px;
     max-width: 100%;
   }
+  /* 2-col compact grid — hiển thị toàn bộ items, scroll tự nhiên */
   .fp-eq__list {
     grid-template-columns: 1fr 1fr !important;
     gap: 8px;
   }
   .fp-eq__item {
-    padding: 10px 10px;
-    grid-template-columns: 24px 1fr;
-    gap: 8px;
+    padding: 12px 10px;
+    grid-template-columns: 26px 1fr;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
   }
+  .fp-eq__item-icon { width: 26px; height: 26px; }
+  .fp-eq__item-name { font-size: 12.5px; line-height: 1.25; }
+  .fp-eq__item-tag { font-size: 9px; letter-spacing: 0.08em; }
   .fp-eq__item-icon { width: 24px; height: 24px; }
   .fp-eq__item-name { font-size: 12.5px; line-height: 1.2; }
   .fp-eq__item-tag { font-size: 8.5px; letter-spacing: 0.08em; }
