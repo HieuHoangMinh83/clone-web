@@ -1,0 +1,28 @@
+/* ============================================================
+ * Furutec tenant theme — override CSS vars trong scope .t-furutec
+ * Components shared dùng `var(--navy-700)`, `var(--gold-500)` v.v.
+ * Khi wrap `<div className="t-furutec">…</div>`, mọi component
+ * con tự render màu Furutec mà không cần đổi code.
+ * ============================================================ */
+
+.t-furutec {
+  /* Brand — Furutec navy (đậm hơn Newtecons) */
+  --navy-900: #0e2547;
+  --navy-700: #1a3a6e;
+  --navy-600: #214280;
+  --blue-500: #3a6fb5;
+  --blue-100: #e8eef7;
+  --blue-050: #d6e2f0;
+
+  /* Logo accents — Furutec dùng vàng làm màu chủ đạo,
+   *   navy đậm cho mark.
+   *   --gold-500: bright golden yellow (decor/hover/bar)
+   *   --teal-500: deep navy variant */
+  --gold-500: #f5b700;
+  --teal-500: #1a3a6e;
+
+  /* Neutrals — giữ nguyên */
+  /* Shadow — re-tint theo navy mới */
+  --shadow-card: 0 8px 32px rgba(26, 58, 110, 0.08);
+  --shadow-hover: 0 16px 48px rgba(26, 58, 110, 0.14);
+}

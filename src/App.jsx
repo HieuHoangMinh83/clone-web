@@ -13,9 +13,17 @@ import ProjectsPage from './pages/ProjectsPage/ProjectsPage.jsx'
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail.jsx'
 import ComponentLibrary from './pages/ComponentLibrary/ComponentLibrary.jsx'
 import LogoDemo from './pages/LogoDemo.jsx'
+import FurutecHomePage from './tenants/furutec/pages/HomePage/HomePage.jsx'
 
 function parseRoute() {
   const h = window.location.pathname || '/'
+  // ---- Tenant: Furutec ---- (prefix /furutec)
+  if (h === '/furutec' || h === '/furutec/') return { name: 'furutec-home' }
+  if (h.startsWith('/furutec/')) {
+    // Các trang con sẽ wire dần. Hiện tại fallback về home tenant.
+    return { name: 'furutec-home' }
+  }
+  // ---- Tenant: Newtecons (default) ----
   if (h.startsWith('/gioi-thieu')) return { name: 'intro' }
   if (h.startsWith('/linh-vuc')) return { name: 'fields' }
   if (h.startsWith('/du-an/')) {
@@ -76,6 +84,7 @@ export default function App() {
     }
   }, [])
 
+  if (route.name === 'furutec-home') return <FurutecHomePage />
   if (route.name === 'intro') return <IntroPage />
   if (route.name === 'fields') return <FieldsPage />
   if (route.name === 'projects') return <ProjectsPage />

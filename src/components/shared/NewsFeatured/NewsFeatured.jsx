@@ -1,6 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { FEATURED, FEATURED_SUB } from '../../../data/news.js'
+import {
+  FEATURED as DEFAULT_FEATURED,
+  FEATURED_SUB as DEFAULT_FEATURED_SUB,
+} from '../../../data/news.js'
 import './NewsFeatured.css'
+
+// ============================================================
+// NewsFeatured — featured article + 2 related (cuối Home page).
+// Tenant-aware: nhận `featured`, `featuredSub`, `brand`, `listHref`,
+// `slugBase` để các tenant khác (Furutec…) tái sử dụng.
+// ============================================================
+
+const NBSP = ' '
 
 function parseDate(s) {
   const [d, m, y] = s.split('/')
@@ -19,14 +30,30 @@ function CharReveal({ text, className = '', baseDelay = 0, stepMs = 28 }) {
             animationDelay: `${baseDelay + i * stepMs}ms`,
           }}
         >
-          {ch === ' ' ? '\u00A0' : ch}
+          {ch === ' ' ? NBSP : ch}
         </span>
       ))}
     </span>
   )
 }
 
-export default function NewsFeatured() {
+/**
+ * NewsFeatured
+ * @param {object} featured       - bài chính { slug, title, image, excerpt, category, date }
+ * @param {Array}  featuredSub    - mảng bài phụ (hiển thị 2 đầu)
+ * @param {string} brand          - tên thương hiệu in trong heading "TIN TỨC <BRAND>"
+ * @param {string} listHref       - link "Xem tất cả tin" (vd '/tin-tuc' hoặc '/furutec/tin-tuc')
+ * @param {string} slugBase       - prefix cho link bài viết (vd '/tin-tuc' → '/tin-tuc/<slug>')
+ * @param {string} ariaLabel      - aria-label cho heading
+ */
+export default function NewsFeatured({
+  featured = DEFAULT_FEATURED,
+  featuredSub = DEFAULT_FEATURED_SUB,
+  brand = 'NEWTECONS',
+  listHref = '/tin-tuc',
+  slugBase = '/tin-tuc',
+  ariaLabel,
+}) {
   const sectionRef = useRef(null)
   const [inView, setInView] = useState(false)
 
@@ -51,7 +78,9 @@ export default function NewsFeatured() {
     return () => io.disconnect()
   }, [])
 
-  const heroDate = parseDate(FEATURED.date)
+  const heroDate = parseDate(featured.date)
+  const bgChar = brand.charAt(0).toUpperCase()
+  const headingAria = ariaLabel || `Tin tức ${brand}`
 
   return (
     <section
@@ -61,18 +90,18 @@ export default function NewsFeatured() {
       <div className="news-featured__bg" aria-hidden>
         <span className="news-featured__bg-grid" />
         <span className="news-featured__bg-orb" />
-        <span className="news-featured__bg-n">N</span>
-        <span className="news-featured__bg-n news-featured__bg-n--outline">N</span>
+        <span className="news-featured__bg-n">{bgChar}</span>
+        <span className="news-featured__bg-n news-featured__bg-n--outline">{bgChar}</span>
       </div>
 
       <div className="news-container">
         <header className="news-featured__head">
           <div className="news-featured__head-left">
-            <h2 className="news-featured__heading" aria-label="Tin tức Newtecons">
+            <h2 className="news-featured__heading" aria-label={headingAria}>
               <span className="news-featured__heading-mask news-featured__heading-mask--single">
                 <CharReveal text="TIN TỨC " baseDelay={260} stepMs={30} />
                 <CharReveal
-                  text="NEWTECONS"
+                  text={brand}
                   className="news-featured__heading-row--accent"
                   baseDelay={540}
                   stepMs={30}
@@ -80,7 +109,7 @@ export default function NewsFeatured() {
               </span>
             </h2>
           </div>
-          <a href="/tin-tuc" className="news-featured__all">
+          <a href={listHref} className="news-featured__all">
             <span className="news-featured__all-label">Xem tất cả tin</span>
             <span className="news-featured__all-arrow" aria-hidden>
               <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
@@ -98,16 +127,16 @@ export default function NewsFeatured() {
 
         <div className="news-featured__grid">
           <article className="news-featured__hero">
-            <a className="news-featured__hero-link" href={`/tin-tuc/${FEATURED.slug}`}>
+            <a className="news-featured__hero-link" href={`${slugBase}/${featured.slug}`}>
               <div className="news-featured__hero-media">
-                <img src={FEATURED.image} alt={FEATURED.title} loading="lazy" />
+                <img src={featured.image} alt={featured.title} loading="lazy" />
                 <span className="news-featured__hero-shine" aria-hidden />
-                <span className="news-featured__hero-tag">{FEATURED.category}</span>
+                <span className="news-featured__hero-tag">{featured.category}</span>
               </div>
               <div className="news-featured__hero-body">
-                <h3 className="news-featured__hero-title">{FEATURED.title}</h3>
+                <h3 className="news-featured__hero-title">{featured.title}</h3>
                 <span className="news-featured__hero-divider" aria-hidden />
-                <p className="news-featured__hero-excerpt">{FEATURED.excerpt}</p>
+                <p className="news-featured__hero-excerpt">{featured.excerpt}</p>
                 <div className="news-featured__hero-footer">
                   <span className="news-featured__hero-date">
                     {heroDate.d} Tháng {heroDate.m}, {heroDate.y}
@@ -134,7 +163,7 @@ export default function NewsFeatured() {
               <span className="news-featured__side-dash" aria-hidden />
             </header>
             <ol className="news-featured__side-list">
-              {FEATURED_SUB.slice(0, 2).map((p, i) => {
+              {featuredSub.slice(0, 2).map((p, i) => {
                 const dt = parseDate(p.date)
                 return (
                   <li
@@ -142,7 +171,7 @@ export default function NewsFeatured() {
                     className="news-featured__row"
                     style={{ '--i': i }}
                   >
-                    <a className="news-featured__row-link" href={`/tin-tuc/${p.slug}`}>
+                    <a className="news-featured__row-link" href={`${slugBase}/${p.slug}`}>
                       <span className="news-featured__row-thumb">
                         <img src={p.image} alt="" loading="lazy" />
                         <span className="news-featured__row-shade" aria-hidden />

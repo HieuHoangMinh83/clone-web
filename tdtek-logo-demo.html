@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>TDtek logo — header entrance animation</title>
+<style>
+  :root{
+    --navy-700:#245692;
+    --navy-900:#1a3c6b;
+    --gold:#f5a623;       /* TDtek primary orange/yellow */
+    --gold-bright:#ffb733;
+    --ink:#1a1a1a;
+    --ink-soft:#2a2a2a;
+    --paper:#ffffff;
+    --header-h:84px;
+    --font:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:var(--font);background:#0e1a2c;color:#fff}
+  body{padding:40px 24px}
+  h1{font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;font-weight:600;margin:0 0 28px}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+  .controls button{
+    appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);
+    color:#fff;padding:8px 14px;border-radius:8px;font-family:var(--font);font-weight:600;
+    font-size:12px;letter-spacing:.08em;cursor:pointer;transition:.2s
+  }
+  .controls button:hover{background:rgba(255,255,255,.1)}
+
+  /* ---------- Header shells (3 variants) ---------- */
+  .stage{
+    position:relative;border-radius:14px;overflow:hidden;
+    margin-bottom:22px;box-shadow:0 20px 60px rgba(0,0,0,.4);
+    border:1px solid rgba(255,255,255,.06);
+  }
+  .stage__label{
+    position:absolute;top:12px;right:16px;font-size:10px;font-weight:700;
+    letter-spacing:.18em;opacity:.55;text-transform:uppercase;z-index:5
+  }
+
+  .stage--navy{background:linear-gradient(180deg,var(--navy-700) 0%,var(--navy-900) 100%)}
+  .stage--dark{background:linear-gradient(180deg,#0a0a0a 0%,#1f1f1f 100%)}
+  .stage--light{background:linear-gradient(180deg,#fafafa 0%,#e7e9ee 100%);color:#1a1a1a}
+  .stage--light .stage__label{color:#666;opacity:.7}
+
+  .nav{
+    height:var(--header-h);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+
+  /* ---------- TDtek logo ---------- */
+  .tdt{
+    --bolt:var(--gold);
+    --td-color:var(--gold);
+    --tek-color:#fff;
+    --line:rgba(255,255,255,.55);
+    --sub:rgba(255,255,255,.78);
+    display:inline-flex;flex-direction:column;align-items:center;gap:4px;
+    text-decoration:none;cursor:pointer;
+    transform:translateY(0);
+    transition:transform .4s cubic-bezier(.2,.9,.3,1.2),filter .4s ease;
+  }
+  .tdt:hover{
+    transform:translateY(-1px) scale(1.03);
+    filter:drop-shadow(0 0 14px rgba(245,166,35,.45));
+  }
+
+  /* dark variant overrides */
+  .stage--dark .tdt{--tek-color:#fff}
+  /* light variant overrides */
+  .stage--light .tdt{
+    --tek-color:#1a1a1a;
+    --line:rgba(0,0,0,.5);
+    --sub:rgba(0,0,0,.72);
+  }
+
+  .tdt__row{
+    display:flex;align-items:center;gap:0;
+    font-weight:900;font-size:38px;letter-spacing:-.02em;line-height:1;
+    position:relative;
+  }
+  .tdt__td{display:inline-flex;align-items:center;gap:3px;margin-right:2px}
+  .tdt__tek{display:inline-flex;align-items:flex-end;padding-bottom:2px}
+  .tdt__tek .ch{color:var(--tek-color)}
+  .ch{
+    display:inline-block;opacity:0;transform:translateY(-12px) scale(.6);
+    transform-origin:50% 100%;
+    animation:tdt-letter 8s cubic-bezier(.2,.7,.3,1.2) infinite;
+    animation-delay:calc(var(--d,0s));
+  }
+  /* per-letter delays — TD shapes drop in, tek types after */
+  .tdt__letter-t,
+  .tdt__letter-d{
+    display:block;height:42px;width:auto;
+    opacity:0;transform:translateY(-14px) scale(.6);
+    transform-origin:50% 100%;
+    animation:tdt-letter 8s cubic-bezier(.2,.7,.3,1.2) infinite;
+  }
+  .tdt__letter-t{animation-delay:.1s}
+  .tdt__letter-d{animation-delay:.24s}
+  .tdt__letter-t path,
+  .tdt__letter-d path{fill:var(--td-color)}
+
+  .tdt__tek .ch:nth-child(1){--d:.6s}
+  .tdt__tek .ch:nth-child(2){--d:.74s}
+  .tdt__tek .ch:nth-child(3){--d:.88s}
+
+  @keyframes tdt-letter{
+    0%   {opacity:0;transform:translateY(-12px) scale(.6)}
+    4%   {opacity:1;transform:translateY(0) scale(1.08);
+          filter:drop-shadow(0 0 8px rgba(245,166,35,.6))}
+    8%   {transform:translateY(0) scale(1);filter:none}
+    72%  {opacity:1;transform:translateY(0) scale(1)}
+    82%  {opacity:0;transform:translateY(6px) scale(.9)}
+    100% {opacity:0;transform:translateY(-12px) scale(.6);filter:none}
+  }
+
+  /* shimmer sweep over the row */
+  .tdt__row::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.35) 50%,transparent 100%);
+    transform:translateX(-120%);
+    animation:tdt-shimmer 8s ease-in-out infinite;
+    mix-blend-mode:overlay;
+  }
+  @keyframes tdt-shimmer{
+    0%,30% {transform:translateX(-120%);opacity:0}
+    32%    {opacity:1}
+    48%    {transform:translateX(120%);opacity:0}
+    100%   {transform:translateX(120%);opacity:0}
+  }
+
+  /* ---------- Sub row: dash · ELECTRICAL & CONSTRUCTION · dash ---------- */
+  .tdt__sub{
+    display:flex;align-items:center;gap:8px;
+    margin-top:2px;
+  }
+  .tdt__dash{
+    display:inline-block;width:0;height:2px;background:var(--bolt);
+    border-radius:2px;
+    animation:tdt-dash 8s ease infinite;
+  }
+  .tdt__dash--l{transform-origin:right center;animation-delay:.95s}
+  .tdt__dash--r{transform-origin:left center;animation-delay:.95s}
+  @keyframes tdt-dash{
+    0%,10% {width:0;opacity:0}
+    14%    {width:22px;opacity:1}
+    72%    {width:22px;opacity:1}
+    82%    {width:0;opacity:0}
+    100%   {width:0;opacity:0}
+  }
+
+  .tdt__tagline{
+    font-size:10px;font-weight:700;letter-spacing:.32em;
+    color:var(--sub);text-transform:uppercase;
+    display:inline-flex;gap:1px;
+  }
+  .tdt__tagline .tch{
+    display:inline-block;opacity:0;transform:translateY(3px);
+    animation:tdt-tag 8s ease infinite;
+    animation-delay:calc(1.05s + var(--ti,0) * .04s);
+  }
+  @keyframes tdt-tag{
+    0%,12% {opacity:0;transform:translateY(3px)}
+    18%    {opacity:1;transform:translateY(0)}
+    72%    {opacity:1;transform:translateY(0)}
+    82%    {opacity:0;transform:translateY(-3px)}
+    100%   {opacity:0;transform:translateY(3px)}
+  }
+
+  /* ---------- Lightning bolt (left of dash row, in center between dashes) ---------- */
+  /* the bolt sits as a tiny SVG between the two dashes/under TDtek */
+  .tdt__boltwrap{
+    position:absolute;
+    left:50%;top:calc(100% + 2px);
+    transform:translate(-50%,0);
+    pointer-events:none;
+  }
+  .tdt__bolt{
+    width:14px;height:18px;display:block;
+    opacity:0;
+    animation:tdt-bolt 8s ease infinite;
+  }
+  .tdt__bolt path{
+    fill:var(--bolt);
+    filter:drop-shadow(0 0 6px rgba(245,166,35,.7));
+  }
+  @keyframes tdt-bolt{
+    0%      {opacity:0;transform:scale(.4) rotate(-8deg)}
+    2%      {opacity:1;transform:scale(1.4) rotate(0);filter:brightness(1.5)}
+    5%      {opacity:.4}
+    7%      {opacity:1;transform:scale(1.1) rotate(0)}
+    10%     {opacity:1;transform:scale(1) rotate(0);filter:none}
+    72%     {opacity:1;transform:scale(1) rotate(0)}
+    82%     {opacity:0;transform:scale(.6) rotate(8deg)}
+    100%    {opacity:0;transform:scale(.4) rotate(-8deg)}
+  }
+
+  /* ---------- Right side actions (mimic real header) ---------- */
+  .nav__actions{
+    position:absolute;right:24px;top:0;height:100%;
+    display:flex;align-items:center;gap:18px;
+  }
+  .nav__icon{
+    width:32px;height:32px;display:grid;place-items:center;
+    color:currentColor;opacity:.8;background:none;border:0;cursor:pointer
+  }
+  .stage--light .nav__icon{color:#1a1a1a}
+
+  /* ---------- Hover freezes animation ---------- */
+  .tdt:hover .ch,
+  .tdt:hover .tch,
+  .tdt:hover .tdt__letter-t,
+  .tdt:hover .tdt__letter-d,
+  .tdt:hover .tdt__dash,
+  .tdt:hover .tdt__bolt,
+  .tdt:hover .tdt__row::after{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+    width:22px;
+    filter:none;
+  }
+  .tdt:hover .tdt__letter-t,
+  .tdt:hover .tdt__letter-d{width:auto;height:42px}
+  .tdt:hover .tdt__row::after{opacity:0 !important}
+
+  /* ---------- Replay button on each stage ---------- */
+  .replay{
+    position:absolute;bottom:10px;right:14px;
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+    color:inherit;padding:6px 10px;border-radius:999px;cursor:pointer;
+    opacity:.6;transition:.2s
+  }
+  .replay:hover{opacity:1}
+  .stage--light .replay{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.12)}
+
+  /* ---------- Reset (no-anim) helper ---------- */
+  .tdt.is-reset .ch,
+  .tdt.is-reset .tch,
+  .tdt.is-reset .tdt__letter-t,
+  .tdt.is-reset .tdt__letter-d,
+  .tdt.is-reset .tdt__dash,
+  .tdt.is-reset .tdt__bolt,
+  .tdt.is-reset .tdt__row::after{animation:none}
+  /* force restart trick */
+  .tdt.play .ch,
+  .tdt.play .tch,
+  .tdt.play .tdt__letter-t,
+  .tdt.play .tdt__letter-d,
+  .tdt.play .tdt__dash,
+  .tdt.play .tdt__bolt,
+  .tdt.play .tdt__row::after{animation-play-state:running}
+</style>
+</head>
+<body>
+
+  <h1>TDtek logo — header entrance animation</h1>
+
+  <div class="controls">
+    <button data-action="replay-all">Replay tất cả</button>
+    <button data-action="hover-toggle">Toggle hover-freeze (xem trạng thái cuối)</button>
+  </div>
+
+  <!-- VARIANT 1: navy (default header) -->
+  <div class="stage stage--navy">
+    <span class="stage__label">variant — navy gradient (header mặc định)</span>
+    <header class="nav">
+      <a class="tdt" href="#" aria-label="TDtek">
+        <span class="tdt__row" aria-hidden="true">
+          <span class="tdt__td">
+            <!-- T: bold rectangular with horizontal top bar -->
+            <svg class="tdt__letter-t" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 0 H32 V10 H21 V42 H11 V10 H0 Z"/>
+            </svg>
+            <!-- D: stylized with diagonal cuts on top-right & bottom-right (flag-like) -->
+            <svg class="tdt__letter-d" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" d="M0 0 H22 L36 14 V28 L22 42 H0 Z M10 10 V32 H18 L26 25 V17 L18 10 Z"/>
+            </svg>
+          </span><span class="tdt__tek">
+            <span class="ch">t</span><span class="ch">e</span><span class="ch">k</span>
+          </span>
+          <span class="tdt__boltwrap">
+            <svg class="tdt__bolt" viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8.2 0 0 10.5h4.6L3.4 18 14 7.3H8.9L11.2 0Z"/>
+            </svg>
+          </span>
+        </span>
+        <span class="tdt__sub">
+          <span class="tdt__dash tdt__dash--l"></span>
+          <span class="tdt__tagline" aria-hidden="true">
+            <!-- ELECTRICAL & CONSTRUCTION letter-by-letter -->
+            <span class="tch" style="--ti:0">E</span><span class="tch" style="--ti:1">L</span><span class="tch" style="--ti:2">E</span><span class="tch" style="--ti:3">C</span><span class="tch" style="--ti:4">T</span><span class="tch" style="--ti:5">R</span><span class="tch" style="--ti:6">I</span><span class="tch" style="--ti:7">C</span><span class="tch" style="--ti:8">A</span><span class="tch" style="--ti:9">L</span><span class="tch" style="--ti:10">&nbsp;&amp;&nbsp;</span><span class="tch" style="--ti:11">C</span><span class="tch" style="--ti:12">O</span><span class="tch" style="--ti:13">N</span><span class="tch" style="--ti:14">S</span><span class="tch" style="--ti:15">T</span><span class="tch" style="--ti:16">R</span><span class="tch" style="--ti:17">U</span><span class="tch" style="--ti:18">C</span><span class="tch" style="--ti:19">T</span><span class="tch" style="--ti:20">I</span><span class="tch" style="--ti:21">O</span><span class="tch" style="--ti:22">N</span>
+          </span>
+          <span class="tdt__dash tdt__dash--r"></span>
+        </span>
+        <span class="sr-only">TDtek — Electrical &amp; Construction</span>
+      </a>
+
+      <div class="nav__actions" aria-hidden="true">
+        <button class="nav__icon" title="Search">
+          <svg width="16" height="16" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="13.5" y2="13.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="nav__icon" title="Menu">
+          <svg width="22" height="14" viewBox="0 0 22 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="21" y2="1"/><line x1="5" y1="7" x2="21" y2="7"/><line x1="1" y1="13" x2="21" y2="13"/></svg>
+        </button>
+      </div>
+    </header>
+    <button class="replay" data-replay>↻ replay</button>
+  </div>
+
+  <!-- VARIANT 2: dark -->
+  <div class="stage stage--dark">
+    <span class="stage__label">variant — dark</span>
+    <header class="nav">
+      <a class="tdt" href="#" aria-label="TDtek">
+        <span class="tdt__row" aria-hidden="true">
+          <span class="tdt__td">
+            <!-- T: bold rectangular with horizontal top bar -->
+            <svg class="tdt__letter-t" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 0 H32 V10 H21 V42 H11 V10 H0 Z"/>
+            </svg>
+            <!-- D: stylized with diagonal cuts on top-right & bottom-right (flag-like) -->
+            <svg class="tdt__letter-d" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" d="M0 0 H22 L36 14 V28 L22 42 H0 Z M10 10 V32 H18 L26 25 V17 L18 10 Z"/>
+            </svg>
+          </span><span class="tdt__tek">
+            <span class="ch">t</span><span class="ch">e</span><span class="ch">k</span>
+          </span>
+          <span class="tdt__boltwrap">
+            <svg class="tdt__bolt" viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8.2 0 0 10.5h4.6L3.4 18 14 7.3H8.9L11.2 0Z"/>
+            </svg>
+          </span>
+        </span>
+        <span class="tdt__sub">
+          <span class="tdt__dash tdt__dash--l"></span>
+          <span class="tdt__tagline" aria-hidden="true">
+            <span class="tch" style="--ti:0">E</span><span class="tch" style="--ti:1">L</span><span class="tch" style="--ti:2">E</span><span class="tch" style="--ti:3">C</span><span class="tch" style="--ti:4">T</span><span class="tch" style="--ti:5">R</span><span class="tch" style="--ti:6">I</span><span class="tch" style="--ti:7">C</span><span class="tch" style="--ti:8">A</span><span class="tch" style="--ti:9">L</span><span class="tch" style="--ti:10">&nbsp;&amp;&nbsp;</span><span class="tch" style="--ti:11">C</span><span class="tch" style="--ti:12">O</span><span class="tch" style="--ti:13">N</span><span class="tch" style="--ti:14">S</span><span class="tch" style="--ti:15">T</span><span class="tch" style="--ti:16">R</span><span class="tch" style="--ti:17">U</span><span class="tch" style="--ti:18">C</span><span class="tch" style="--ti:19">T</span><span class="tch" style="--ti:20">I</span><span class="tch" style="--ti:21">O</span><span class="tch" style="--ti:22">N</span>
+          </span>
+          <span class="tdt__dash tdt__dash--r"></span>
+        </span>
+      </a>
+    </header>
+    <button class="replay" data-replay>↻ replay</button>
+  </div>
+
+  <!-- VARIANT 3: light -->
+  <div class="stage stage--light">
+    <span class="stage__label">variant — light (nền sáng)</span>
+    <header class="nav">
+      <a class="tdt" href="#" aria-label="TDtek">
+        <span class="tdt__row" aria-hidden="true">
+          <span class="tdt__td">
+            <!-- T: bold rectangular with horizontal top bar -->
+            <svg class="tdt__letter-t" viewBox="0 0 32 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 0 H32 V10 H21 V42 H11 V10 H0 Z"/>
+            </svg>
+            <!-- D: stylized with diagonal cuts on top-right & bottom-right (flag-like) -->
+            <svg class="tdt__letter-d" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" d="M0 0 H22 L36 14 V28 L22 42 H0 Z M10 10 V32 H18 L26 25 V17 L18 10 Z"/>
+            </svg>
+          </span><span class="tdt__tek">
+            <span class="ch">t</span><span class="ch">e</span><span class="ch">k</span>
+          </span>
+          <span class="tdt__boltwrap">
+            <svg class="tdt__bolt" viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8.2 0 0 10.5h4.6L3.4 18 14 7.3H8.9L11.2 0Z"/>
+            </svg>
+          </span>
+        </span>
+        <span class="tdt__sub">
+          <span class="tdt__dash tdt__dash--l"></span>
+          <span class="tdt__tagline" aria-hidden="true">
+            <span class="tch" style="--ti:0">E</span><span class="tch" style="--ti:1">L</span><span class="tch" style="--ti:2">E</span><span class="tch" style="--ti:3">C</span><span class="tch" style="--ti:4">T</span><span class="tch" style="--ti:5">R</span><span class="tch" style="--ti:6">I</span><span class="tch" style="--ti:7">C</span><span class="tch" style="--ti:8">A</span><span class="tch" style="--ti:9">L</span><span class="tch" style="--ti:10">&nbsp;&amp;&nbsp;</span><span class="tch" style="--ti:11">C</span><span class="tch" style="--ti:12">O</span><span class="tch" style="--ti:13">N</span><span class="tch" style="--ti:14">S</span><span class="tch" style="--ti:15">T</span><span class="tch" style="--ti:16">R</span><span class="tch" style="--ti:17">U</span><span class="tch" style="--ti:18">C</span><span class="tch" style="--ti:19">T</span><span class="tch" style="--ti:20">I</span><span class="tch" style="--ti:21">O</span><span class="tch" style="--ti:22">N</span>
+          </span>
+          <span class="tdt__dash tdt__dash--r"></span>
+        </span>
+      </a>
+    </header>
+    <button class="replay" data-replay>↻ replay</button>
+  </div>
+
+<script>
+  // Replay: re-trigger CSS animations by toggling a reset class
+  function replay(stageEl){
+    const tdt = stageEl.querySelector('.tdt');
+    if(!tdt) return;
+    tdt.classList.add('is-reset');
+    // force reflow
+    void tdt.offsetWidth;
+    tdt.classList.remove('is-reset');
+  }
+  document.querySelectorAll('[data-replay]').forEach(btn=>{
+    btn.addEventListener('click',()=>replay(btn.closest('.stage')));
+  });
+  document.querySelector('[data-action="replay-all"]').addEventListener('click',()=>{
+    document.querySelectorAll('.stage').forEach(replay);
+  });
+  // hover-freeze toggle: forces .tdt into hover state (peek final frame)
+  let hoverLocked=false;
+  document.querySelector('[data-action="hover-toggle"]').addEventListener('click',()=>{
+    hoverLocked=!hoverLocked;
+    document.querySelectorAll('.tdt').forEach(t=>{
+      if(hoverLocked) t.style.cssText='animation:none';
+      // CSS :hover handles freezing; we simulate by toggling a class
+      t.classList.toggle('force-hover',hoverLocked);
+    });
+  });
+</script>
+
+<style>
+  /* force-hover replicates :hover freeze */
+  .tdt.force-hover .ch,
+  .tdt.force-hover .tch,
+  .tdt.force-hover .tdt__letter-t,
+  .tdt.force-hover .tdt__letter-d,
+  .tdt.force-hover .tdt__dash,
+  .tdt.force-hover .tdt__bolt,
+  .tdt.force-hover .tdt__row::after{
+    animation:none !important;opacity:1 !important;transform:none !important;
+    width:22px;filter:none
+  }
+  .tdt.force-hover .tdt__letter-t,
+  .tdt.force-hover .tdt__letter-d{width:auto;height:42px}
+  .tdt.force-hover .tdt__row::after{opacity:0 !important}
+</style>
+</body>
+</html>
